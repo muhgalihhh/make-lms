@@ -40,12 +40,12 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
                     <Button variant="ghost" size="sm" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
-                    <h1 className="text-2xl font-bold">Tambah Institusi Baru</h1>
+                    <h1 className="text-2xl font-bold">Tambah Data Institusi</h1>
                 </div>
 
                 <Card className="max-w-2xl">
                     <CardHeader>
-                        <CardTitle>Informasi Institusi</CardTitle>
+                        <CardTitle>Data Institusi</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -126,7 +126,7 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
                                     Batal
                                 </Button>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? 'Menyimpan...' : 'Simpan Institusi'}
+                                    {processing ? 'Menyimpan...' : 'Simpan Data'}
                                 </Button>
                             </div>
                         </form>

@@ -12,7 +12,7 @@ import { OverviewChart } from '@/components/overview-chart';
 import AdminLayout from '@/layouts/admin-layout';
 import { type BreadcrumbItem, type PageProps, type User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX } from 'lucide-react';
+import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX, Building2 } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -145,7 +145,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
                         <p className="text-muted-foreground">
-                            Welcome back! Here's what's happening with your platform today.
+                            Selamat datang! Kelola data institusi dan pantau perkembangan platform Anda.
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -171,52 +171,52 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <StatCard
-                        title="Total Pengguna"
+                        title="Total Institusi"
                         value={stats.totalUsers}
-                        description="dari bulan lalu"
-                        icon={Users}
-                        trend={{ value: "+12%", isPositive: true }}
+                        description="institusi terdaftar"
+                        icon={Building2}
+                        trend={{ value: "+5%", isPositive: true }}
                         chartData={userTrendData}
                     />
                     
                     <StatCard
                         title="Total Kursus"
                         value={stats.totalCourses}
-                        description="dari bulan lalu"
+                        description="dari semua institusi"
                         icon={BookOpen}
                         trend={{ value: "+8%", isPositive: true }}
                         chartData={courseTrendData}
                     />
 
                     <StatCard
-                        title="Pendapatan"
-                        value="Rp 2.4M"
-                        description="dari bulan lalu"
-                        icon={DollarSign}
-                        trend={{ value: "+23%", isPositive: true }}
+                        title="Data Terbaru"
+                        value="24"
+                        description="update minggu ini"
+                        icon={TrendingUp}
+                        trend={{ value: "+12%", isPositive: true }}
                         chartData={revenueTrendData}
                     />
 
                     <StatCard
-                        title="Pertumbuhan"
-                        value="+15.2%"
-                        description="dari bulan lalu"
-                        icon={TrendingUp}
-                        trend={{ value: "+2.1%", isPositive: true }}
+                        title="Status Sistem"
+                        value="Aktif"
+                        description="semua sistem berjalan"
+                        icon={Crown}
+                        trend={{ value: "100%", isPositive: true }}
                         chartData={growthTrendData}
                     />
                 </div>
 
                 {/* Overview Chart */}
                 <OverviewChart
-                    title="Overview Platform"
-                    description="Perkembangan users, courses, dan revenue dalam 8 bulan terakhir"
+                    title="Overview Data Institusi"
+                    description="Perkembangan data institusi dan kursus dalam 8 bulan terakhir"
                     data={overviewData}
                     categories={["users", "courses", "revenue"]}
                     colors={["#3b82f6", "#10b981", "#f59e0b"]}
                     valueFormatter={(value) => {
                         if (value >= 1000000) {
-                            return `Rp ${(value / 1000000).toFixed(1)}M`
+                            return `${(value / 1000000).toFixed(1)}M`
                         }
                         return value.toString()
                     }}
@@ -224,10 +224,10 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
 
                 {/* Charts Section */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    {/* User Registration Trend */}
+                    {/* Institution Data Trend */}
                     <ChartCard
-                        title="Trend Pendaftaran"
-                        description="Perbandingan pendaftar regular vs premium"
+                        title="Trend Data Institusi"
+                        description="Perbandingan data institusi aktif vs non-aktif"
                         trend={{
                             value: "+18%",
                             isPositive: true,
@@ -242,24 +242,24 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         />
                     </ChartCard>
 
-                    {/* User Types Distribution */}
+                    {/* Institution Types Distribution */}
                     <ChartCard
-                        title="Distribusi Tipe User"
-                        description="Persentase berdasarkan tipe user"
+                        title="Distribusi Tipe Institusi"
+                        description="Persentase berdasarkan tipe institusi"
                         trend={{
                             value: "+5%",
                             isPositive: true,
-                            label: "Premium growth"
+                            label: "Growth"
                         }}
                     >
                         <PieChartComponent data={userTypeData} />
                     </ChartCard>
                 </div>
 
-                {/* Monthly Registration Stats */}
+                {/* Monthly Institution Data Stats */}
                 <ChartCard
-                    title="Pendaftaran Bulanan"
-                    description="Total pendaftar per bulan"
+                    title="Data Institusi Bulanan"
+                    description="Total data institusi yang diupdate per bulan"
                 >
                     <BarChartComponent
                         data={monthlyData}
@@ -272,7 +272,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                 {/* Detailed Statistics */}
                 <div className="grid gap-6 md:grid-cols-2">
                     <StatsSummary
-                        title="Statistik Detail User"
+                        title="Statistik Detail Institusi"
                         stats={detailedStats}
                     />
                     
@@ -283,9 +283,9 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         <CardContent>
                             <div className="space-y-4">
                                 <ActivityItem
-                                    title="User baru mendaftar"
+                                    title="Data institusi diperbarui"
                                     time="2 menit yang lalu"
-                                    icon={Users}
+                                    icon={Building2}
                                     iconBgColor="bg-green-100"
                                     iconColor="text-green-600"
                                 />
@@ -299,15 +299,15 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                 />
                                 
                                 <ActivityItem
-                                    title="Transaksi berhasil"
+                                    title="Backup data selesai"
                                     time="3 jam yang lalu"
-                                    icon={DollarSign}
+                                    icon={Download}
                                     iconBgColor="bg-yellow-100"
                                     iconColor="text-yellow-600"
                                 />
                                 
                                 <ActivityItem
-                                    title="Laporan bulanan selesai"
+                                    title="Laporan data selesai"
                                     time="1 hari yang lalu"
                                     icon={TrendingUp}
                                     iconBgColor="bg-purple-100"
@@ -318,14 +318,14 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                     </Card>
                 </div>
 
-                {/* Recent Users */}
+                {/* Recent Institutions */}
                 <Card>
                     <CardHeader>
                         <div className="flex items-center justify-between">
-                            <CardTitle>Pengguna Terbaru</CardTitle>
+                            <CardTitle>Institusi Terbaru</CardTitle>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href={route('admin.users.index')}>
-                                    Lihat Semua
+                                <Link href={route('admin.institutions.index')}>
+                                    Kelola Data
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>
@@ -336,7 +336,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                             {recentUsers.map((user) => (
                                 <div className="flex items-center" key={user.id}>
                                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-                                        <Users className="h-5 w-5 text-muted-foreground" />
+                                        <Building2 className="h-5 w-5 text-muted-foreground" />
                                     </div>
                                     <div className="ml-4 space-y-1">
                                         <p className="text-sm font-medium leading-none">{user.name}</p>
@@ -346,8 +346,8 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                         </div>
                                     </div>
                                     <div className="ml-auto flex items-center space-x-2">
-                                        <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
-                                            {user.role}
+                                        <Badge variant="secondary">
+                                            Institusi
                                         </Badge>
                                         <p className="text-sm text-muted-foreground">
                                             {new Date(user.created_at).toLocaleDateString('id-ID', {
