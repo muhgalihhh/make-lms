@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { useInitials } from '@/hooks/use-initials';
-import { type BreadcrumbItem, type User } from '@/types';
+import { type BreadcrumbItem, type User as UserType } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
 import { BarChart3, Bell, HelpCircle, LogOut, Search, Settings, Shield, User } from 'lucide-react';
 
@@ -21,7 +21,7 @@ interface AdminHeaderProps {
 }
 
 export function AdminHeader({ breadcrumbs = [] }: AdminHeaderProps) {
-    const page = usePage<{ auth: { user: User } }>();
+    const page = usePage<{ auth: { user: UserType } }>();
     const { auth } = page.props;
     const getInitials = useInitials();
 
