@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useInitials } from '@/hooks/use-initials';
 import { type BreadcrumbItem, type User } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
-import { BarChart3, Bell, HelpCircle, LogOut, Search, Settings, Shield, User } from 'lucide-react';
+import { BarChart3, Bell, HelpCircle, LogOut, Search, Settings, Shield, User as UserIcon } from 'lucide-react';
 
 interface AdminHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
@@ -115,7 +115,7 @@ export function AdminHeader({ breadcrumbs = [] }: AdminHeaderProps) {
                             <DropdownMenuGroup>
                                 <DropdownMenuItem asChild>
                                     <Link href={route('profile.edit')} className="flex items-center">
-                                        <User className="mr-2 h-4 w-4" />
+                                        <UserIcon className="mr-2 h-4 w-4" />
                                         <span>Profile</span>
                                     </Link>
                                 </DropdownMenuItem>
