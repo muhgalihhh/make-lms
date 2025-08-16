@@ -2,6 +2,7 @@ import { AdminSidebar } from '@/components/admin-sidebar';
 import { AppContent } from '@/components/app-content';
 import { AppShell } from '@/components/app-shell';
 import { FlashMessages } from '@/components/flash-messages';
+import { AdminHeader } from '@/components/admin-header';
 import { type BreadcrumbItem } from '@/types';
 import { type ReactNode } from 'react';
 
@@ -14,12 +15,15 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutP
     return (
         <AppShell variant="sidebar">
             <AdminSidebar breadcrumbs={breadcrumbs} />
-            <AppContent variant="sidebar" className="overflow-x-hidden md:ml-64">
-                <div className="flex-1 space-y-4 p-4 sm:p-6 lg:p-8">
-                    <FlashMessages />
-                    {children}
-                </div>
-            </AppContent>
+            <div className="flex flex-col flex-1 md:ml-64">
+                <AdminHeader breadcrumbs={breadcrumbs} />
+                <AppContent variant="sidebar" className="overflow-x-hidden">
+                    <div className="flex-1 space-y-6 p-6 lg:p-8">
+                        <FlashMessages />
+                        {children}
+                    </div>
+                </AppContent>
+            </div>
         </AppShell>
     );
 }
