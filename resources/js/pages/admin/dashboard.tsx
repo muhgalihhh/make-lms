@@ -12,7 +12,7 @@ import { OverviewChart } from '@/components/overview-chart';
 import AdminLayout from '@/layouts/admin-layout';
 import { type BreadcrumbItem, type PageProps, type User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX } from 'lucide-react';
+import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX, Building2 } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -143,15 +143,15 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+                        <h1 className="text-3xl font-bold tracking-tight">Dashboard Kursus Pribadi</h1>
                         <p className="text-muted-foreground">
-                            Welcome back! Here's what's happening with your platform today.
+                            Selamat datang kembali! Berikut adalah ringkasan platform kursus Anda hari ini.
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
                         <Button variant="outline" size="sm">
                             <Calendar className="mr-2 h-4 w-4" />
-                            Today
+                            Hari Ini
                         </Button>
                         <Button variant="outline" size="sm" onClick={handleExportData}>
                             <Download className="mr-2 h-4 w-4" />
@@ -207,9 +207,80 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                     />
                 </div>
 
+                {/* Quick Actions */}
+                <div className="grid gap-4 md:grid-cols-3">
+                    <Card>
+                        <CardHeader className="pb-3">
+                            <CardTitle className="text-sm font-medium">Kelola Data</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-2">
+                                <Link href={route('admin.institutions.index')}>
+                                    <Button variant="outline" className="w-full justify-start">
+                                        <Building2 className="mr-2 h-4 w-4" />
+                                        Data Institusi
+                                    </Button>
+                                </Link>
+                                <Link href={route('admin.courses.index')}>
+                                    <Button variant="outline" className="w-full justify-start">
+                                        <BookOpen className="mr-2 h-4 w-4" />
+                                        Kelola Kursus
+                                    </Button>
+                                </Link>
+                                <Link href={route('admin.users.index')}>
+                                    <Button variant="outline" className="w-full justify-start">
+                                        <Users className="mr-2 h-4 w-4" />
+                                        Kelola Pengguna
+                                    </Button>
+                                </Link>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="pb-3">
+                            <CardTitle className="text-sm font-medium">Tambah Data Baru</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-2">
+                                <Link href={route('admin.institutions.create')}>
+                                    <Button variant="outline" className="w-full justify-start">
+                                        <Building2 className="mr-2 h-4 w-4" />
+                                        Tambah Institusi
+                                    </Button>
+                                </Link>
+                                <Link href={route('admin.courses.create')}>
+                                    <Button variant="outline" className="w-full justify-start">
+                                        <BookOpen className="mr-2 h-4 w-4" />
+                                        Tambah Kursus
+                                    </Button>
+                                </Link>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="pb-3">
+                            <CardTitle className="text-sm font-medium">Laporan</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-2">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <BarChart3 className="mr-2 h-4 w-4" />
+                                    Laporan Bulanan
+                                </Button>
+                                <Button variant="outline" className="w-full justify-start">
+                                    <TrendingUp className="mr-2 h-4 w-4" />
+                                    Analisis Performa
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+
                 {/* Overview Chart */}
                 <OverviewChart
-                    title="Overview Platform"
+                    title="Overview Platform Kursus"
                     description="Perkembangan users, courses, dan revenue dalam 8 bulan terakhir"
                     data={overviewData}
                     categories={["users", "courses", "revenue"]}
@@ -299,19 +370,19 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                 />
                                 
                                 <ActivityItem
-                                    title="Transaksi berhasil"
+                                    title="Data institusi diperbarui"
                                     time="3 jam yang lalu"
-                                    icon={DollarSign}
-                                    iconBgColor="bg-yellow-100"
-                                    iconColor="text-yellow-600"
+                                    icon={Building2}
+                                    iconBgColor="bg-purple-100"
+                                    iconColor="text-purple-600"
                                 />
                                 
                                 <ActivityItem
-                                    title="Laporan bulanan selesai"
-                                    time="1 hari yang lalu"
-                                    icon={TrendingUp}
-                                    iconBgColor="bg-purple-100"
-                                    iconColor="text-purple-600"
+                                    title="Transaksi berhasil"
+                                    time="5 jam yang lalu"
+                                    icon={DollarSign}
+                                    iconBgColor="bg-yellow-100"
+                                    iconColor="text-yellow-600"
                                 />
                             </div>
                         </CardContent>

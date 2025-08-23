@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/admin-layout';
 import { PageProps } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Database } from 'lucide-react';
 
 interface InstitutionCreateProps extends PageProps {}
 
@@ -29,23 +29,26 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
         <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
-                { title: 'Institutions', href: route('admin.institutions.index') },
-                { title: 'Create', href: route('admin.institutions.create') },
+                { title: 'Data Institusi', href: route('admin.institutions.index') },
+                { title: 'Tambah Data', href: route('admin.institutions.create') },
             ]}
         >
-            <Head title="Create Institution" />
+            <Head title="Tambah Data Institusi" />
 
             <div className="">
                 <div className="flex items-center mb-6">
                     <Button variant="ghost" size="sm" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
-                    <h1 className="text-2xl font-bold">Tambah Institusi Baru</h1>
+                    <h1 className="text-2xl font-bold">Tambah Data Institusi</h1>
                 </div>
 
                 <Card className="max-w-2xl">
                     <CardHeader>
-                        <CardTitle>Informasi Institusi</CardTitle>
+                        <div className="flex items-center space-x-2">
+                            <Database className="h-5 w-5" />
+                            <CardTitle>Informasi Data Institusi</CardTitle>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -126,7 +129,7 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
                                     Batal
                                 </Button>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? 'Menyimpan...' : 'Simpan Institusi'}
+                                    {processing ? 'Menyimpan...' : 'Simpan Data Institusi'}
                                 </Button>
                             </div>
                         </form>
