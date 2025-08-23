@@ -52,7 +52,7 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
                             Informasi Profil Institusi
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            Masukkan informasi lengkap tentang institusi Anda untuk memberikan kepercayaan kepada peserta kursus
+                            Masukkan informasi lengkap tentang institusi Anda untuk memberikan kepercayaan dan informasi yang jelas kepada peserta kursus
                         </p>
                     </CardHeader>
                     <CardContent>

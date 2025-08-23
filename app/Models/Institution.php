@@ -20,7 +20,7 @@ class Institution extends Model
     ];
 
     /**
-     * Kursus yang dimiliki oleh institusi ini.
+     * Kursus yang dimiliki oleh institusi ini (satu institusi dapat memiliki banyak kursus).
      */
     public function courses(): HasMany
     {
@@ -28,7 +28,7 @@ class Institution extends Model
     }
 
     /**
-     * Ulasan yang dimiliki oleh institusi ini.
+     * Ulasan yang dimiliki oleh institusi ini (satu institusi dapat memiliki banyak ulasan).
      */
     public function reviews(): HasMany
     {

@@ -27,7 +27,7 @@ class Course extends Model
     ];
 
     /**
-     * Institusi yang memiliki kursus ini.
+     * Institusi yang memiliki kursus ini (satu institusi dapat memiliki banyak kursus).
      */
     public function institution(): BelongsTo
     {

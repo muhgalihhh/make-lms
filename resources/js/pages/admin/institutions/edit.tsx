@@ -64,7 +64,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                             Perbarui Informasi Profil
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            Perbarui informasi profil institusi Anda untuk menjaga data yang akurat dan terpercaya
+                            Perbarui informasi profil institusi Anda untuk menjaga data yang akurat dan terpercaya bagi peserta kursus
                         </p>
                     </CardHeader>
                     <CardContent>

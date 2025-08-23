@@ -163,7 +163,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
                         <p className="text-muted-foreground">
-                            Selamat datang! Kelola profil institusi dan pantau perkembangan platform kursus online Anda.
+                            Selamat datang! Kelola profil institusi Anda dan pantau perkembangan platform kursus online.
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -356,7 +356,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                 <div className="flex-1">
                                     <h4 className="font-medium text-blue-900">Profil Institusi</h4>
                                     <p className="text-sm text-blue-700">
-                                        Kelola informasi profil institusi untuk platform kursus online Anda
+                                        Kelola informasi profil institusi Anda untuk platform kursus online
                                     </p>
                                 </div>
                                 <Button variant="outline" size="sm" asChild>
@@ -373,7 +373,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                         <Badge variant="default">Aktif</Badge>
                                     </div>
                                     <p className="text-sm text-muted-foreground">
-                                        Profil institusi sudah terdaftar dan aktif
+                                        Profil institusi Anda sudah terdaftar dan aktif
                                     </p>
                                 </div>
                                 
@@ -383,7 +383,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                                         <Badge variant="secondary">Lengkap</Badge>
                                     </div>
                                     <p className="text-sm text-muted-foreground">
-                                        Semua informasi profil sudah diisi
+                                        Semua informasi profil institusi sudah diisi
                                     </p>
                                 </div>
                             </div>
