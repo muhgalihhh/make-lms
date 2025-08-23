@@ -16,12 +16,12 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutProps) {
-    const { isCollapsed } = useSidebar();
+    const { isCollapsed, isMobile } = useSidebar();
     useToastNotifications();
 
     return (
         <AppShell variant="sidebar">
-            <div className="flex h-screen flex-col">
+            <div className="flex h-screen flex-col bg-background">
                 {/* Header - Fixed at top */}
                 <AdminHeader breadcrumbs={breadcrumbs} />
                 
@@ -31,17 +31,24 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AdminLayoutP
                     <AdminSidebar breadcrumbs={breadcrumbs} />
                     
                     {/* Content area - Adjusts based on sidebar state */}
-                    <div className={cn(
-                        "flex flex-1 flex-col transition-all duration-300",
-                        isCollapsed ? "md:ml-16" : "md:ml-64"
-                    )}>
-                        <AppContent variant="sidebar" className="overflow-x-hidden">
+                    <main 
+                        className={cn(
+                            "flex flex-1 flex-col transition-all duration-300 ease-in-out",
+                            isMobile ? "ml-0" : isCollapsed ? "md:ml-16" : "md:ml-64"
+                        )}
+                        role="main"
+                        aria-label="Main content"
+                    >
+                        <AppContent 
+                            variant="sidebar" 
+                            className="overflow-x-hidden bg-background/50"
+                        >
                             <div className="flex-1 space-y-4 p-4 lg:p-6">
                                 <FlashMessages />
                                 {children}
                             </div>
                         </AppContent>
-                    </div>
+                    </main>
                 </div>
             </div>
             <Toaster />
