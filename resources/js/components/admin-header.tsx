@@ -30,7 +30,7 @@ export function AdminHeader({ breadcrumbs = [] }: AdminHeaderProps) {
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             placeholder="Search users, courses, transactions..."
-                            className="pl-10 bg-muted/50 border-0 focus-visible:ring-1"
+                            className="pl-10"
                         />
                     </div>
                 </div>
@@ -89,7 +89,7 @@ export function AdminHeader({ breadcrumbs = [] }: AdminHeaderProps) {
                             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                                 <Avatar className="h-10 w-10">
                                     <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-                                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                                    <AvatarFallback>
                                         {getInitials(auth.user.name)}
                                     </AvatarFallback>
                                 </Avatar>

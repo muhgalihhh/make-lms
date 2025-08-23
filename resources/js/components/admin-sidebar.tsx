@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Building2, CreditCard, Menu, Users } from 'lucide-react';
+import { BookOpen, Building2, CreditCard, Menu, Users, LayoutDashboard, Tag } from 'lucide-react';
 
 interface AdminSidebarProps {
     breadcrumbs?: BreadcrumbItem[];
@@ -14,6 +14,7 @@ const menuItems = [
     {
         title: 'Dashboard',
         href: route('admin.dashboard'),
+        icon: LayoutDashboard,
     },
     {
         title: 'Users',
@@ -28,6 +29,7 @@ const menuItems = [
     {
         title: 'Categories',
         href: route('admin.categories.index'),
+        icon: Tag,
     },
     {
         title: 'Institutions',
@@ -72,26 +74,29 @@ function AdminSidebarContent() {
 
     return (
         <div className="flex flex-grow flex-col border-r bg-background">
-            <div className="flex h-16 items-center border-b px-4">
+            <div className="flex h-16 items-center border-b px-6">
                 <Link href={route('admin.dashboard')} className="flex items-center space-x-2">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                         <span className="text-sm font-bold text-primary-foreground">A</span>
                     </div>
-                    <span className="text-lg font-bold">Admin Panel</span>
+                    <span className="text-lg font-semibold">Admin Panel</span>
                 </Link>
             </div>
 
             <ScrollArea className="flex-1 px-3 py-4">
-                <nav className="space-y-2">
+                <nav className="space-y-1">
                     {menuItems.map((item) => {
                         const isActive = url.startsWith(item.href);
                         return (
                             <Link key={item.href} href={item.href}>
                                 <Button
                                     variant={isActive ? 'secondary' : 'ghost'}
-                                    className={cn('w-full justify-start', isActive && 'bg-secondary text-secondary-foreground')}
+                                    className={cn(
+                                        'w-full justify-start h-10',
+                                        isActive && 'bg-secondary text-secondary-foreground'
+                                    )}
                                 >
-                                    {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+                                    {item.icon && <item.icon className="mr-3 h-4 w-4" />}
                                     {item.title}
                                 </Button>
                             </Link>
@@ -99,13 +104,6 @@ function AdminSidebarContent() {
                     })}
                 </nav>
             </ScrollArea>
-
-            <div className="border-t p-4">
-                <div className="text-sm text-muted-foreground">
-                    <p>Admin Dashboard</p>
-                    <p className="text-xs">Manage your LMS system</p>
-                </div>
-            </div>
         </div>
     );
 }
