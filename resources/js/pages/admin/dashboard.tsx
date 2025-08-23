@@ -5,14 +5,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { StatCard } from '@/components/stat-card';
 import { ActivityItem } from '@/components/activity-item';
-import { ChartCard } from '@/components/chart-card';
-import { SimpleChart } from '@/components/simple-chart';
-import { LineChart } from '@/components/line-chart';
+import { ChartCard, LineChartComponent, BarChartComponent, PieChartComponent } from '@/components/ui/charts';
 import { DashboardFilters } from '@/components/dashboard-filters';
+import { StatsSummary } from '@/components/stats-summary';
+import { OverviewChart } from '@/components/overview-chart';
 import AdminLayout from '@/layouts/admin-layout';
 import { type BreadcrumbItem, type PageProps, type User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download } from 'lucide-react';
+import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -35,29 +35,100 @@ interface DashboardProps extends PageProps {
 export default function Dashboard({ stats, recentUsers }: DashboardProps) {
     const [chartPeriod, setChartPeriod] = useState('30d');
 
-    // Sample data for charts
+    // Data untuk chart pendaftaran
+    const registrationData = [
+        { month: 'Jan', regular: 45, premium: 12 },
+        { month: 'Feb', regular: 52, premium: 18 },
+        { month: 'Mar', regular: 38, premium: 15 },
+        { month: 'Apr', regular: 67, premium: 25 },
+        { month: 'May', regular: 73, premium: 32 },
+        { month: 'Jun', regular: 89, premium: 41 },
+    ];
+
+    // Data untuk chart bulanan
+    const monthlyData = [
+        { month: 'Jan', pendaftar: 57 },
+        { month: 'Feb', pendaftar: 70 },
+        { month: 'Mar', pendaftar: 53 },
+        { month: 'Apr', pendaftar: 92 },
+        { month: 'May', pendaftar: 105 },
+        { month: 'Jun', pendaftar: 130 },
+    ];
+
+    // Data untuk pie chart tipe user
     const userTypeData = [
-        { label: 'Regular', value: 1250, color: '#3b82f6' },
-        { label: 'Premium', value: 320, color: '#10b981' },
-        { label: 'Enterprise', value: 85, color: '#8b5cf6' },
+        { name: 'Regular', value: 1250 },
+        { name: 'Premium', value: 320 },
+        { name: 'Enterprise', value: 85 },
     ];
 
-    const registrationTrendData = [
-        { date: 'Jan', regular: 45, premium: 12 },
-        { date: 'Feb', regular: 52, premium: 18 },
-        { date: 'Mar', regular: 38, premium: 15 },
-        { date: 'Apr', regular: 67, premium: 25 },
-        { date: 'May', regular: 73, premium: 32 },
-        { date: 'Jun', regular: 89, premium: 41 },
+    // Data untuk overview chart
+    const overviewData = [
+        { name: 'Jan', users: 1200, courses: 45, revenue: 1800000 },
+        { name: 'Feb', users: 1250, courses: 48, revenue: 1900000 },
+        { name: 'Mar', users: 1300, courses: 52, revenue: 2100000 },
+        { name: 'Apr', users: 1280, courses: 50, revenue: 2000000 },
+        { name: 'May', users: 1350, courses: 55, revenue: 2200000 },
+        { name: 'Jun', users: 1400, courses: 58, revenue: 2300000 },
+        { name: 'Jul', users: 1450, courses: 62, revenue: 2400000 },
+        { name: 'Aug', users: 1500, courses: 65, revenue: 2500000 },
     ];
 
-    const monthlyStatsData = [
-        { label: 'Jan', value: 57, color: '#3b82f6' },
-        { label: 'Feb', value: 70, color: '#3b82f6' },
-        { label: 'Mar', value: 53, color: '#3b82f6' },
-        { label: 'Apr', value: 92, color: '#3b82f6' },
-        { label: 'May', value: 105, color: '#3b82f6' },
-        { label: 'Jun', value: 130, color: '#3b82f6' },
+    // Data untuk statistik detail
+    const detailedStats = [
+        {
+            label: 'Pendaftar Baru',
+            value: 89,
+            change: '+12%',
+            isPositive: true,
+            icon: UserCheck,
+            color: '#10b981'
+        },
+        {
+            label: 'User Aktif',
+            value: 1247,
+            change: '+8%',
+            isPositive: true,
+            icon: Users,
+            color: '#3b82f6'
+        },
+        {
+            label: 'User Non-Aktif',
+            value: 23,
+            change: '-3%',
+            isPositive: false,
+            icon: UserX,
+            color: '#ef4444'
+        },
+        {
+            label: 'Conversion Rate',
+            value: '15.2%',
+            change: '+2.1%',
+            isPositive: true,
+            icon: TrendingUp,
+            color: '#f59e0b'
+        }
+    ];
+
+    // Data untuk mini charts
+    const userTrendData = [
+        { value: 1200 }, { value: 1250 }, { value: 1300 }, { value: 1280 }, 
+        { value: 1350 }, { value: 1400 }, { value: 1450 }, { value: 1500 }
+    ];
+    
+    const courseTrendData = [
+        { value: 45 }, { value: 48 }, { value: 52 }, { value: 50 }, 
+        { value: 55 }, { value: 58 }, { value: 62 }, { value: 65 }
+    ];
+    
+    const revenueTrendData = [
+        { value: 1800000 }, { value: 1900000 }, { value: 2100000 }, { value: 2000000 }, 
+        { value: 2200000 }, { value: 2300000 }, { value: 2400000 }, { value: 2500000 }
+    ];
+    
+    const growthTrendData = [
+        { value: 12 }, { value: 13 }, { value: 14 }, { value: 13.5 }, 
+        { value: 15 }, { value: 15.5 }, { value: 16 }, { value: 15.2 }
     ];
 
     const handleExportData = () => {
@@ -105,6 +176,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         description="dari bulan lalu"
                         icon={Users}
                         trend={{ value: "+12%", isPositive: true }}
+                        chartData={userTrendData}
                     />
                     
                     <StatCard
@@ -113,6 +185,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         description="dari bulan lalu"
                         icon={BookOpen}
                         trend={{ value: "+8%", isPositive: true }}
+                        chartData={courseTrendData}
                     />
 
                     <StatCard
@@ -121,6 +194,7 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         description="dari bulan lalu"
                         icon={DollarSign}
                         trend={{ value: "+23%", isPositive: true }}
+                        chartData={revenueTrendData}
                     />
 
                     <StatCard
@@ -129,101 +203,80 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         description="dari bulan lalu"
                         icon={TrendingUp}
                         trend={{ value: "+2.1%", isPositive: true }}
+                        chartData={growthTrendData}
                     />
                 </div>
+
+                {/* Overview Chart */}
+                <OverviewChart
+                    title="Overview Platform"
+                    description="Perkembangan users, courses, dan revenue dalam 8 bulan terakhir"
+                    data={overviewData}
+                    categories={["users", "courses", "revenue"]}
+                    colors={["#3b82f6", "#10b981", "#f59e0b"]}
+                    valueFormatter={(value) => {
+                        if (value >= 1000000) {
+                            return `Rp ${(value / 1000000).toFixed(1)}M`
+                        }
+                        return value.toString()
+                    }}
+                />
 
                 {/* Charts Section */}
                 <div className="grid gap-6 md:grid-cols-2">
                     {/* User Registration Trend */}
                     <ChartCard
                         title="Trend Pendaftaran"
-                        icon={BarChart3}
-                        filters={{
-                            period: chartPeriod,
-                            onPeriodChange: setChartPeriod
-                        }}
+                        description="Perbandingan pendaftar regular vs premium"
                         trend={{
                             value: "+18%",
                             isPositive: true,
                             label: "vs bulan lalu"
                         }}
                     >
-                        <LineChart data={registrationTrendData} />
+                        <LineChartComponent
+                            data={registrationData}
+                            index="month"
+                            categories={["regular", "premium"]}
+                            colors={["#3b82f6", "#10b981"]}
+                        />
                     </ChartCard>
 
                     {/* User Types Distribution */}
                     <ChartCard
                         title="Distribusi Tipe User"
-                        icon={Crown}
+                        description="Persentase berdasarkan tipe user"
                         trend={{
                             value: "+5%",
                             isPositive: true,
                             label: "Premium growth"
                         }}
                     >
-                        <SimpleChart data={userTypeData} />
+                        <PieChartComponent data={userTypeData} />
                     </ChartCard>
                 </div>
 
                 {/* Monthly Registration Stats */}
                 <ChartCard
                     title="Pendaftaran Bulanan"
-                    icon={Users}
-                    filters={{
-                        period: chartPeriod,
-                        onPeriodChange: setChartPeriod
-                    }}
+                    description="Total pendaftar per bulan"
                 >
-                    <SimpleChart data={monthlyStatsData} showValues={false} />
+                    <BarChartComponent
+                        data={monthlyData}
+                        index="month"
+                        categories={["pendaftar"]}
+                        colors={["#3b82f6"]}
+                    />
                 </ChartCard>
 
-                {/* Recent Activity */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                    <Card className="col-span-4">
-                        <CardHeader>
-                            <div className="flex items-center justify-between">
-                                <CardTitle>Pengguna Terbaru</CardTitle>
-                                <Button variant="ghost" size="sm" asChild>
-                                    <Link href={route('admin.users.index')}>
-                                        Lihat Semua
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </Link>
-                                </Button>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-6">
-                                {recentUsers.map((user) => (
-                                    <div className="flex items-center" key={user.id}>
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-                                            <Users className="h-5 w-5 text-muted-foreground" />
-                                        </div>
-                                        <div className="ml-4 space-y-1">
-                                            <p className="text-sm font-medium leading-none">{user.name}</p>
-                                            <div className="flex items-center space-x-2">
-                                                <Mail className="h-3 w-3 text-muted-foreground" />
-                                                <p className="text-sm text-muted-foreground">{user.email}</p>
-                                            </div>
-                                        </div>
-                                        <div className="ml-auto flex items-center space-x-2">
-                                            <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
-                                                {user.role}
-                                            </Badge>
-                                            <p className="text-sm text-muted-foreground">
-                                                {new Date(user.created_at).toLocaleDateString('id-ID', {
-                                                    day: 'numeric',
-                                                    month: 'short',
-                                                    year: 'numeric'
-                                                })}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="col-span-3">
+                {/* Detailed Statistics */}
+                <div className="grid gap-6 md:grid-cols-2">
+                    <StatsSummary
+                        title="Statistik Detail User"
+                        stats={detailedStats}
+                    />
+                    
+                    <Card>
                         <CardHeader>
                             <CardTitle>Aktivitas Terbaru</CardTitle>
                         </CardHeader>
@@ -264,6 +317,51 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Recent Users */}
+                <Card>
+                    <CardHeader>
+                        <div className="flex items-center justify-between">
+                            <CardTitle>Pengguna Terbaru</CardTitle>
+                            <Button variant="ghost" size="sm" asChild>
+                                <Link href={route('admin.users.index')}>
+                                    Lihat Semua
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-6">
+                            {recentUsers.map((user) => (
+                                <div className="flex items-center" key={user.id}>
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+                                        <Users className="h-5 w-5 text-muted-foreground" />
+                                    </div>
+                                    <div className="ml-4 space-y-1">
+                                        <p className="text-sm font-medium leading-none">{user.name}</p>
+                                        <div className="flex items-center space-x-2">
+                                            <Mail className="h-3 w-3 text-muted-foreground" />
+                                            <p className="text-sm text-muted-foreground">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="ml-auto flex items-center space-x-2">
+                                        <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
+                                            {user.role}
+                                        </Badge>
+                                        <p className="text-sm text-muted-foreground">
+                                            {new Date(user.created_at).toLocaleDateString('id-ID', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            })}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </AdminLayout>
     );

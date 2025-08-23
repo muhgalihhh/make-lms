@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LucideIcon } from 'lucide-react';
+import { MiniChart } from './mini-chart';
 
 interface StatCardProps {
     title: string;
@@ -10,6 +11,7 @@ interface StatCardProps {
         value: string;
         isPositive: boolean;
     };
+    chartData?: { value: number }[];
     className?: string;
 }
 
@@ -19,6 +21,7 @@ export function StatCard({
     description, 
     icon: Icon, 
     trend, 
+    chartData,
     className = '' 
 }: StatCardProps) {
     return (
@@ -28,20 +31,32 @@ export function StatCard({
                 <Icon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">
-                    {typeof value === 'number' ? value.toLocaleString() : value}
-                </div>
-                {description && (
-                    <p className="text-xs text-muted-foreground">
-                        {trend && (
-                            <span className={trend.isPositive ? 'text-green-600' : 'text-red-600'}>
-                                {trend.value}
-                            </span>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <div className="text-2xl font-bold">
+                            {typeof value === 'number' ? value.toLocaleString() : value}
+                        </div>
+                        {description && (
+                            <p className="text-xs text-muted-foreground">
+                                {trend && (
+                                    <span className={trend.isPositive ? 'text-green-600' : 'text-red-600'}>
+                                        {trend.value}
+                                    </span>
+                                )}
+                                {trend && ' '}
+                                {description}
+                            </p>
                         )}
-                        {trend && ' '}
-                        {description}
-                    </p>
-                )}
+                    </div>
+                    {chartData && (
+                        <div className="w-20 h-12">
+                            <MiniChart 
+                                data={chartData} 
+                                color={trend?.isPositive ? "#10b981" : "#ef4444"}
+                            />
+                        </div>
+                    )}
+                </div>
             </CardContent>
         </Card>
     );
