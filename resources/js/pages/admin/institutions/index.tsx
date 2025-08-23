@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import AdminLayout from '@/layouts/admin-layout';
 import { PageProps, PaginatedData } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Plus, Edit, Trash2, Mail, Phone, Globe } from 'lucide-react';
+import { Plus, Edit, Trash2, Mail, Phone, Globe, Database } from 'lucide-react';
 import { Pagination } from '@/components/pagination';
 
 interface Institution {
@@ -29,35 +29,43 @@ export default function InstitutionIndex({ institutions }: InstitutionIndexProps
         <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
-                { title: 'Institutions', href: route('admin.institutions.index') },
+                { title: 'Data Institusi', href: route('admin.institutions.index') },
             ]}
         >
-            <Head title="Manage Institutions" />
+            <Head title="Kelola Data Institusi" />
 
             <div className="">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Daftar Institusi</h1>
+                    <div>
+                        <h1 className="text-2xl font-bold">Kelola Data Institusi</h1>
+                        <p className="text-muted-foreground">
+                            Kelola informasi institusi yang terkait dengan kursus Anda
+                        </p>
+                    </div>
                     <Link href={route('admin.institutions.create')}>
                         <Button>
                             <Plus className="h-4 w-4 mr-2" />
-                            Tambah Institusi
+                            Tambah Data Institusi
                         </Button>
                     </Link>
                 </div>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Institusi</CardTitle>
+                        <div className="flex items-center space-x-2">
+                            <Database className="h-5 w-5" />
+                            <CardTitle>Data Institusi</CardTitle>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Nama</TableHead>
-                                    <TableHead>Kontak</TableHead>
+                                    <TableHead>Nama Institusi</TableHead>
+                                    <TableHead>Informasi Kontak</TableHead>
                                     <TableHead>Alamat</TableHead>
                                     <TableHead>Jumlah Kursus</TableHead>
-                                    <TableHead>Tanggal Dibuat</TableHead>
+                                    <TableHead>Tanggal Ditambahkan</TableHead>
                                     <TableHead>Aksi</TableHead>
                                 </TableRow>
                             </TableHeader>
