@@ -23,11 +23,11 @@ interface AdminHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
 }
 
-export function AdminHeader({ breadcrumbs = [] }: AdminHeaderProps) {
+export function AdminHeader({ breadcrumbs: _ }: AdminHeaderProps) {
     const page = usePage<{ auth: { user: UserType } }>();
     const { auth } = page.props;
     const getInitials = useInitials();
-    const { toggleSidebar, isCollapsed, isMobile } = useSidebar();
+    const { toggleSidebar, isCollapsed } = useSidebar();
 
     const handleLogout = () => {
         router.post(route('logout'));
