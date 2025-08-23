@@ -3,10 +3,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps, PaginatedData } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Eye, DollarSign } from 'lucide-react';
+import { Pagination } from '@/components/pagination';
 
 interface User {
     id: number;
@@ -73,7 +74,7 @@ export default function TransactionIndex({ transactions }: TransactionIndexProps
     };
 
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Transactions', href: route('admin.transactions.index') },
@@ -81,7 +82,7 @@ export default function TransactionIndex({ transactions }: TransactionIndexProps
         >
             <Head title="Manage Transactions" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Daftar Transaksi</h1>
                 </div>
@@ -150,10 +151,14 @@ export default function TransactionIndex({ transactions }: TransactionIndexProps
                                 ))}
                             </TableBody>
                         </Table>
-                        {/* Pagination component akan ditambahkan di sini */}
+                        {transactions.links && transactions.links.length > 0 && (
+                            <div className="mt-4">
+                                <Pagination links={transactions.links} />
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }

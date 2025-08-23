@@ -2,10 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps, PaginatedData } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Plus, Edit, Trash2, Mail, Phone, Globe } from 'lucide-react';
+import { Pagination } from '@/components/pagination';
 
 interface Institution {
     id: number;
@@ -25,7 +26,7 @@ interface InstitutionIndexProps extends PageProps {
 
 export default function InstitutionIndex({ institutions }: InstitutionIndexProps) {
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Institutions', href: route('admin.institutions.index') },
@@ -33,7 +34,7 @@ export default function InstitutionIndex({ institutions }: InstitutionIndexProps
         >
             <Head title="Manage Institutions" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Daftar Institusi</h1>
                     <Link href={route('admin.institutions.create')}>
@@ -107,10 +108,14 @@ export default function InstitutionIndex({ institutions }: InstitutionIndexProps
                                 ))}
                             </TableBody>
                         </Table>
-                        {/* Pagination component akan ditambahkan di sini */}
+                        {institutions.links && institutions.links.length > 0 && (
+                            <div className="mt-4">
+                                <Pagination links={institutions.links} />
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }

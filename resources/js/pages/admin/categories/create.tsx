@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
@@ -22,7 +22,7 @@ export default function CategoryCreate({}: CategoryCreateProps) {
     };
 
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Categories', href: route('admin.categories.index') },
@@ -31,7 +31,7 @@ export default function CategoryCreate({}: CategoryCreateProps) {
         >
             <Head title="Create Category" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
                 <div className="flex items-center mb-6">
                     <Button variant="ghost" size="sm" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
@@ -80,6 +80,6 @@ export default function CategoryCreate({}: CategoryCreateProps) {
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }

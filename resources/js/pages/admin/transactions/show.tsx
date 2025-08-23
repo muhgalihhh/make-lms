@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, DollarSign, User, Calendar, CreditCard } from 'lucide-react';
@@ -64,7 +64,7 @@ export default function TransactionShow({ transaction }: TransactionShowProps) {
     };
 
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Transactions', href: route('admin.transactions.index') },
@@ -73,7 +73,7 @@ export default function TransactionShow({ transaction }: TransactionShowProps) {
         >
             <Head title="Transaction Detail" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
                 <div className="flex items-center mb-6">
                     <Link href={route('admin.transactions.index')}>
                         <Button variant="ghost" size="sm" className="mr-2">
@@ -164,6 +164,6 @@ export default function TransactionShow({ transaction }: TransactionShowProps) {
                     </Card>
                 </div>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }

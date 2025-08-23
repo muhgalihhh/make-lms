@@ -2,10 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps, PaginatedData } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Pagination } from '@/components/pagination';
 
 interface Category {
     id: number;
@@ -21,7 +22,7 @@ interface CategoryIndexProps extends PageProps {
 
 export default function CategoryIndex({ categories }: CategoryIndexProps) {
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Categories', href: route('admin.categories.index') },
@@ -29,7 +30,7 @@ export default function CategoryIndex({ categories }: CategoryIndexProps) {
         >
             <Head title="Manage Categories" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Daftar Kategori</h1>
                     <Link href={route('admin.categories.create')}>
@@ -80,10 +81,14 @@ export default function CategoryIndex({ categories }: CategoryIndexProps) {
                                 ))}
                             </TableBody>
                         </Table>
-                        {/* Pagination component akan ditambahkan di sini */}
+                        {categories.links && categories.links.length > 0 && (
+                            <div className="mt-4">
+                                <Pagination links={categories.links} />
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }

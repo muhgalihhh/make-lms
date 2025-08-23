@@ -2,10 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import AppLayout from '@/layouts/app-layout';
+import AdminLayout from '@/layouts/admin-layout';
 import { PageProps, PaginatedData } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Pagination } from '@/components/pagination';
 
 interface Course {
     id: number;
@@ -30,7 +31,7 @@ interface CourseIndexProps extends PageProps {
 
 export default function CourseIndex({ courses }: CourseIndexProps) {
     return (
-        <AppLayout
+        <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
                 { title: 'Courses', href: route('admin.courses.index') },
@@ -38,7 +39,7 @@ export default function CourseIndex({ courses }: CourseIndexProps) {
         >
             <Head title="Manage Courses" />
 
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div>
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Daftar Kursus</h1>
                     <Link href={route('admin.courses.create')}>
@@ -100,10 +101,14 @@ export default function CourseIndex({ courses }: CourseIndexProps) {
                                 ))}
                             </TableBody>
                         </Table>
-                        {/* Pagination component akan ditambahkan di sini */}
+                        {courses.links && courses.links.length > 0 && (
+                            <div className="mt-4">
+                                <Pagination links={courses.links} />
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </AdminLayout>
     );
 }
