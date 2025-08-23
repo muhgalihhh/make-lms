@@ -11,7 +11,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Menu, Search, PanelLeft } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -40,16 +40,31 @@ const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral
 
 interface AppHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
+    onSidebarToggle?: () => void;
+    sidebarOpen?: boolean;
 }
 
-export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
+export function AppHeader({ breadcrumbs = [], onSidebarToggle, sidebarOpen }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+    
     return (
         <>
-            <div className="border-b border-sidebar-border/80">
+            <div className="sticky top-0 z-50 border-b border-sidebar-border/80 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+                    {/* Sidebar Toggle Button */}
+                    <div className="mr-2">
+                        <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-[34px] w-[34px]"
+                            onClick={onSidebarToggle}
+                        >
+                            <PanelLeft className="h-5 w-5" />
+                        </Button>
+                    </div>
+
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
