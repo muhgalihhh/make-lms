@@ -11,7 +11,7 @@ use Inertia\Response;
 class InstitutionController extends Controller
 {
     /**
-     * Menampilkan profil institusi.
+     * Menampilkan profil institusi (hanya satu institusi yang dapat dikelola).
      */
     public function index(): Response
     {
@@ -23,28 +23,28 @@ class InstitutionController extends Controller
     }
 
     /**
-     * Tampilkan form untuk membuat profil institusi baru.
+     * Tampilkan form untuk membuat profil institusi baru (hanya jika belum ada profil).
      */
     public function create(): Response
     {
         // Cek apakah sudah ada institusi
         if (Institution::exists()) {
             return redirect()->route('admin.institutions.index')
-                ->with('error', 'Profil institusi sudah ada. Anda hanya dapat mengedit profil yang ada.');
+                ->with('error', 'Profil institusi sudah ada. Anda hanya dapat mengedit profil institusi yang sudah ada.');
         }
 
         return Inertia::render('admin/institutions/create');
     }
 
     /**
-     * Simpan profil institusi baru ke database.
+     * Simpan profil institusi baru ke database (hanya jika belum ada profil).
      */
     public function store(Request $request)
     {
         // Cek apakah sudah ada institusi
         if (Institution::exists()) {
             return redirect()->route('admin.institutions.index')
-                ->with('error', 'Profil institusi sudah ada. Anda hanya dapat mengedit profil yang ada.');
+                ->with('error', 'Profil institusi sudah ada. Anda hanya dapat mengedit profil institusi yang sudah ada.');
         }
 
         $validated = $request->validate([
@@ -63,7 +63,7 @@ class InstitutionController extends Controller
     }
 
     /**
-     * Tampilkan form untuk mengedit profil institusi.
+     * Tampilkan form untuk mengedit profil institusi yang sudah ada.
      */
     public function edit(Institution $institution): Response
     {
@@ -73,7 +73,7 @@ class InstitutionController extends Controller
     }
 
     /**
-     * Update data profil institusi di database.
+     * Update data profil institusi yang sudah ada di database.
      */
     public function update(Request $request, Institution $institution)
     {
@@ -93,7 +93,7 @@ class InstitutionController extends Controller
     }
 
     /**
-     * Hapus profil institusi dari database.
+     * Hapus profil institusi dari database (hanya jika tidak digunakan oleh kursus).
      */
     public function destroy(Institution $institution)
     {

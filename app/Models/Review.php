@@ -26,7 +26,7 @@ class Review extends Model
     }
 
     /**
-     * Institusi yang diulas.
+     * Institusi yang diulas (satu institusi dapat memiliki banyak ulasan).
      */
     public function institution(): BelongsTo
     {

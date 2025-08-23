@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Ulasan institusi yang diberikan oleh pengguna.
+     * Ulasan institusi yang diberikan oleh pengguna (satu pengguna dapat memberikan banyak ulasan).
      */
     public function reviews(): HasMany
     {

@@ -37,7 +37,7 @@ export default function InstitutionIndex({ institution }: InstitutionIndexProps)
                     <div>
                         <h1 className="text-2xl font-bold">Profil Institusi</h1>
                         <p className="text-muted-foreground">
-                            Kelola informasi profil institusi untuk platform kursus online Anda
+                            Kelola informasi profil institusi Anda untuk platform kursus online
                         </p>
                     </div>
                     {!institution ? (
@@ -62,7 +62,7 @@ export default function InstitutionIndex({ institution }: InstitutionIndexProps)
                         <CardHeader>
                             <CardTitle>Belum Ada Profil Institusi</CardTitle>
                             <p className="text-sm text-muted-foreground">
-                                Anda belum membuat profil institusi. Buat profil institusi untuk menampilkan informasi lembaga Anda.
+                                Anda belum membuat profil institusi. Buat profil institusi untuk menampilkan informasi lembaga Anda kepada peserta kursus.
                             </p>
                         </CardHeader>
                         <CardContent>
@@ -70,7 +70,7 @@ export default function InstitutionIndex({ institution }: InstitutionIndexProps)
                                 <Building2 className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                                 <h3 className="text-lg font-medium mb-2">Mulai dengan Membuat Profil Institusi</h3>
                                 <p className="text-muted-foreground mb-4">
-                                    Tambahkan informasi lengkap tentang institusi Anda untuk memberikan kepercayaan kepada peserta kursus.
+                                    Tambahkan informasi lengkap tentang institusi Anda untuk memberikan kepercayaan dan informasi yang jelas kepada peserta kursus.
                                 </p>
                                 <Link href={route('admin.institutions.create')}>
                                     <Button>
