@@ -91,7 +91,7 @@ function AdminSidebarContent() {
                                     variant={isActive ? 'secondary' : 'ghost'}
                                     className={cn('w-full justify-start', isActive && 'bg-secondary text-secondary-foreground')}
                                 >
-                                    <item.icon className="mr-2 h-4 w-4" />
+                                    {item.icon && <item.icon className="mr-2 h-4 w-4" />}
                                     {item.title}
                                 </Button>
                             </Link>
