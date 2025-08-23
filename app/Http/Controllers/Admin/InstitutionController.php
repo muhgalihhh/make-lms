@@ -11,15 +11,15 @@ use Inertia\Response;
 class InstitutionController extends Controller
 {
     /**
-     * Menampilkan daftar semua institusi dengan paginasi.
+     * Menampilkan data institusi (hanya satu institusi).
      */
     public function index(): Response
     {
+        $institution = Institution::withCount('courses')->first();
+        
         return Inertia::render('admin/institutions/index', [
-            'institutions' => Institution::withCount('courses')
-                ->latest()
-                ->paginate(10)
-                ->withQueryString(),
+            'institution' => $institution,
+            'hasInstitution' => $institution !== null,
         ]);
     }
 
@@ -28,6 +28,12 @@ class InstitutionController extends Controller
      */
     public function create(): Response
     {
+        // Cek apakah sudah ada institusi
+        if (Institution::count() > 0) {
+            return redirect()->route('admin.institutions.index')
+                ->with('error', 'Hanya dapat membuat satu data institusi.');
+        }
+
         return Inertia::render('admin/institutions/create');
     }
 
@@ -36,8 +42,14 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
+        // Cek apakah sudah ada institusi
+        if (Institution::count() > 0) {
+            return redirect()->route('admin.institutions.index')
+                ->with('error', 'Hanya dapat membuat satu data institusi.');
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:institutions',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
@@ -48,7 +60,7 @@ class InstitutionController extends Controller
         Institution::create($validated);
 
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil dibuat.');
+            ->with('success', 'Data institusi berhasil dibuat.');
     }
 
     /**
@@ -67,7 +79,7 @@ class InstitutionController extends Controller
     public function update(Request $request, Institution $institution)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:institutions,name,' . $institution->id,
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
@@ -78,7 +90,7 @@ class InstitutionController extends Controller
         $institution->update($validated);
 
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil diperbarui.');
+            ->with('success', 'Data institusi berhasil diperbarui.');
     }
 
     /**
@@ -95,6 +107,6 @@ class InstitutionController extends Controller
         $institution->delete();
 
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil dihapus.');
+            ->with('success', 'Data institusi berhasil dihapus.');
     }
 }
