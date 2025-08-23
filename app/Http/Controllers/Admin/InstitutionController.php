@@ -11,33 +11,44 @@ use Inertia\Response;
 class InstitutionController extends Controller
 {
     /**
-     * Menampilkan daftar semua institusi dengan paginasi.
+     * Menampilkan informasi institusi (hanya 1 institusi untuk platform kursus pribadi).
      */
     public function index(): Response
     {
+        $institution = Institution::withCount('courses')->first();
+        
         return Inertia::render('admin/institutions/index', [
-            'institutions' => Institution::withCount('courses')
-                ->latest()
-                ->paginate(10)
-                ->withQueryString(),
+            'institution' => $institution,
         ]);
     }
 
     /**
-     * Tampilkan form untuk membuat institusi baru.
+     * Tampilkan form untuk membuat institusi baru (hanya jika belum ada institusi).
      */
     public function create(): Response
     {
+        // Cek apakah sudah ada institusi
+        if (Institution::count() > 0) {
+            return redirect()->route('admin.institutions.index')
+                ->with('error', 'Institusi sudah ada. Platform kursus pribadi hanya mendukung satu institusi.');
+        }
+
         return Inertia::render('admin/institutions/create');
     }
 
     /**
-     * Simpan institusi baru ke database.
+     * Simpan institusi baru ke database (hanya jika belum ada institusi).
      */
     public function store(Request $request)
     {
+        // Cek apakah sudah ada institusi
+        if (Institution::count() > 0) {
+            return redirect()->route('admin.institutions.index')
+                ->with('error', 'Institusi sudah ada. Platform kursus pribadi hanya mendukung satu institusi.');
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:institutions',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
@@ -48,7 +59,7 @@ class InstitutionController extends Controller
         Institution::create($validated);
 
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil dibuat.');
+            ->with('success', 'Informasi institusi berhasil dibuat.');
     }
 
     /**
@@ -67,7 +78,7 @@ class InstitutionController extends Controller
     public function update(Request $request, Institution $institution)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:institutions,name,' . $institution->id,
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
@@ -78,23 +89,15 @@ class InstitutionController extends Controller
         $institution->update($validated);
 
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil diperbarui.');
+            ->with('success', 'Informasi institusi berhasil diperbarui.');
     }
 
     /**
-     * Hapus institusi dari database.
+     * Hapus institusi dari database (tidak diizinkan untuk platform kursus pribadi).
      */
     public function destroy(Institution $institution)
     {
-        // Cek apakah institusi masih digunakan oleh kursus
-        if ($institution->courses()->count() > 0) {
-            return redirect()->route('admin.institutions.index')
-                ->with('error', 'Institusi tidak dapat dihapus karena masih digunakan oleh kursus.');
-        }
-
-        $institution->delete();
-
         return redirect()->route('admin.institutions.index')
-            ->with('success', 'Institusi berhasil dihapus.');
+            ->with('error', 'Tidak dapat menghapus institusi. Platform kursus pribadi memerlukan informasi institusi.');
     }
 }

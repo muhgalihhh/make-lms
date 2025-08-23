@@ -41,47 +41,47 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
         <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
-                { title: 'Data Institusi', href: route('admin.institutions.index') },
-                { title: 'Edit Data', href: route('admin.institutions.edit', institution.id) },
+                { title: 'Informasi Institusi', href: route('admin.institutions.index') },
+                { title: 'Edit Informasi', href: route('admin.institutions.edit', institution.id) },
             ]}
         >
-            <Head title="Edit Data Institusi" />
+            <Head title="Edit Informasi Institusi" />
 
             <div className="">
                 <div className="flex items-center mb-6">
                     <Button variant="ghost" size="sm" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
-                    <h1 className="text-2xl font-bold">Edit Data Institusi</h1>
+                    <h1 className="text-2xl font-bold">Edit Informasi Institusi</h1>
                 </div>
 
                 <Card className="max-w-2xl">
                     <CardHeader>
-                        <CardTitle>Informasi Data Institusi</CardTitle>
+                        <CardTitle>Informasi Lembaga</CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            Perbarui informasi institusi untuk menjaga data yang akurat
+                            Perbarui informasi lembaga atau instansi untuk menjaga data yang akurat
                         </p>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <Label htmlFor="name">Nama Institusi</Label>
+                                <Label htmlFor="name">Nama Lembaga/Instansi</Label>
                                 <Input
                                     id="name"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
-                                    placeholder="Masukkan nama institusi"
+                                    placeholder="Masukkan nama lembaga atau instansi"
                                 />
                                 {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="description">Deskripsi</Label>
+                                <Label htmlFor="description">Deskripsi Lembaga</Label>
                                 <Textarea
                                     id="description"
                                     value={data.description}
                                     onChange={(e) => setData('description', e.target.value)}
-                                    placeholder="Masukkan deskripsi institusi"
+                                    placeholder="Masukkan deskripsi singkat tentang lembaga atau visi misi"
                                     rows={4}
                                 />
                                 {errors.description && <p className="text-sm text-red-600">{errors.description}</p>}
@@ -93,7 +93,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                                     id="address"
                                     value={data.address}
                                     onChange={(e) => setData('address', e.target.value)}
-                                    placeholder="Masukkan alamat institusi"
+                                    placeholder="Masukkan alamat lengkap lembaga"
                                     rows={3}
                                 />
                                 {errors.address && <p className="text-sm text-red-600">{errors.address}</p>}
@@ -118,7 +118,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                                         type="email"
                                         value={data.email}
                                         onChange={(e) => setData('email', e.target.value)}
-                                        placeholder="Masukkan email institusi"
+                                        placeholder="Masukkan email lembaga"
                                     />
                                     {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
                                 </div>
@@ -141,7 +141,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                                     Batal
                                 </Button>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? 'Menyimpan...' : 'Update Institusi'}
+                                    {processing ? 'Menyimpan...' : 'Update Informasi Lembaga'}
                                 </Button>
                             </div>
                         </form>
