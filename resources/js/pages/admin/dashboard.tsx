@@ -5,10 +5,15 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { StatCard } from '@/components/stat-card';
 import { ActivityItem } from '@/components/activity-item';
+import { ChartCard } from '@/components/chart-card';
+import { SimpleChart } from '@/components/simple-chart';
+import { LineChart } from '@/components/line-chart';
+import { DashboardFilters } from '@/components/dashboard-filters';
 import AdminLayout from '@/layouts/admin-layout';
 import { type BreadcrumbItem, type PageProps, type User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail } from 'lucide-react';
+import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,6 +33,38 @@ interface DashboardProps extends PageProps {
 }
 
 export default function Dashboard({ stats, recentUsers }: DashboardProps) {
+    const [chartPeriod, setChartPeriod] = useState('30d');
+
+    // Sample data for charts
+    const userTypeData = [
+        { label: 'Regular', value: 1250, color: '#3b82f6' },
+        { label: 'Premium', value: 320, color: '#10b981' },
+        { label: 'Enterprise', value: 85, color: '#8b5cf6' },
+    ];
+
+    const registrationTrendData = [
+        { date: 'Jan', regular: 45, premium: 12 },
+        { date: 'Feb', regular: 52, premium: 18 },
+        { date: 'Mar', regular: 38, premium: 15 },
+        { date: 'Apr', regular: 67, premium: 25 },
+        { date: 'May', regular: 73, premium: 32 },
+        { date: 'Jun', regular: 89, premium: 41 },
+    ];
+
+    const monthlyStatsData = [
+        { label: 'Jan', value: 57, color: '#3b82f6' },
+        { label: 'Feb', value: 70, color: '#3b82f6' },
+        { label: 'Mar', value: 53, color: '#3b82f6' },
+        { label: 'Apr', value: 92, color: '#3b82f6' },
+        { label: 'May', value: 105, color: '#3b82f6' },
+        { label: 'Jun', value: 130, color: '#3b82f6' },
+    ];
+
+    const handleExportData = () => {
+        // Implement export functionality
+        console.log('Exporting dashboard data...');
+    };
+
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -45,8 +82,20 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                             <Calendar className="mr-2 h-4 w-4" />
                             Today
                         </Button>
+                        <Button variant="outline" size="sm" onClick={handleExportData}>
+                            <Download className="mr-2 h-4 w-4" />
+                            Export
+                        </Button>
                     </div>
                 </div>
+
+                {/* Dashboard Filters */}
+                <DashboardFilters
+                    period={chartPeriod}
+                    onPeriodChange={setChartPeriod}
+                    onExport={handleExportData}
+                    showExport={true}
+                />
 
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -82,6 +131,51 @@ export default function Dashboard({ stats, recentUsers }: DashboardProps) {
                         trend={{ value: "+2.1%", isPositive: true }}
                     />
                 </div>
+
+                {/* Charts Section */}
+                <div className="grid gap-6 md:grid-cols-2">
+                    {/* User Registration Trend */}
+                    <ChartCard
+                        title="Trend Pendaftaran"
+                        icon={BarChart3}
+                        filters={{
+                            period: chartPeriod,
+                            onPeriodChange: setChartPeriod
+                        }}
+                        trend={{
+                            value: "+18%",
+                            isPositive: true,
+                            label: "vs bulan lalu"
+                        }}
+                    >
+                        <LineChart data={registrationTrendData} />
+                    </ChartCard>
+
+                    {/* User Types Distribution */}
+                    <ChartCard
+                        title="Distribusi Tipe User"
+                        icon={Crown}
+                        trend={{
+                            value: "+5%",
+                            isPositive: true,
+                            label: "Premium growth"
+                        }}
+                    >
+                        <SimpleChart data={userTypeData} />
+                    </ChartCard>
+                </div>
+
+                {/* Monthly Registration Stats */}
+                <ChartCard
+                    title="Pendaftaran Bulanan"
+                    icon={Users}
+                    filters={{
+                        period: chartPeriod,
+                        onPeriodChange: setChartPeriod
+                    }}
+                >
+                    <SimpleChart data={monthlyStatsData} showValues={false} />
+                </ChartCard>
 
                 {/* Recent Activity */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
