@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/admin-layout';
 import { PageProps } from '@/types';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 
 interface Institution {
@@ -49,9 +49,11 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
 
             <div className="">
                 <div className="flex items-center mb-6">
-                    <Button variant="ghost" size="sm" className="mr-2">
-                        <ArrowLeft className="h-4 w-4" />
-                    </Button>
+                    <Link href={route('admin.institutions.index')}>
+                        <Button variant="ghost" size="sm" className="mr-2">
+                            <ArrowLeft className="h-4 w-4" />
+                        </Button>
+                    </Link>
                     <h1 className="text-2xl font-bold">Edit Data Institusi</h1>
                 </div>
 
@@ -137,11 +139,13 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                             </div>
 
                             <div className="flex justify-end space-x-2">
-                                <Button type="button" variant="outline">
-                                    Batal
-                                </Button>
+                                <Link href={route('admin.institutions.index')}>
+                                    <Button type="button" variant="outline">
+                                        Batal
+                                    </Button>
+                                </Link>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? 'Menyimpan...' : 'Update Institusi'}
+                                    {processing ? 'Menyimpan...' : 'Update Data Institusi'}
                                 </Button>
                             </div>
                         </form>

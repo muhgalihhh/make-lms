@@ -37,9 +37,11 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
 
             <div className="">
                 <div className="flex items-center mb-6">
-                    <Button variant="ghost" size="sm" className="mr-2">
-                        <ArrowLeft className="h-4 w-4" />
-                    </Button>
+                    <Link href={route('admin.institutions.index')}>
+                        <Button variant="ghost" size="sm" className="mr-2">
+                            <ArrowLeft className="h-4 w-4" />
+                        </Button>
+                    </Link>
                     <h1 className="text-2xl font-bold">Tambah Data Institusi</h1>
                 </div>
 
@@ -126,9 +128,11 @@ export default function InstitutionCreate({}: InstitutionCreateProps) {
                             </div>
 
                             <div className="flex justify-end space-x-2">
-                                <Button type="button" variant="outline">
-                                    Batal
-                                </Button>
+                                <Link href={route('admin.institutions.index')}>
+                                    <Button type="button" variant="outline">
+                                        Batal
+                                    </Button>
+                                </Link>
                                 <Button type="submit" disabled={processing}>
                                     {processing ? 'Menyimpan...' : 'Simpan Data Institusi'}
                                 </Button>
