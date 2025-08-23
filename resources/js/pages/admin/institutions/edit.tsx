@@ -41,7 +41,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
         <AdminLayout
             breadcrumbs={[
                 { title: 'Admin', href: route('admin.dashboard') },
-                { title: 'Institutions', href: route('admin.institutions.index') },
+                { title: 'Data Institusi', href: route('admin.institutions.index') },
                 { title: 'Edit', href: route('admin.institutions.edit', institution.id) },
             ]}
         >
@@ -52,12 +52,12 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                     <Button variant="ghost" size="sm" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
-                    <h1 className="text-2xl font-bold">Edit Institusi</h1>
+                    <h1 className="text-2xl font-bold">Edit Data Institusi</h1>
                 </div>
 
                 <Card className="max-w-2xl">
                     <CardHeader>
-                        <CardTitle>Informasi Institusi</CardTitle>
+                        <CardTitle>Data Institusi</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -138,7 +138,7 @@ export default function InstitutionEdit({ institution }: InstitutionEditProps) {
                                     Batal
                                 </Button>
                                 <Button type="submit" disabled={processing}>
-                                    {processing ? 'Menyimpan...' : 'Update Institusi'}
+                                    {processing ? 'Menyimpan...' : 'Update Data'}
                                 </Button>
                             </div>
                         </form>

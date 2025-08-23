@@ -36,18 +36,21 @@ export default function InstitutionIndex({ institutions }: InstitutionIndexProps
 
             <div className="">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Daftar Institusi</h1>
+                    <div>
+                        <h1 className="text-2xl font-bold">Kelola Data Institusi</h1>
+                        <p className="text-muted-foreground">Kelola dan perbarui data institusi yang tersedia</p>
+                    </div>
                     <Link href={route('admin.institutions.create')}>
                         <Button>
                             <Plus className="h-4 w-4 mr-2" />
-                            Tambah Institusi
+                            Tambah Data
                         </Button>
                     </Link>
                 </div>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Institusi</CardTitle>
+                        <CardTitle>Data Institusi</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -97,10 +100,12 @@ export default function InstitutionIndex({ institutions }: InstitutionIndexProps
                                                 <Link href={route('admin.institutions.edit', institution.id)}>
                                                     <Button variant="outline" size="sm">
                                                         <Edit className="h-4 w-4" />
+                                                        <span className="ml-1">Edit</span>
                                                     </Button>
                                                 </Link>
                                                 <Button variant="destructive" size="sm">
                                                     <Trash2 className="h-4 w-4" />
+                                                    <span className="ml-1">Hapus</span>
                                                 </Button>
                                             </div>
                                         </TableCell>
