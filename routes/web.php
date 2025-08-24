@@ -113,4 +113,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // Include authentication routes
 require __DIR__ . '/auth.php';
-require
+require __DIR__ . '/settings.php';
+require __DIR__ . '/errors.php';
