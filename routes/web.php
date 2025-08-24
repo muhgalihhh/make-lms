@@ -68,62 +68,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/settings.php';
-
-// Error pages for testing (remove in production)
-Route::prefix('errors')->name('errors.')->group(function () {
-    Route::get('/404', function () {
-        return Inertia::render('errors/404');
-    })->name('404');
-
-    Route::get('/403', function () {
-        return Inertia::render('errors/403');
-    })->name('403');
-
-    Route::get('/401', function () {
-        return Inertia::render('errors/401');
-    })->name('401');
-
-    Route::get('/500', function () {
-        return Inertia::render('errors/500');
-    })->name('500');
-
-    Route::get('/419', function () {
-        return Inertia::render('errors/419');
-    })->name('419');
-
-    Route::get('/429', function () {
-        return Inertia::render('errors/429');
-    })->name('429');
-
-    Route::get('/503', function () {
-        return Inertia::render('errors/503');
-    })->name('503');
-    
-    Route::get('/422', function () {
-        return Inertia::render('errors/422', [
-            'errors' => [
-                'email' => ['Email harus valid'],
-                'password' => ['Password minimal 8 karakter'],
-            ]
-        ]);
-    })->name('422');
-    
-    Route::get('/400', function () {
-        return Inertia::render('errors/400');
-    })->name('400');
-    
-    Route::get('/408', function () {
-        return Inertia::render('errors/408');
-    })->name('408');
-    
-    Route::get('/502', function () {
-        return Inertia::render('errors/502');
-    })->name('502');
-    
-    Route::get('/504', function () {
-        return Inertia::render('errors/504');
-    })->name('504');
-});
+require __DIR__ . '/errors.php';
 
 // Fallback route untuk menangani semua URL yang tidak terdaftar
 // Route ini harus ditempatkan di akhir file routes
@@ -136,11 +81,11 @@ Route::fallback(function () {
             'description' => 'Anda harus masuk terlebih dahulu untuk mengakses halaman ini.',
         ])->toResponse(request())->setStatusCode(401);
     }
-    
+
     // Cek apakah user memiliki akses ke halaman yang diminta
     $user = auth()->user();
     $path = request()->path();
-    
+
     // Jika mencoba mengakses area admin tanpa permission
     if (str_starts_with($path, 'admin') && !$user->isAdmin()) {
         return Inertia::render('errors/403', [
@@ -149,7 +94,7 @@ Route::fallback(function () {
             'description' => 'Anda tidak memiliki izin untuk mengakses halaman ini.',
         ])->toResponse(request())->setStatusCode(403);
     }
-    
+
     // Default: halaman tidak ditemukan
     return Inertia::render('errors/404', [
         'code' => '404',

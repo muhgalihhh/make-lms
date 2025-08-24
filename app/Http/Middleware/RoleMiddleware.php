@@ -20,7 +20,7 @@ class RoleMiddleware
         $userRole = $request->user()->role;
 
         if (!in_array($userRole, $roles)) {
-            abort(403, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki izin untuk mengakses halaman ini.');
         }
 
         return $next($request);
