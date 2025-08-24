@@ -181,8 +181,8 @@ const WelcomeWithLayout: React.FC = () => {
             keywords="coding, programming, web development, design, online course, tutorial, laravel, react, javascript, php"
         >
             {/* Hero Section */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
-                <div className="absolute inset-0 bg-black/20" />
+            <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white dark:from-primary/90 dark:via-primary/80 dark:to-primary/70">
+                <div className="absolute inset-0 bg-black/20 dark:bg-black/30" />
                 <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl text-center">
                         <h1 className="mb-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
@@ -193,14 +193,14 @@ const WelcomeWithLayout: React.FC = () => {
                             Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
                         </p>
                         <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 dark:bg-white dark:text-primary dark:hover:bg-gray-100">
                                 Mulai Belajar Gratis
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                                className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
                             >
                                 <PlayCircle className="mr-2 h-5 w-5" /> Lihat Demo
                             </Button>
@@ -213,10 +213,10 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
                             Mengapa Memilih {NAMA_LEMBAGA}?
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-600 dark:text-gray-300">
                             Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan.
                         </p>
                     </div>
@@ -226,8 +226,8 @@ const WelcomeWithLayout: React.FC = () => {
                                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                                     {feature.icon}
                                 </div>
-                                <h3 className="mb-2 text-lg font-semibold text-gray-900">{feature.title}</h3>
-                                <p className="text-gray-600">{feature.description}</p>
+                                <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{feature.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
                             </div>
                         ))}
                     </div>
@@ -235,19 +235,19 @@ const WelcomeWithLayout: React.FC = () => {
             </section>
 
             {/* Pro Courses Section */}
-            <section className="bg-gray-50 py-16">
+            <section className="bg-gray-50 dark:bg-gray-800 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
                             Kursus Pro Terpopuler
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-600 dark:text-gray-300">
                             Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.
                         </p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {proCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
+                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105 dark:bg-gray-700 dark:border-gray-600">
                                 <div className="relative">
                                     <img
                                         src={course.thumbnail}
@@ -261,16 +261,16 @@ const WelcomeWithLayout: React.FC = () => {
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <Badge variant="secondary">{course.category}</Badge>
-                                        <div className="flex items-center text-sm text-gray-600">
+                                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                             <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
                                             {course.rating}
                                         </div>
                                     </div>
-                                    <h3 className="text-lg font-semibold">{course.title}</h3>
-                                    <p className="text-sm text-gray-600">{course.description}</p>
+                                    <h3 className="text-lg font-semibold dark:text-white">{course.title}</h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{course.description}</p>
                                 </CardHeader>
                                 <CardFooter className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-gray-600">
+                                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                         <Users className="mr-1 h-4 w-4" />
                                         {course.students.toLocaleString()} siswa
                                     </div>
@@ -288,16 +288,16 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
                             Mulai Gratis
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-600 dark:text-gray-300">
                             Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.
                         </p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {freeCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
+                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105 dark:bg-gray-700 dark:border-gray-600">
                                 <div className="relative">
                                     <img
                                         src={course.thumbnail}
@@ -311,16 +311,16 @@ const WelcomeWithLayout: React.FC = () => {
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <Badge variant="secondary">{course.category}</Badge>
-                                        <div className="flex items-center text-sm text-gray-600">
+                                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                             <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
                                             {course.rating}
                                         </div>
                                     </div>
-                                    <h3 className="text-lg font-semibold">{course.title}</h3>
-                                    <p className="text-sm text-gray-600">{course.description}</p>
+                                    <h3 className="text-lg font-semibold dark:text-white">{course.title}</h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{course.description}</p>
                                 </CardHeader>
                                 <CardFooter className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-gray-600">
+                                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                         <Users className="mr-1 h-4 w-4" />
                                         {course.students.toLocaleString()} siswa
                                     </div>
@@ -333,27 +333,27 @@ const WelcomeWithLayout: React.FC = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="bg-gray-50 py-16">
+            <section className="bg-gray-50 dark:bg-gray-800 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
                             Apa Kata Mereka?
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-600 dark:text-gray-300">
                             Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.
                         </p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
                         {reviews.map((review) => (
-                            <Card key={review.id} className="p-6">
+                            <Card key={review.id} className="p-6 dark:bg-gray-700 dark:border-gray-600">
                                 <div className="mb-4 flex items-center">
                                     <Avatar className="mr-3">
                                         <AvatarImage src={review.avatar} alt={review.name} />
                                         <AvatarFallback>{review.name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <h4 className="font-semibold">{review.name}</h4>
-                                        <p className="text-sm text-gray-600">{review.role}</p>
+                                        <h4 className="font-semibold dark:text-white">{review.name}</h4>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">{review.role}</p>
                                     </div>
                                 </div>
                                 <div className="mb-3 flex">
@@ -363,12 +363,12 @@ const WelcomeWithLayout: React.FC = () => {
                                             className={`h-4 w-4 ${
                                                 i < review.rating
                                                     ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'text-gray-300'
+                                                    : 'text-gray-300 dark:text-gray-600'
                                             }`}
                                         />
                                     ))}
                                 </div>
-                                <p className="text-gray-600">{review.comment}</p>
+                                <p className="text-gray-600 dark:text-gray-300">{review.comment}</p>
                             </Card>
                         ))}
                     </div>
@@ -379,21 +379,23 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
                             Pertanyaan yang Sering Diajukan
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-600 dark:text-gray-300">
                             Temukan jawaban untuk pertanyaan umum seputar platform kami.
                         </p>
                     </div>
                     <div className="mx-auto mt-12 max-w-4xl">
                         <Accordion type="single" collapsible className="w-full">
                             {faqs.map((faq, index) => (
-                                <AccordionItem key={index} value={`item-${index}`}>
-                                    <AccordionTrigger className="text-left">
+                                <AccordionItem key={index} value={`item-${index}`} className="border-gray-200 dark:border-gray-700">
+                                    <AccordionTrigger className="text-left dark:text-white hover:no-underline">
                                         {faq.question}
                                     </AccordionTrigger>
-                                    <AccordionContent>{faq.answer}</AccordionContent>
+                                    <AccordionContent className="text-gray-600 dark:text-gray-300">
+                                        {faq.answer}
+                                    </AccordionContent>
                                 </AccordionItem>
                             ))}
                         </Accordion>
@@ -402,7 +404,7 @@ const WelcomeWithLayout: React.FC = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="bg-primary py-16 text-white">
+            <section className="bg-primary py-16 text-white dark:bg-primary/90">
                 <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
                     <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
                         Siap Memulai Perjalanan Belajar Anda?
@@ -411,14 +413,14 @@ const WelcomeWithLayout: React.FC = () => {
                         Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
                     </p>
                     <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100 dark:bg-white dark:text-primary dark:hover:bg-gray-100">
                             Daftar Sekarang
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                            className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
                         >
                             <MessageSquare className="mr-2 h-5 w-5" /> Hubungi Kami
                         </Button>
