@@ -70,6 +70,24 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/settings.php';
 require __DIR__ . '/errors.php';
 
+// Test route untuk debugging 403 error
+Route::get('/test-403', function () {
+    // Simulate admin access without permission
+    if (auth()->check() && !auth()->user()->isAdmin()) {
+        throw new \Illuminate\Auth\Access\AuthorizationException('Test: Anda tidak memiliki izin untuk mengakses halaman ini.');
+    }
+    return 'Test passed - user is admin or not logged in';
+})->middleware('auth')->name('test.403');
+
+// Test route untuk debugging 403 error dengan abort()
+Route::get('/test-403-abort', function () {
+    // Simulate admin access without permission
+    if (auth()->check() && !auth()->user()->isAdmin()) {
+        abort(403, 'Test: Anda tidak memiliki izin untuk mengakses halaman ini.');
+    }
+    return 'Test passed - user is admin or not logged in';
+})->middleware('auth')->name('test.403.abort');
+
 // Fallback route untuk menangani semua URL yang tidak terdaftar
 // Route ini harus ditempatkan di akhir file routes
 Route::fallback(function () {

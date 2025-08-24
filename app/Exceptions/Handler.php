@@ -63,6 +63,13 @@ class Handler extends ExceptionHandler
             }
 
             if ($e instanceof AuthorizationException) {
+                // Debug: Log the exception to see if it's being caught
+                \Log::info('AuthorizationException caught', [
+                    'message' => $e->getMessage(),
+                    'url' => $request->url(),
+                    'user' => $request->user() ? $request->user()->id : 'guest'
+                ]);
+                
                 return Inertia::render('errors/403', [
                     'code' => '403',
                     'title' => 'Akses Dilarang',
@@ -136,9 +143,10 @@ class Handler extends ExceptionHandler
                 $statusCode = $e->getStatusCode();
                 
                 // Handle specific error codes with dedicated pages
-                if (in_array($statusCode, [400, 408, 502, 504])) {
+                if (in_array($statusCode, [400, 403, 408, 502, 504])) {
                     $errorPage = match ($statusCode) {
                         400 => 'errors/400',
+                        403 => 'errors/403',
                         408 => 'errors/408',
                         502 => 'errors/502',
                         504 => 'errors/504',

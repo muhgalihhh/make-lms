@@ -18,6 +18,11 @@ Route::prefix('errors')->name('errors.')->group(function () {
         abort(403, 'Test: Anda tidak memiliki izin untuk mengakses halaman ini.');
     })->name('403-test');
     
+    // Test route untuk AuthorizationException dengan throw
+    Route::get('/403-test-throw', function () {
+        throw new \Illuminate\Auth\Access\AuthorizationException('Test: Anda tidak memiliki izin untuk mengakses halaman ini.');
+    })->name('403-test-throw');
+    
     Route::get('/401', function () {
         return Inertia::render('errors/401');
     })->name('401');
