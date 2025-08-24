@@ -4,8 +4,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import GuestLayout from '@/layouts/guest-layout';
-import { ArrowRight, Award, BookOpen, MessageSquare, PlayCircle, Star, Users, Zap } from 'lucide-react';
+import { ArrowRight, Award, BookOpen, MessageSquare, PlayCircle, Star, Users, Zap, Building2, Phone, Mail, Globe, MapPin } from 'lucide-react';
 import React from 'react';
+import WeatherWidget from '@/components/WeatherWidget';
+import EmergencyHelp from '@/components/EmergencyHelp';
+import TawkToChat from '@/components/TawkToChat';
 
 // --- Tipe Data (sesuai migrasi) ---
 interface Course {
@@ -20,6 +23,20 @@ interface Course {
     description: string;
 }
 
+interface Institution {
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+    address: string;
+    website: string;
+    rating: number;
+    reviews: number;
+    category: 'premium' | 'standard' | 'basic';
+    description: string;
+    logo: string;
+}
+
 interface Review {
     id: number;
     name: string;
@@ -32,6 +49,48 @@ interface Review {
 const Welcome: React.FC = () => {
     // --- Data Statis (Contoh) ---
     const NAMA_LEMBAGA = 'Pare EDUHUB'; // Nama perusahaan yang benar
+
+    const institutions: Institution[] = [
+        {
+            id: 1,
+            name: 'Tech Academy Indonesia',
+            phone: '+62 21 1234 5678',
+            email: 'info@techacademy.id',
+            address: 'Jl. Sudirman No. 123, Jakarta Pusat',
+            website: 'https://techacademy.id',
+            rating: 4.9,
+            reviews: 1250,
+            category: 'premium',
+            description: 'Lembaga pelatihan teknologi terkemuka dengan fokus pada web development dan mobile apps.',
+            logo: 'https://via.placeholder.com/80x80'
+        },
+        {
+            id: 2,
+            name: 'Digital Skills Center',
+            phone: '+62 21 2345 6789',
+            email: 'hello@digitalskills.id',
+            address: 'Jl. Thamrin No. 45, Jakarta Pusat',
+            website: 'https://digitalskills.id',
+            rating: 4.7,
+            reviews: 890,
+            category: 'premium',
+            description: 'Pusat pengembangan skill digital dengan kurikulum yang disesuaikan kebutuhan industri.',
+            logo: 'https://via.placeholder.com/80x80'
+        },
+        {
+            id: 3,
+            name: 'Creative Learning Hub',
+            phone: '+62 21 3456 7890',
+            email: 'contact@creativehub.id',
+            address: 'Jl. Gatot Subroto No. 67, Jakarta Selatan',
+            website: 'https://creativehub.id',
+            rating: 4.5,
+            reviews: 650,
+            category: 'standard',
+            description: 'Lembaga pelatihan kreatif untuk design, marketing, dan content creation.',
+            logo: 'https://via.placeholder.com/80x80'
+        }
+    ];
 
     const proCourses: Course[] = [
         {
@@ -174,12 +233,28 @@ const Welcome: React.FC = () => {
         },
     ];
 
+    const getCategoryColor = (category: string) => {
+        switch (category) {
+            case 'premium':
+                return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
+            case 'standard':
+                return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white';
+            case 'basic':
+                return 'bg-gradient-to-r from-green-500 to-teal-600 text-white';
+            default:
+                return 'bg-gray-500 text-white';
+        }
+    };
+
     return (
         <GuestLayout
             title={`${NAMA_LEMBAGA} - Platform Pembelajaran Online Terpercaya`}
             description="Belajar coding, design, dan skill digital lainnya dengan ribuan kursus berkualitas dari para ahli. Mulai karir tech Anda hari ini!"
             keywords="coding, programming, web development, design, online course, tutorial, laravel, react, javascript, php"
         >
+            {/* Tawk.to Chat Integration */}
+            <TawkToChat propertyId="YOUR_PROPERTY_ID" widgetId="YOUR_WIDGET_ID" />
+
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
                 <div className="absolute inset-0 bg-black/20" />
@@ -213,8 +288,102 @@ const Welcome: React.FC = () => {
                 </div>
             </section>
 
-            {/* Features Section */}
+            {/* Weather Widget & Quick Actions */}
+            <section className="py-8 bg-gray-50">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2">
+                            <div className="bg-white rounded-lg p-6 shadow-sm">
+                                <h3 className="text-lg font-semibold mb-4">Akses Cepat</h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                        <Building2 className="w-6 h-6" />
+                                        <span className="text-sm">Katalog Lembaga</span>
+                                    </Button>
+                                    <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                        <Award className="w-6 h-6" />
+                                        <span className="text-sm">Kelas Pro</span>
+                                    </Button>
+                                    <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                        <BookOpen className="w-6 h-6" />
+                                        <span className="text-sm">Kelas Gratis</span>
+                                    </Button>
+                                    <Button variant="outline" className="h-auto p-4 flex flex-col items-center gap-2">
+                                        <MessageSquare className="w-6 h-6" />
+                                        <span className="text-sm">Katalog WA</span>
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <WeatherWidget />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Top Institutions Section */}
             <section className="py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Lembaga Terpopuler</h2>
+                        <p className="text-lg text-muted-foreground">Temukan lembaga pelatihan terbaik dengan rating tertinggi.</p>
+                    </div>
+                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {institutions.map((institution) => (
+                            <Card key={institution.id} className="overflow-hidden transition-transform hover:scale-105">
+                                <div className="relative p-6">
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <img src={institution.logo} alt={institution.name} className="w-16 h-16 rounded-lg object-cover" />
+                                        <div className="flex-1">
+                                            <h3 className="text-lg font-semibold text-foreground">{institution.name}</h3>
+                                            <Badge className={getCategoryColor(institution.category)}>
+                                                {institution.category === 'premium' ? 'Premium' : 
+                                                 institution.category === 'standard' ? 'Standard' : 'Basic'}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mb-4">{institution.description}</p>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center gap-1">
+                                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                            <span className="text-sm font-medium">{institution.rating}</span>
+                                            <span className="text-sm text-muted-foreground">({institution.reviews} ulasan)</span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2 text-sm text-muted-foreground">
+                                        <div className="flex items-center gap-2">
+                                            <Phone className="w-4 h-4" />
+                                            <span>{institution.phone}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Mail className="w-4 h-4" />
+                                            <span>{institution.email}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <MapPin className="w-4 h-4" />
+                                            <span className="truncate">{institution.address}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Globe className="w-4 h-4" />
+                                            <a href={institution.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                                {institution.website}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <CardFooter className="flex gap-2">
+                                    <Button className="flex-1">Lihat Detail</Button>
+                                    <Button variant="outline" size="sm">💬 WA</Button>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Features Section */}
+            <section className="bg-muted/50 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
                         <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Mengapa Memilih {NAMA_LEMBAGA}?</h2>
@@ -237,7 +406,7 @@ const Welcome: React.FC = () => {
             </section>
 
             {/* Pro Courses Section */}
-            <section className="bg-muted/50 py-16">
+            <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
                         <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Kursus Pro Terpopuler</h2>
@@ -275,7 +444,7 @@ const Welcome: React.FC = () => {
             </section>
 
             {/* Free Courses Section */}
-            <section className="py-16">
+            <section className="bg-muted/50 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
                         <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Mulai Gratis</h2>
@@ -313,7 +482,7 @@ const Welcome: React.FC = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="bg-muted/50 py-16">
+            <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
                         <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Apa Kata Mereka?</h2>
@@ -344,6 +513,13 @@ const Welcome: React.FC = () => {
                             </Card>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Emergency Help Section */}
+            <section className="bg-muted/50 py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <EmergencyHelp />
                 </div>
             </section>
 
