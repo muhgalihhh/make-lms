@@ -20,7 +20,9 @@ import {
     Users,
     Award,
     ArrowRight,
-    ExternalLink
+    ExternalLink,
+    Shield,
+    CheckCircle
 } from 'lucide-react';
 
 interface Institution {
@@ -99,28 +101,28 @@ const institutions: Institution[] = [
         id: 5,
         name: "Basic English Pare",
         phone: "+62 812-3456-7894",
-        email: "contact@basicenglishpare.com",
+        email: "info@basicenglishpare.com",
         address: "Jl. Sudirman No. 12, Pare, Kediri",
         website: "https://basicenglishpare.com",
         rating: 4.0,
         reviews: 320,
         category: 'basic',
-        description: "Kursus bahasa Inggris dasar untuk pemula dengan harga terjangkau.",
+        description: "Kursus bahasa Inggris dasar dengan harga terjangkau dan kualitas terjamin.",
         logo: "/images/basic-english-logo.png",
         isPremium: false
     },
     {
         id: 6,
-        name: "Pare Learning Hub",
+        name: "Pare English Academy",
         phone: "+62 812-3456-7895",
-        email: "hello@parelearninghub.com",
+        email: "contact@pareacademy.com",
         address: "Jl. Gatot Subroto No. 34, Pare, Kediri",
-        website: "https://parelearninghub.com",
+        website: "https://pareacademy.com",
         rating: 3.8,
         reviews: 280,
         category: 'basic',
-        description: "Tempat belajar yang nyaman dengan suasana yang mendukung.",
-        logo: "/images/learning-hub-logo.png",
+        description: "Akademi bahasa Inggris dengan fokus pada pembelajaran praktis dan aplikatif.",
+        logo: "/images/academy-logo.png",
         isPremium: false
     }
 ];
@@ -156,95 +158,186 @@ export default function Institutions() {
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [isPremiumUser, setIsPremiumUser] = useState(false); // Simulasi user premium
 
-    // Filter institutions based on search and category
+    // Filter institutions berdasarkan search dan category
     const filteredInstitutions = institutions.filter(institution => {
         const matchesSearch = institution.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             institution.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === 'all' || institution.category === selectedCategory;
         
-        // If user is not premium, only show first 3 institutions
-        if (!isPremiumUser && !institution.isPremium) {
-            return false;
+        // Jika user tidak premium, hanya tampilkan basic dan standard
+        if (!isPremiumUser) {
+            return matchesSearch && matchesCategory && institution.category !== 'premium';
         }
         
         return matchesSearch && matchesCategory;
     });
 
     // Group institutions by category
-    const groupedInstitutions = filteredInstitutions.reduce((groups, institution) => {
-        const category = institution.category;
-        if (!groups[category]) {
-            groups[category] = [];
+    const groupedInstitutions = filteredInstitutions.reduce((acc, institution) => {
+        if (!acc[institution.category]) {
+            acc[institution.category] = [];
         }
-        groups[category].push(institution);
-        return groups;
+        acc[institution.category].push(institution);
+        return acc;
     }, {} as Record<string, Institution[]>);
 
     return (
         <GuestLayout>
-            <Head title="Katalog Lembaga - Pare EDUHUB LMS" />
+            <Head title="Lembaga - Pare EDU HUB" />
             
             {/* Header Section */}
-            <section className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-16">
-                <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        Katalog Lembaga
-                    </h1>
-                    <p className="text-xl max-w-3xl mx-auto">
-                        Temukan lembaga pendidikan berkualitas di Pare dengan rating dan ulasan terbaik
-                    </p>
+            <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+                <div className="container mx-auto px-4">
+                    <div className="text-center">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                            Katalog Lembaga
+                        </h1>
+                        <p className="text-xl max-w-2xl mx-auto">
+                            Temukan lembaga pendidikan berkualitas di Pare, dikelompokkan berdasarkan rating dan kategori
+                        </p>
+                    </div>
                 </div>
             </section>
 
             {/* Search and Filter Section */}
             <section className="py-8 bg-gray-50">
                 <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-3 gap-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                            <Input
-                                placeholder="Cari lembaga..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-10"
-                            />
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex-1">
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                                <Input
+                                    placeholder="Cari lembaga..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="pl-10"
+                                />
+                            </div>
                         </div>
-                        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Pilih kategori" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">Semua Kategori</SelectItem>
-                                <SelectItem value="premium">Premium</SelectItem>
-                                <SelectItem value="standard">Standard</SelectItem>
-                                <SelectItem value="basic">Basic</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <Button 
-                            variant="outline" 
-                            className="flex items-center gap-2"
-                            onClick={() => setIsPremiumUser(!isPremiumUser)}
-                        >
-                            {isPremiumUser ? (
-                                <>
-                                    <Crown className="w-4 h-4 text-yellow-500" />
-                                    Premium User
-                                </>
-                            ) : (
-                                <>
-                                    <Lock className="w-4 h-4" />
-                                    Free User
-                                </>
-                            )}
-                        </Button>
+                        <div className="w-full md:w-48">
+                            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Pilih Kategori" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">Semua Kategori</SelectItem>
+                                    <SelectItem value="premium">Premium</SelectItem>
+                                    <SelectItem value="standard">Standard</SelectItem>
+                                    <SelectItem value="basic">Basic</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Institutions List */}
+            {/* Premium Access Notice */}
+            {!isPremiumUser && (
+                <section className="py-4 bg-yellow-50 border-b border-yellow-200">
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center gap-3 text-yellow-800">
+                            <Lock className="w-5 h-5" />
+                            <p className="text-sm">
+                                <strong>Akun Free:</strong> Anda hanya dapat melihat lembaga kategori Basic dan Standard. 
+                                <Button variant="link" className="p-0 h-auto text-yellow-800 underline">
+                                    Upgrade ke Premium
+                                </Button> untuk akses ke semua lembaga.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Institutions by Category */}
             <section className="py-12">
                 <div className="container mx-auto px-4">
-                    {Object.keys(groupedInstitutions).length === 0 ? (
+                    {Object.entries(groupedInstitutions).map(([category, categoryInstitutions]) => (
+                        <div key={category} className="mb-12">
+                            <div className="flex items-center gap-3 mb-6">
+                                <Badge className={getCategoryColor(category)}>
+                                    {getCategoryName(category)}
+                                </Badge>
+                                <h2 className="text-2xl font-bold">
+                                    Lembaga {getCategoryName(category)}
+                                </h2>
+                                {category === 'premium' && !isPremiumUser && (
+                                    <Badge variant="outline" className="border-yellow-500 text-yellow-700">
+                                        <Crown className="w-3 h-3 mr-1" />
+                                        Premium Only
+                                    </Badge>
+                                )}
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {categoryInstitutions.map((institution) => (
+                                    <Card key={institution.id} className="hover:shadow-lg transition-shadow duration-300">
+                                        <CardHeader>
+                                            <div className="flex items-start justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                                        <Building2 className="w-6 h-6 text-white" />
+                                                    </div>
+                                                    <div>
+                                                        <CardTitle className="text-lg">{institution.name}</CardTitle>
+                                                        <Badge className={getCategoryColor(institution.category)}>
+                                                            {getCategoryName(institution.category)}
+                                                        </Badge>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                                                    <span className="text-sm font-medium">{institution.rating}</span>
+                                                </div>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <p className="text-gray-600 mb-4">{institution.description}</p>
+                                            
+                                            <div className="space-y-2 mb-4">
+                                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                    <Phone className="w-4 h-4" />
+                                                    <span>{institution.phone}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                    <Mail className="w-4 h-4" />
+                                                    <span>{institution.email}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                    <MapPin className="w-4 h-4" />
+                                                    <span className="truncate">{institution.address}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                    <Users className="w-4 h-4" />
+                                                    <span>{institution.reviews} ulasan</span>
+                                                </div>
+                                                {institution.isPremium && (
+                                                    <Badge variant="outline" className="border-yellow-500 text-yellow-700">
+                                                        <Crown className="w-3 h-3 mr-1" />
+                                                        Premium
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                            
+                                            <div className="flex gap-2">
+                                                <Button size="sm" variant="outline" className="flex-1">
+                                                    <ExternalLink className="w-4 h-4 mr-1" />
+                                                    Website
+                                                </Button>
+                                                <Button size="sm" variant="outline">
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </Button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    
+                    {filteredInstitutions.length === 0 && (
                         <div className="text-center py-12">
                             <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <h3 className="text-xl font-semibold text-gray-600 mb-2">
@@ -254,111 +347,27 @@ export default function Institutions() {
                                 Coba ubah filter pencarian Anda
                             </p>
                         </div>
-                    ) : (
-                        Object.entries(groupedInstitutions).map(([category, categoryInstitutions]) => (
-                            <div key={category} className="mb-12">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${getCategoryColor(category)}`}>
-                                        <Award className="w-4 h-4" />
-                                    </div>
-                                    <h2 className="text-2xl font-bold">
-                                        Kategori {getCategoryName(category)}
-                                    </h2>
-                                    <Badge variant="secondary">
-                                        {categoryInstitutions.length} lembaga
-                                    </Badge>
-                                </div>
-                                
-                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {categoryInstitutions.map((institution) => (
-                                        <Card key={institution.id} className="card-hover">
-                                            <CardHeader>
-                                                <div className="flex items-start justify-between">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                                                            <Building2 className="w-6 h-6 text-white" />
-                                                        </div>
-                                                        <div>
-                                                            <CardTitle className="text-lg">{institution.name}</CardTitle>
-                                                            <Badge className={getCategoryColor(institution.category)}>
-                                                                {getCategoryName(institution.category)}
-                                                            </Badge>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex items-center gap-1">
-                                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                                        <span className="text-sm font-medium">{institution.rating}</span>
-                                                    </div>
-                                                </div>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <p className="text-gray-600 mb-4">{institution.description}</p>
-                                                
-                                                <div className="space-y-2 mb-4">
-                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                                                        <Phone className="w-4 h-4" />
-                                                        <span>{institution.phone}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                                                        <Mail className="w-4 h-4" />
-                                                        <span>{institution.email}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                                                        <MapPin className="w-4 h-4" />
-                                                        <span className="truncate">{institution.address}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                                                        <Globe className="w-4 h-4" />
-                                                        <a 
-                                                            href={institution.website} 
-                                                            target="_blank" 
-                                                            rel="noopener noreferrer"
-                                                            className="text-blue-600 hover:underline flex items-center gap-1"
-                                                        >
-                                                            {institution.website}
-                                                            <ExternalLink className="w-3 h-3" />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                                                        <span>{institution.reviews} ulasan</span>
-                                                        <div className="flex items-center gap-1">
-                                                            <Users className="w-4 h-4" />
-                                                            <span>1.2k siswa</span>
-                                                        </div>
-                                                    </div>
-                                                    <Button size="sm">
-                                                        Lihat Detail
-                                                        <ArrowRight className="ml-1 h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </div>
-                        ))
                     )}
                 </div>
             </section>
 
-            {/* Premium Upgrade CTA */}
+            {/* Upgrade to Premium CTA */}
             {!isPremiumUser && (
-                <section className="py-12 bg-gradient-to-r from-yellow-400 to-orange-500">
+                <section className="py-12 bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
                     <div className="container mx-auto px-4 text-center">
-                        <div className="max-w-2xl mx-auto">
-                            <Crown className="w-16 h-16 text-white mx-auto mb-4" />
-                            <h2 className="text-3xl font-bold text-white mb-4">
-                                Upgrade ke Premium
-                            </h2>
-                            <p className="text-white/90 mb-6">
-                                Dapatkan akses ke semua lembaga dan fitur premium lainnya
-                            </p>
-                            <Button size="lg" className="bg-white text-orange-500 hover:bg-gray-100">
+                        <h2 className="text-3xl font-bold mb-4">
+                            Upgrade ke Premium
+                        </h2>
+                        <p className="text-xl mb-6 max-w-2xl mx-auto">
+                            Dapatkan akses ke semua lembaga premium dengan rating tertinggi dan fitur eksklusif
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100">
+                                <Crown className="w-5 h-5 mr-2" />
                                 Upgrade Sekarang
-                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
+                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-600">
+                                Pelajari Lebih Lanjut
                             </Button>
                         </div>
                     </div>

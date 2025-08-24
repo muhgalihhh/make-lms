@@ -12,96 +12,105 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-// API routes untuk welcome page
-Route::prefix('api/welcome')->name('api.welcome.')->group(function () {
-    Route::get('/institutions', [WelcomeController::class, 'getInstitutions'])->name('institutions');
-    Route::get('/pro-courses', [WelcomeController::class, 'getProCourses'])->name('pro-courses');
-    Route::get('/free-courses', [WelcomeController::class, 'getFreeCourses'])->name('free-courses');
-    Route::get('/weather', [WelcomeController::class, 'getWeather'])->name('weather');
-    Route::get('/institutions-by-rating', [WelcomeController::class, 'getInstitutionsByRating'])->name('institutions-by-rating');
+// Welcome Page - Halaman Utama Pare EDU HUB
+Route::get('/', function () {
+    return Inertia::render('Welcome');
+})->name('welcome');
+
+// About Page - Tentang Pare EDU HUB
+Route::get('/about', function () {
+    return Inertia::render('About');
+})->name('about');
+
+// Institutions Page - Katalog Lembaga berdasarkan Rating
+Route::get('/institutions', function () {
+    return Inertia::render('Institutions');
+})->name('institutions');
+
+// Pro Courses Page - Kelas Pro dengan Pembayaran QRIS
+Route::get('/pro-courses', function () {
+    return Inertia::render('ProCourses');
+})->name('pro-courses');
+
+// Free Courses Page - Kelas Gratis dengan Materi Dasar
+Route::get('/free-courses', function () {
+    return Inertia::render('FreeCourses');
+})->name('free-courses');
+
+// Catalog WA Page - Katalog Direct ke WhatsApp
+Route::get('/catalog-wa', function () {
+    return Inertia::render('CatalogWA');
+})->name('catalog-wa');
+
+// Institution Detail Page - Detail Lembaga
+Route::get('/institution/{id}', function ($id) {
+    return Inertia::render('InstitutionDetail', [
+        'institutionId' => $id
+    ]);
+})->name('institution.detail');
+
+// Hotel Booking Page - Booking Hotel dengan Tiket.com
+Route::get('/hotel-booking', function () {
+    return Inertia::render('HotelBooking');
+})->name('hotel-booking');
+
+// User Dashboard Routes (akan diimplementasikan)
+Route::middleware(['auth'])->group(function () {
+    // User Dashboard
+    Route::get('/dashboard', function () {
+        return Inertia::render('User/Dashboard');
+    })->name('dashboard');
+
+    // User Profile
+    Route::get('/profile', function () {
+        return Inertia::render('User/Profile');
+    })->name('profile');
+
+    // User Courses
+    Route::get('/my-courses', function () {
+        return Inertia::render('User/MyCourses');
+    })->name('my-courses');
+
+    // User Transactions
+    Route::get('/transactions', function () {
+        return Inertia::render('User/Transactions');
+    })->name('transactions');
 });
 
-// Dashboard untuk semua user yang login
-Route::get('/dashboard', function () {
-    $user = auth()->user();
+// Admin Routes (akan diimplementasikan)
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Admin Dashboard
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('admin.dashboard');
 
-    // Redirect berdasarkan role
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    }
+    // Admin Institutions Management
+    Route::get('/admin/institutions', function () {
+        return Inertia::render('Admin/Institutions');
+    })->name('admin.institutions');
 
-    return redirect()->route('user.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    // Admin Courses Management
+    Route::get('/admin/courses', function () {
+        return Inertia::render('Admin/Courses');
+    })->name('admin.courses');
 
-// Routes untuk Admin
-Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-
-    // User Management
-    Route::resource('users', AdminUserController::class);
-
-    // Course Management
-    Route::resource('courses', AdminCourseController::class);
-
-    // Category Management
-    Route::resource('categories', AdminCategoryController::class);
-
-    // Institution Management
-    Route::resource('institutions', AdminInstitutionController::class);
-
-    // Transaction Management
-    Route::resource('transactions', AdminTransactionController::class)->except(['create', 'store', 'edit', 'update']);
-    Route::patch('/transactions/{transaction}/status', [AdminTransactionController::class, 'updateStatus'])->name('transactions.update-status');
+    // Admin Users Management
+    Route::get('/admin/users', function () {
+        return Inertia::render('Admin/Users');
+    })->name('admin.users');
 });
 
-// Routes untuk User
-Route::middleware(['auth', 'verified', 'role:user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-});
-
-// Profile routes (untuk semua user)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
+// Include authentication routes
 require __DIR__ . '/auth.php';
-require __DIR__ . '/settings.php';
-require __DIR__ . '/errors.php';
-
-// Fallback route untuk menangani semua URL yang tidak terdaftar
-// Route ini harus ditempatkan di akhir file routes
-Route::fallback(function () {
-    // Cek apakah user sudah login
-    if (!auth()->check()) {
-        return Inertia::render('errors/401', [
-            'code' => '401',
-            'title' => 'Akses Tidak Sah',
-            'description' => 'Anda harus masuk terlebih dahulu untuk mengakses halaman ini.',
-        ])->toResponse(request())->setStatusCode(401);
-    }
-
-    // Cek apakah user memiliki akses ke halaman yang diminta
-    $user = auth()->user();
-    $path = request()->path();
-
-    // Jika mencoba mengakses area admin tanpa permission
-    if (str_starts_with($path, 'admin') && !$user->isAdmin()) {
-        return Inertia::render('errors/403', [
-            'code' => '403',
-            'title' => 'Akses Dilarang',
-            'description' => 'Anda tidak memiliki izin untuk mengakses halaman ini. Silakan hubungi administrator jika Anda yakin ini adalah kesalahan.',
-        ])->toResponse(request())->setStatusCode(403);
-    }
-
-    // Default: halaman tidak ditemukan
-    return Inertia::render('errors/404', [
-        'code' => '404',
-        'title' => 'Halaman Tidak Ditemukan',
-        'description' => 'Halaman yang Anda cari tidak dapat ditemukan.',
-    ])->toResponse(request())->setStatusCode(404);
-});
+require
