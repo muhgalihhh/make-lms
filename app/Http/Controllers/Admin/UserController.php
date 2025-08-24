@@ -11,25 +11,27 @@ use Inertia\Response;
 class UserController extends Controller
 {
     /**
-     * Menampilkan daftar semua pengguna dengan paginasi.
+     * Display a listing of the resource.
      */
     public function index(): Response
     {
-        return Inertia::render('admin/users/index', [
-            'users' => User::latest()->paginate(10)->withQueryString(),
+        $users = User::latest()->paginate(10);
+
+        return Inertia::render('Admin/Users/Index', [
+            'users' => $users,
         ]);
     }
 
     /**
-     * Tampilkan form untuk membuat user baru.
+     * Show the form for creating a new resource.
      */
     public function create(): Response
     {
-        return Inertia::render('admin/users/create');
+        return Inertia::render('Admin/Users/Create');
     }
 
     /**
-     * Simpan user baru ke database.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -40,62 +42,57 @@ class UserController extends Controller
             'role' => 'required|in:admin,user',
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
-
         User::create($validated);
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil dibuat.');
+            ->with('success', 'User created successfully.');
     }
 
     /**
-     * Tampilkan form untuk mengedit user.
+     * Display the specified resource.
      */
-    public function edit(User $user): Response
+    public function show(User $user): Response
     {
-        return Inertia::render('admin/users/edit', [
+        return Inertia::render('Admin/Users/Show', [
             'user' => $user,
         ]);
     }
 
     /**
-     * Update data user di database.
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user): Response
+    {
+        return Inertia::render('Admin/Users/Edit', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
             'role' => 'required|in:admin,user',
         ]);
-
-        if (isset($validated['password'])) {
-            $validated['password'] = bcrypt($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
 
         $user->update($validated);
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil diperbarui.');
+            ->with('success', 'User updated successfully.');
     }
 
     /**
-     * Hapus user dari database.
+     * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
-        // Cek apakah user yang akan dihapus adalah user yang sedang login
-        if ($user->id === auth()->id()) {
-            return redirect()->route('admin.users.index')
-                ->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
-        }
-
         $user->delete();
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil dihapus.');
+            ->with('success', 'User deleted successfully.');
     }
 }

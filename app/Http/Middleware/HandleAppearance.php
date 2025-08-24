@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class HandleAppearance
@@ -16,7 +15,11 @@ class HandleAppearance
      */
     public function handle(Request $request, Closure $next): Response
     {
-        View::share('appearance', $request->cookie('appearance') ?? 'system');
+        // Set default appearance if not set
+        if (!$request->cookie('appearance')) {
+            $response = $next($request);
+            return $response->withCookie('appearance', 'light', 60 * 24 * 365);
+        }
 
         return $next($request);
     }
