@@ -1,299 +1,176 @@
-# Pare EDU HUB
+# Laravel 12 + React Starterkit
 
-Platform pembelajaran online eksklusif untuk lembaga pendidikan di Pare, menghubungkan siswa dengan lembaga berkualitas terbaik.
+A modern web application built with Laravel 12 and React, featuring the best practices for scalable development.
 
-## 🎯 Tentang Pare EDU HUB
+## Features
 
-Pare EDU HUB adalah aplikasi LMS (Learning Management System) yang dirancang khusus untuk lembaga pendidikan di Pare, Kediri. Platform ini menyediakan berbagai fitur untuk memudahkan pembelajaran bahasa Inggris dengan kualitas terbaik.
+- **Laravel 12** - Latest Laravel framework with modern PHP features
+- **React 18** - Latest React with hooks and modern patterns
+- **TypeScript** - Full TypeScript support for better development experience
+- **Tailwind CSS** - Utility-first CSS framework with dark mode support
+- **Inertia.js** - Seamless SPA experience without API complexity
+- **Vite** - Fast build tool and development server
+- **Radix UI** - Accessible and customizable UI components
+- **Lucide React** - Beautiful and consistent icons
 
-## ✨ Fitur Utama
+## Prerequisites
 
-### 🏫 Katalog Lembaga
-- Daftar lembaga pendidikan berdasarkan rating
-- Kategori Premium, Standard, dan Basic
-- Informasi lengkap lembaga (kontak, alamat, fasilitas)
-- Akses terbatas untuk user free
+- PHP 8.2 or higher
+- Composer
+- Node.js 18 or higher
+- npm or yarn
 
-### 💎 Kelas Pro
-- Materi pembelajaran lengkap
-- Pembayaran melalui QRIS (Midtrans)
-- Video HD dan live session
-- Sertifikat resmi
-- Support 24/7
+## Installation
 
-### 🆓 Kelas Gratis
-- Materi dasar gratis
-- Download PDF materi
-- Link upgrade ke kelas pro
-- Akses tanpa biaya
-
-### 📱 Katalog WhatsApp
-- Direct link ke WhatsApp lembaga
-- Konsultasi gratis
-- Informasi kelas dan harga
-- Pendaftaran mudah
-
-### 🏨 Booking Hotel
-- Integrasi dengan Tiket.com
-- Hotel dekat lembaga kursus
-- Diskon khusus siswa
-- Booking aman dan terpercaya
-
-### 🌤️ Widget Cuaca
-- Informasi cuaca real-time
-- Lokasi Pare, Kediri
-- Update otomatis
-
-### 💬 Live Chat
-- Integrasi Tawk.to
-- Support 24/7
-- Konsultasi langsung
-
-### 🚨 Bantuan Darurat
-- Kontak darurat 24/7
-- Polisi, Rumah Sakit, Pemadam
-- Support Pare EDU HUB
-
-## 🛠️ Teknologi
-
-- **Frontend**: React + TypeScript + Inertia.js
-- **Backend**: Laravel 11
-- **UI Framework**: Tailwind CSS + Shadcn/ui
-- **Database**: MySQL
-- **Payment Gateway**: Midtrans (QRIS)
-- **Live Chat**: Tawk.to
-- **Hotel Booking**: Tiket.com API
-
-## 📁 Struktur Proyek
-
-```
-pare-edu-hub/
-├── app/
-│   ├── Models/           # Eloquent models
-│   ├── Http/            # Controllers & Middleware
-│   └── Providers/       # Service providers
-├── resources/
-│   └── js/
-│       ├── pages/       # React pages
-│       ├── components/  # React components
-│       └── layouts/     # Layout components
-├── routes/              # Laravel routes
-├── database/            # Migrations & seeders
-└── public/              # Static assets
-```
-
-## 🚀 Instalasi
-
-1. **Clone repository**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/pare-edu-hub.git
-   cd pare-edu-hub
+   git clone <repository-url>
+   cd <project-directory>
    ```
 
-2. **Install dependencies**
+2. **Install PHP dependencies**
    ```bash
    composer install
+   ```
+
+3. **Install Node.js dependencies**
+   ```bash
    npm install
    ```
 
-3. **Setup environment**
+4. **Environment setup**
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-4. **Configure database**
+5. **Database setup**
    ```bash
-   # Edit .env file dengan konfigurasi database
    php artisan migrate
-   php artisan db:seed
    ```
 
-5. **Build assets**
-   ```bash
-   npm run build
-   ```
+## Development
 
-6. **Start development server**
+### Starting the development servers
+
+1. **Start Laravel development server**
    ```bash
    php artisan serve
+   ```
+
+2. **Start Vite development server** (in a new terminal)
+   ```bash
    npm run dev
    ```
 
-## 🔧 Konfigurasi
+3. **Access the application**
+   - Laravel server: http://localhost:8000
+   - Vite dev server: http://localhost:5173
 
-### Environment Variables
+### Available npm scripts
 
-```env
-# Database
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=pare_edu_hub
-DB_USERNAME=root
-DB_PASSWORD=
+- `npm run dev` - Start Vite development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run ssr:dev` - Start SSR development server
+- `npm run ssr:build` - Build for SSR production
 
-# Midtrans (Payment Gateway)
-MIDTRANS_SERVER_KEY=your_server_key
-MIDTRANS_CLIENT_KEY=your_client_key
-MIDTRANS_MERCHANT_ID=your_merchant_id
+## Project Structure
 
-# Tawk.to (Live Chat)
-TAWK_TO_PROPERTY_ID=your_property_id
-TAWK_TO_WIDGET_ID=your_widget_id
-
-# Tiket.com API
-TIKET_API_KEY=your_api_key
-TIKET_API_URL=https://api.tiket.com
+```
+resources/
+├── js/
+│   ├── components/     # Reusable React components
+│   │   └── ui/        # Base UI components (Radix UI)
+│   ├── layouts/       # Layout components
+│   ├── pages/         # Inertia page components
+│   ├── hooks/         # Custom React hooks
+│   ├── lib/           # Utility functions
+│   ├── types/         # TypeScript type definitions
+│   ├── app.tsx        # Main application entry point
+│   └── ssr.tsx        # SSR entry point
+├── css/
+│   └── app.css        # Main stylesheet
+└── views/
+    └── app.blade.php  # Main blade template
 ```
 
-## 📊 Models
+## Best Practices
 
-### User
-- Authentication dan authorization
-- Role: admin, user
-- Relasi dengan courses dan transactions
+### Code Organization
 
-### Institution
-- Informasi lembaga pendidikan
-- Rating dan ulasan
-- Kategori (premium, standard, basic)
+- Use TypeScript for all JavaScript/React files
+- Follow Laravel naming conventions for PHP files
+- Use PascalCase for React components
+- Use camelCase for functions and variables
+- Use kebab-case for CSS classes
 
-### Course
-- Kelas yang ditawarkan
-- Harga dan durasi
-- Tipe: pro atau free
-- Relasi dengan institution
+### Component Structure
 
-### Transaction
-- Riwayat pembayaran
-- Status pembayaran
-- Integrasi Midtrans
+```tsx
+import { ReactNode } from 'react';
 
-## 🎨 UI Components
+interface ComponentProps {
+    children: ReactNode;
+    // other props...
+}
 
-### Pages
-- `Welcome` - Halaman utama
-- `Institutions` - Katalog lembaga
-- `ProCourses` - Kelas pro
-- `FreeCourses` - Kelas gratis
-- `CatalogWA` - Katalog WhatsApp
-- `HotelBooking` - Booking hotel
-- `About` - Tentang kami
-
-### Components
-- `WeatherWidget` - Widget cuaca
-- `EmergencyHelp` - Bantuan darurat
-- `TawkToChat` - Live chat
-
-## 🔐 Authentication
-
-- Laravel Breeze dengan Inertia.js
-- Login/Register
-- Password reset
-- Email verification
-
-## 💳 Payment Integration
-
-### Midtrans QRIS
-- Pembayaran melalui QRIS
-- Support berbagai e-wallet
-- Callback handling
-- Payment status tracking
-
-## 🏨 Hotel Booking
-
-### Tiket.com Integration
-- Search hotel berdasarkan lokasi
-- Filter berdasarkan rating dan harga
-- Direct booking ke Tiket.com
-- Diskon khusus siswa
-
-## 📱 Live Chat
-
-### Tawk.to Integration
-- Chat widget otomatis
-- Visitor tracking
-- File sharing
-- Chat history
-
-## 🚨 Emergency Help
-
-### Kontak Darurat
-- Polisi: 110
-- Rumah Sakit: +62 354 123456
-- Pemadam: 113
-- Ambulans: 119
-- Support Pare EDU HUB
-
-## 📈 Analytics
-
-- User registration tracking
-- Course enrollment analytics
-- Payment success rate
-- User engagement metrics
-
-## 🔒 Security
-
-- CSRF protection
-- XSS prevention
-- SQL injection protection
-- Input validation
-- Rate limiting
-
-## 🧪 Testing
-
-```bash
-# Run PHP tests
-php artisan test
-
-# Run frontend tests
-npm run test
+export default function Component({ children, ...props }: ComponentProps) {
+    return (
+        <div>
+            {children}
+        </div>
+    );
+}
 ```
 
-## 📦 Deployment
+### Styling
 
-### Production Build
-```bash
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
+- Use Tailwind CSS utility classes
+- Create custom components for reusable styles
+- Use CSS variables for theming
+- Support dark mode with `dark:` prefix
 
-### Environment Setup
-- Set `APP_ENV=production`
-- Configure production database
-- Set up SSL certificate
-- Configure queue workers
+### State Management
 
-## 🤝 Contributing
+- Use React hooks for local state
+- Use Inertia.js for server state
+- Keep state as close to where it's used as possible
 
-1. Fork repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Create Pull Request
+## Troubleshooting
 
-## 📄 License
+### Common Issues
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+1. **ERR_ADDRESS_INVALID error**
+   - Ensure all npm dependencies are installed: `npm install`
+   - Check if Vite server is running on correct port
+   - Verify Laravel server is running
 
-## 📞 Support
+2. **TypeScript errors**
+   - Run `npm run build` to check for type errors
+   - Ensure all imports are correct
+   - Check TypeScript configuration
 
-- **Email**: support@pareeduhub.com
-- **WhatsApp**: +62 812-3456-7894
-- **Website**: https://pareeduhub.com
+3. **Styling issues**
+   - Ensure Tailwind CSS is properly configured
+   - Check if CSS variables are defined
+   - Verify dark mode classes are applied correctly
 
-## 🙏 Acknowledgments
+### Development Tips
 
-- Laravel team untuk framework yang luar biasa
-- Inertia.js untuk SPA experience
-- Shadcn/ui untuk komponen UI yang indah
-- Midtrans untuk payment gateway
-- Tawk.to untuk live chat
-- Tiket.com untuk hotel booking
+- Use browser dev tools to debug React components
+- Use Laravel Telescope for debugging PHP code
+- Enable source maps in development
+- Use React DevTools for component inspection
 
----
+## Contributing
 
-**Pare EDU HUB** - Platform pembelajaran online terdepan untuk lembaga pendidikan di Pare 🎓
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).
