@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class RoleMiddleware
 {
@@ -20,7 +21,8 @@ class RoleMiddleware
         $userRole = $request->user()->role;
 
         if (!in_array($userRole, $roles)) {
-            abort(403, 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+            // Throw AuthorizationException instead of using abort() to ensure proper error handling
+            throw new AuthorizationException('Anda tidak memiliki izin untuk mengakses halaman ini.');
         }
 
         return $next($request);

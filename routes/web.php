@@ -91,7 +91,7 @@ Route::fallback(function () {
         return Inertia::render('errors/403', [
             'code' => '403',
             'title' => 'Akses Dilarang',
-            'description' => 'Anda tidak memiliki izin untuk mengakses halaman ini.',
+            'description' => 'Anda tidak memiliki izin untuk mengakses halaman ini. Silakan hubungi administrator jika Anda yakin ini adalah kesalahan.',
         ])->toResponse(request())->setStatusCode(403);
     }
 
