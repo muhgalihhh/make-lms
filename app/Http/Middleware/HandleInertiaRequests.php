@@ -37,8 +37,6 @@ class HandleInertiaRequests extends Middleware
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
                     'role' => $request->user()->role,
-                    'is_admin' => $request->user()->isAdmin(),
-                    'is_user' => $request->user()->isUser(),
                 ] : null,
             ],
             'flash' => [

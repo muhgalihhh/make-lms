@@ -25,12 +25,14 @@ export default defineConfig({
         },
     },
     server: {
-        port: 3000,
-        host: true,
-        open: true,
+        port: 5173,
+        host: '0.0.0.0',
+        hmr: {
+            host: 'localhost',
+        },
     },
     build: {
-        outDir: 'dist',
+        outDir: 'public/build',
         sourcemap: true,
         rollupOptions: {
             output: {

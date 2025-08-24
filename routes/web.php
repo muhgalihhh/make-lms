@@ -11,6 +11,9 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,54 +26,18 @@ use Inertia\Inertia;
 |
 */
 
-// Welcome Page - Halaman Utama Pare EDU HUB
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
-// About Page - Tentang Pare EDU HUB
 Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
 
-// Institutions Page - Katalog Lembaga berdasarkan Rating
-Route::get('/institutions', function () {
-    return Inertia::render('Institutions');
-})->name('institutions');
-
-// Pro Courses Page - Kelas Pro dengan Pembayaran QRIS
-Route::get('/pro-courses', function () {
-    return Inertia::render('ProCourses');
-})->name('pro-courses');
-
-// Free Courses Page - Kelas Gratis dengan Materi Dasar
-Route::get('/free-courses', function () {
-    return Inertia::render('FreeCourses');
-})->name('free-courses');
-
-// Catalog WA Page - Katalog Direct ke WhatsApp
-Route::get('/catalog-wa', function () {
-    return Inertia::render('CatalogWA');
-})->name('catalog-wa');
-
-// Institution Detail Page - Detail Lembaga
-Route::get('/institution/{id}', function ($id) {
-    return Inertia::render('InstitutionDetail', [
-        'institutionId' => $id
-    ]);
-})->name('institution.detail');
-
-// Hotel Booking Page - Booking Hotel dengan Tiket.com
-Route::get('/hotel-booking', function () {
-    return Inertia::render('HotelBooking');
-})->name('hotel-booking');
-
-// User Dashboard Routes (akan diimplementasikan)
+// User routes (protected by auth middleware)
 Route::middleware(['auth'])->group(function () {
-    // User Dashboard
     Route::get('/dashboard', function () {
         return Inertia::render('User/Dashboard');
     })->name('dashboard');
+<<<<<<< HEAD
 
     // User Profile
     Route::get('/profile', function () {
@@ -86,10 +53,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transactions', function () {
         return Inertia::render('User/Transactions');
     })->name('transactions');
+=======
+    
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+>>>>>>> f0bc731136958cb86ff86f928715cea0a676a6f0
 });
 
-// Admin Routes (akan diimplementasikan)
+// Admin routes (protected by auth and admin middleware)
 Route::middleware(['auth', 'admin'])->group(function () {
+<<<<<<< HEAD
     // Admin Dashboard
     Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard');
@@ -109,6 +81,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', function () {
         return Inertia::render('Admin/Users');
     })->name('admin.users');
+=======
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+>>>>>>> f0bc731136958cb86ff86f928715cea0a676a6f0
 });
 
 // Include authentication routes
