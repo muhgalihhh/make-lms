@@ -1,3 +1,4 @@
+import GuestLayout from '@/layouts/guest-layout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -28,7 +29,7 @@ interface Review {
     rating: number;
 }
 
-const Welcome: React.FC = () => {
+const WelcomeWithLayout: React.FC = () => {
     // --- Data Statis (Contoh) ---
     const NAMA_LEMBAGA = 'Akademi Koding Pro'; // Ganti dengan nama lembaga Anda
 
@@ -100,410 +101,332 @@ const Welcome: React.FC = () => {
             students: 15000,
             price: 0,
             isPro: false,
-            description: 'Manajemen versi kode yang wajib dikuasai setiap developer.',
+            description: 'Kontrol versi dan kolaborasi dalam pengembangan software.',
         },
     ];
 
-    const testimonials: Review[] = [
+    const reviews: Review[] = [
         {
             id: 1,
-            name: 'Budi Santoso',
-            role: 'Full-Stack Developer',
-            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-            comment: `Materi di ${NAMA_LEMBAGA} sangat terstruktur dan mudah diikuti. Saya berhasil mendapatkan pekerjaan impian saya setelah lulus dari sini!`,
+            name: 'Sarah Johnson',
+            role: 'Frontend Developer',
+            avatar: 'https://via.placeholder.com/40x40',
+            comment: 'Kursus Laravel & React sangat membantu karir saya. Materi yang disampaikan sangat praktis dan mudah dipahami.',
             rating: 5,
         },
         {
             id: 2,
-            name: 'Citra Lestari',
+            name: 'Ahmad Rizki',
             role: 'UI/UX Designer',
-            avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-            comment: 'Kurikulumnya sangat relevan dengan industri saat ini. Mentornya juga sangat membantu dan responsif. Sangat direkomendasikan!',
+            avatar: 'https://via.placeholder.com/40x40',
+            comment: 'Platform yang sangat bagus untuk belajar design. Instruktur sangat berpengalaman dan responsive.',
             rating: 5,
         },
         {
             id: 3,
-            name: 'Doni Firmansyah',
-            role: 'Mahasiswa IT',
-            avatar: 'https://randomuser.me/api/portraits/men/33.jpg',
-            comment: 'Kelas gratisnya saja sudah sangat bermanfaat, apalagi kelas Pro-nya. Investasi terbaik untuk belajar skill digital.',
-            rating: 5,
+            name: 'Maria Garcia',
+            role: 'DevOps Engineer',
+            avatar: 'https://via.placeholder.com/40x40',
+            comment: 'Kursus DevOps membantu saya memahami konsep deployment dan scaling dengan baik.',
+            rating: 4,
+        },
+    ];
+
+    const features = [
+        {
+            icon: <BookOpen className="h-6 w-6" />,
+            title: 'Kursus Berkualitas',
+            description: 'Ribuan kursus dari para ahli di bidangnya masing-masing.',
+        },
+        {
+            icon: <Users className="h-6 w-6" />,
+            title: 'Komunitas Aktif',
+            description: 'Bergabung dengan ribuan pelajar dan developer lainnya.',
+        },
+        {
+            icon: <Award className="h-6 w-6" />,
+            title: 'Sertifikat Resmi',
+            description: 'Dapatkan sertifikat yang diakui industri setelah menyelesaikan kursus.',
+        },
+        {
+            icon: <Zap className="h-6 w-6" />,
+            title: 'Belajar Fleksibel',
+            description: 'Belajar kapan saja dan di mana saja sesuai jadwal Anda.',
         },
     ];
 
     const faqs = [
         {
-            q: 'Apa yang saya dapatkan jika membeli kelas Pro?',
-            a: 'Dengan sekali bayar, Anda mendapatkan akses seumur hidup ke SEMUA kelas Pro yang ada saat ini dan yang akan datang, materi PDF, studi kasus, grup komunitas eksklusif, dan sertifikat kelulusan.',
+            question: 'Apakah kursus gratis benar-benar gratis?',
+            answer: 'Ya, semua kursus yang ditandai sebagai "Gratis" dapat diakses tanpa biaya sama sekali. Anda hanya perlu mendaftar akun untuk mulai belajar.',
         },
         {
-            q: 'Apakah ada jaminan uang kembali?',
-            a: 'Tentu. Kami memberikan jaminan kepuasan 100% uang kembali dalam 7 hari pertama jika Anda merasa materi kami tidak sesuai dengan ekspektasi Anda.',
+            question: 'Berapa lama saya bisa mengakses kursus Pro?',
+            answer: 'Setelah membeli kursus Pro, Anda memiliki akses seumur hidup ke materi kursus tersebut, termasuk update dan pembaruan konten.',
         },
         {
-            q: 'Bagaimana metode pembayarannya?',
-            a: 'Kami menerima pembayaran melalui QRIS yang didukung oleh Midtrans, sehingga Anda bisa membayar dengan mudah melalui berbagai e-wallet dan mobile banking.',
+            question: 'Apakah ada jaminan uang kembali?',
+            answer: 'Kami memberikan jaminan uang kembali 30 hari untuk semua kursus Pro. Jika Anda tidak puas, kami akan mengembalikan uang Anda.',
         },
         {
-            q: 'Apakah saya akan mendapat sertifikat?',
-            a: 'Ya, setiap siswa yang berhasil menyelesaikan kelas (baik Pro maupun Gratis) akan mendapatkan e-sertifikat yang bisa dilampirkan di profil LinkedIn atau CV Anda.',
+            question: 'Bagaimana cara mendapatkan sertifikat?',
+            answer: 'Sertifikat akan otomatis tersedia setelah Anda menyelesaikan semua modul dan lulus ujian akhir dengan skor minimal 70%.',
         },
     ];
 
-    const CourseCard: React.FC<{ course: Course }> = ({ course }) => (
-        <Card className="flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader className="p-0">
-                <img src={course.thumbnail} alt={course.title} className="aspect-[16/9] w-full object-cover" />
-            </CardHeader>
-            <CardContent className="flex-grow space-y-2 p-4">
-                <Badge variant={course.isPro ? 'default' : 'secondary'}>{course.category}</Badge>
-                <h3 className="line-clamp-2 text-lg leading-tight font-bold">{course.title}</h3>
-                <div className="flex items-center gap-4 pt-1">
-                    <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-semibold">{course.rating}</span>
-                        <span className="text-xs text-muted-foreground">({course.students.toLocaleString()} siswa)</span>
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter className="flex items-center justify-between p-4">
-                <p className="text-xl font-bold text-primary">{course.isPro ? `Rp ${course.price.toLocaleString('id-ID')}` : 'Gratis'}</p>
-                {course.isPro ? (
-                    <Button size="sm" variant="outline" disabled>
-                        <Lock className="mr-2 h-4 w-4" /> Login untuk Beli
-                    </Button>
-                ) : (
-                    <Button size="sm" variant="outline" disabled>
-                        <Eye className="mr-2 h-4 w-4" /> Login untuk Akses
-                    </Button>
-                )}
-            </CardFooter>
-        </Card>
-    );
-
     return (
-        <div className="min-h-screen bg-background">
-            {/* Simple Header for Guests */}
-            <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                            <h1 className="text-2xl font-bold text-primary">{NAMA_LEMBAGA}</h1>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <Button variant="outline" size="sm">
-                                <Eye className="mr-2 h-4 w-4" /> Lihat Kelas
-                            </Button>
-                            <Button size="sm">
-                                <ArrowRight className="mr-2 h-4 w-4" /> Daftar Sekarang
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+        <GuestLayout
+            title={`${NAMA_LEMBAGA} - Platform Pembelajaran Online Terpercaya`}
+            description="Belajar coding, design, dan skill digital lainnya dengan ribuan kursus berkualitas dari para ahli. Mulai karir tech Anda hari ini!"
+            keywords="coding, programming, web development, design, online course, tutorial, laravel, react, javascript, php"
+        >
             {/* Hero Section */}
-            <section className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4 text-center">
-                    <Badge variant="outline" className="mb-4 px-3 py-1">
-                        <Award className="mr-2 h-4 w-4 text-yellow-500" />
-                        Platform Kursus Online Eksklusif dari {NAMA_LEMBAGA}
-                    </Badge>
-                    <h1 className="mb-4 text-4xl font-extrabold tracking-tight md:text-6xl">Tingkatkan Skill, Raih Karir Impian Anda</h1>
-                    <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-                        Akses ratusan kursus berkualitas dari kami, bayar sekali untuk akses semua materi Pro selamanya.
-                    </p>
-                    <div className="flex justify-center gap-4">
-                        <Button size="lg" className="px-8 py-6 text-lg">
-                            Daftar Sekarang <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
-                            <PlayCircle className="mr-2 h-5 w-5" /> Lihat Kelas Gratis
-                        </Button>
+            <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-4xl text-center">
+                        <h1 className="mb-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                            Belajar Skill Digital
+                            <span className="block text-primary-foreground">Untuk Masa Depan</span>
+                        </h1>
+                        <p className="mb-8 text-xl text-primary-foreground/90 sm:text-2xl">
+                            Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
+                        </p>
+                        <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+                                Mulai Belajar Gratis
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
+                            <Button
+                                size="lg"
+                                variant="outline"
+                                className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                            >
+                                <PlayCircle className="mr-2 h-5 w-5" /> Lihat Demo
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="container mx-auto -mt-8 px-4">
-                <Card className="border-2 border-primary/10 bg-card/80 shadow-lg backdrop-blur">
-                    <div className="flex flex-col items-center justify-between gap-4 p-4 md:flex-row">
-                        <div className="flex items-center gap-3">
-                            <CloudSun className="h-8 w-8 text-blue-500" />
-                            <div>
-                                <p className="text-lg font-bold">Cuaca Jakarta</p>
-                                <p className="text-sm text-muted-foreground">Cerah Berawan, 30°C</p>
-                            </div>
-                        </div>
-                        <div className="hidden h-10 w-px bg-border md:block" />
-                        <div className="flex items-center gap-3">
-                            <LifeBuoy className="h-8 w-8 text-red-500" />
-                            <div>
-                                <p className="text-lg font-bold">Butuh Bantuan?</p>
-                                <p className="text-sm text-muted-foreground">Hubungi kami jika butuh bantuan cepat.</p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="secondary"
-                            onClick={() => window.open('https://wa.me/6281234567890?text=Halo,%20saya%20butuh%20bantuan.', '_blank')}
-                        >
-                            <MessageSquare className="mr-2 h-4 w-4" /> Hubungi via WhatsApp
-                        </Button>
+            {/* Features Section */}
+            <section className="py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                            Mengapa Memilih {NAMA_LEMBAGA}?
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan.
+                        </p>
                     </div>
-                </Card>
-            </section>
-
-            {/* Guest Notice */}
-            <section className="bg-blue-50 py-8 dark:bg-blue-900/20">
-                <div className="container mx-auto px-4">
-                    <Card className="border-blue-200 bg-blue-50/50 dark:bg-blue-900/20">
-                        <CardContent className="p-6">
-                            <div className="flex items-center gap-4">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-                                    <Eye className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                        {features.map((feature, index) => (
+                            <div key={index} className="text-center">
+                                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                    {feature.icon}
                                 </div>
-                                <div className="flex-1">
-                                    <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100">Anda sedang melihat sebagai Tamu</h3>
-                                    <p className="text-blue-700 dark:text-blue-300">
-                                        Daftar sekarang untuk mengakses semua fitur, membeli kelas, dan mendapatkan sertifikat.
-                                    </p>
-                                </div>
-                                <Button className="bg-blue-600 hover:bg-blue-700">Daftar Sekarang</Button>
+                                <h3 className="mb-2 text-lg font-semibold text-gray-900">{feature.title}</h3>
+                                <p className="text-gray-600">{feature.description}</p>
                             </div>
-                        </CardContent>
-                    </Card>
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            {/* Kelas Pro */}
-            <section id="kelas-pro" className="py-20">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Kelas Profesional Unggulan</h2>
-                    <p className="mx-auto mb-8 max-w-xl text-center text-muted-foreground">
-                        Investasi terbaik untuk karir Anda. Dapatkan akses ke semua kelas Pro dengan sekali bayar.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Pro Courses Section */}
+            <section className="bg-gray-50 py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                            Kursus Pro Terpopuler
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.
+                        </p>
+                    </div>
+                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {proCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
-                    <div className="mt-8 text-center">
-                        <p className="mb-4 text-sm text-muted-foreground">* Login atau daftar untuk membeli kelas Pro</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Mengapa Memilih Kami */}
-            <section id="why-us" className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-12 text-center text-3xl font-bold">Mengapa Belajar di {NAMA_LEMBAGA}?</h2>
-                    <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <BookOpen className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Kurikulum Standar Industri</h3>
-                            <p className="text-muted-foreground">
-                                Materi disusun oleh para ahli dan selalu diperbarui sesuai kebutuhan industri terkini.
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <Users className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Mentor Berpengalaman</h3>
-                            <p className="text-muted-foreground">
-                                Dapatkan bimbingan langsung dari praktisi yang telah bertahun-tahun berkarir di bidangnya.
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <Zap className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Akses Seumur Hidup</h3>
-                            <p className="text-muted-foreground">
-                                Cukup bayar sekali untuk menikmati semua kelas Pro, termasuk update dan kelas baru di masa depan.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Kelas Gratis */}
-            <section id="kelas-gratis" className="py-20">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Mulai Belajar dengan Kelas Gratis</h2>
-                    <p className="mx-auto mb-8 max-w-xl text-center text-muted-foreground">
-                        Cicipi materi dasar dari berbagai bidang tanpa biaya. Cukup daftar dan langsung bisa akses.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {freeCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
-                    <div className="mt-8 text-center">
-                        <p className="mb-4 text-sm text-muted-foreground">* Login atau daftar untuk mengakses kelas gratis</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Testimoni */}
-            <section id="testimonials" className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Apa Kata Alumni Kami?</h2>
-                    <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-                        Kami bangga telah membantu ribuan siswa mencapai tujuan karir mereka.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {testimonials.map((item) => (
-                            <Card key={item.id} className="flex flex-col p-6">
-                                <div className="flex-grow">
-                                    <div className="mb-4 flex items-center">
-                                        {[...Array(item.rating)].map((_, i) => (
-                                            <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                                        ))}
-                                    </div>
-                                    <p className="text-muted-foreground">"{item.comment}"</p>
+                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
+                                <div className="relative">
+                                    <img
+                                        src={course.thumbnail}
+                                        alt={course.title}
+                                        className="h-48 w-full object-cover"
+                                    />
+                                    <Badge className="absolute right-2 top-2 bg-primary text-primary-foreground">
+                                        PRO
+                                    </Badge>
                                 </div>
-                                <div className="mt-6 flex items-center">
-                                    <Avatar>
-                                        <AvatarImage src={item.avatar} alt={item.name} />
-                                        <AvatarFallback>{item.name.substring(0, 2)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="ml-4">
-                                        <p className="font-bold">{item.name}</p>
-                                        <p className="text-sm text-muted-foreground">{item.role}</p>
+                                <CardHeader>
+                                    <div className="flex items-center justify-between">
+                                        <Badge variant="secondary">{course.category}</Badge>
+                                        <div className="flex items-center text-sm text-gray-600">
+                                            <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                            {course.rating}
+                                        </div>
                                     </div>
-                                </div>
+                                    <h3 className="text-lg font-semibold">{course.title}</h3>
+                                    <p className="text-sm text-gray-600">{course.description}</p>
+                                </CardHeader>
+                                <CardFooter className="flex items-center justify-between">
+                                    <div className="flex items-center text-sm text-gray-600">
+                                        <Users className="mr-1 h-4 w-4" />
+                                        {course.students.toLocaleString()} siswa
+                                    </div>
+                                    <div className="text-lg font-bold text-primary">
+                                        Rp {course.price.toLocaleString()}
+                                    </div>
+                                </CardFooter>
                             </Card>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* FAQ */}
-            <section id="faq" className="py-20">
-                <div className="container mx-auto max-w-3xl px-4">
-                    <h2 className="mb-8 text-center text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqs.map((faq, index) => (
-                            <AccordionItem value={`item-${index + 1}`} key={index}>
-                                <AccordionTrigger className="text-left">{faq.q}</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">{faq.a}</AccordionContent>
-                            </AccordionItem>
+            {/* Free Courses Section */}
+            <section className="py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                            Mulai Gratis
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.
+                        </p>
+                    </div>
+                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {freeCourses.map((course) => (
+                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
+                                <div className="relative">
+                                    <img
+                                        src={course.thumbnail}
+                                        alt={course.title}
+                                        className="h-48 w-full object-cover"
+                                    />
+                                    <Badge className="absolute right-2 top-2 bg-green-500 text-white">
+                                        GRATIS
+                                    </Badge>
+                                </div>
+                                <CardHeader>
+                                    <div className="flex items-center justify-between">
+                                        <Badge variant="secondary">{course.category}</Badge>
+                                        <div className="flex items-center text-sm text-gray-600">
+                                            <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                            {course.rating}
+                                        </div>
+                                    </div>
+                                    <h3 className="text-lg font-semibold">{course.title}</h3>
+                                    <p className="text-sm text-gray-600">{course.description}</p>
+                                </CardHeader>
+                                <CardFooter className="flex items-center justify-between">
+                                    <div className="flex items-center text-sm text-gray-600">
+                                        <Users className="mr-1 h-4 w-4" />
+                                        {course.students.toLocaleString()} siswa
+                                    </div>
+                                    <div className="text-lg font-bold text-green-600">Gratis</div>
+                                </CardFooter>
+                            </Card>
                         ))}
-                    </Accordion>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="bg-gray-50 py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                            Apa Kata Mereka?
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.
+                        </p>
+                    </div>
+                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
+                        {reviews.map((review) => (
+                            <Card key={review.id} className="p-6">
+                                <div className="mb-4 flex items-center">
+                                    <Avatar className="mr-3">
+                                        <AvatarImage src={review.avatar} alt={review.name} />
+                                        <AvatarFallback>{review.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <h4 className="font-semibold">{review.name}</h4>
+                                        <p className="text-sm text-gray-600">{review.role}</p>
+                                    </div>
+                                </div>
+                                <div className="mb-3 flex">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star
+                                            key={i}
+                                            className={`h-4 w-4 ${
+                                                i < review.rating
+                                                    ? 'fill-yellow-400 text-yellow-400'
+                                                    : 'text-gray-300'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                                <p className="text-gray-600">{review.comment}</p>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-16">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+                            Pertanyaan yang Sering Diajukan
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            Temukan jawaban untuk pertanyaan umum seputar platform kami.
+                        </p>
+                    </div>
+                    <div className="mx-auto mt-12 max-w-4xl">
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqs.map((faq, index) => (
+                                <AccordionItem key={index} value={`item-${index}`}>
+                                    <AccordionTrigger className="text-left">
+                                        {faq.question}
+                                    </AccordionTrigger>
+                                    <AccordionContent>{faq.answer}</AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="bg-primary py-20 text-primary-foreground">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="mb-4 text-3xl font-bold">Siap Memulai Perjalanan Belajar?</h2>
-                    <p className="mx-auto mb-8 max-w-2xl text-lg opacity-90">
-                        Bergabunglah dengan ribuan siswa yang telah berhasil mengembangkan skill mereka bersama kami.
+            <section className="bg-primary py-16 text-white">
+                <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
+                    <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+                        Siap Memulai Perjalanan Belajar Anda?
+                    </h2>
+                    <p className="mb-8 text-xl text-primary-foreground/90">
+                        Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
                     </p>
-                    <div className="flex justify-center gap-4">
-                        <Button size="lg" variant="secondary" className="px-8 py-6 text-lg">
-                            Daftar Sekarang <ArrowRight className="ml-2 h-5 w-5" />
+                    <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+                            Daftar Sekarang
+                            <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                         <Button
                             size="lg"
                             variant="outline"
                             className="border-primary-foreground px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground hover:text-primary"
                         >
-                            <PlayCircle className="mr-2 h-5 w-5" /> Lihat Demo
+                            <MessageSquare className="mr-2 h-5 w-5" /> Hubungi Kami
                         </Button>
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer className="bg-slate-900 py-12 text-slate-300">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-                        <div>
-                            <h3 className="mb-4 text-xl font-bold text-white">{NAMA_LEMBAGA}</h3>
-                            <p className="text-slate-400">Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas.</p>
-                        </div>
-                        <div>
-                            <h4 className="mb-4 font-semibold text-white">Layanan</h4>
-                            <ul className="space-y-2 text-slate-400">
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Kelas Gratis
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Kelas Pro
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Sertifikat
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Komunitas
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="mb-4 font-semibold text-white">Perusahaan</h4>
-                            <ul className="space-y-2 text-slate-400">
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Tentang Kami
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Karir
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Kontak
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="transition-colors hover:text-white">
-                                        Blog
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="mb-4 font-semibold text-white">Ikuti Kami</h4>
-                            <div className="flex space-x-4">
-                                <a href="#" className="text-slate-400 transition-colors hover:text-white">
-                                    <span className="sr-only">Facebook</span>
-                                    📘
-                                </a>
-                                <a href="#" className="text-slate-400 transition-colors hover:text-white">
-                                    <span className="sr-only">Twitter</span>
-                                    🐦
-                                </a>
-                                <a href="#" className="text-slate-400 transition-colors hover:text-white">
-                                    <span className="sr-only">Instagram</span>
-                                    📷
-                                </a>
-                                <a href="#" className="text-slate-400 transition-colors hover:text-white">
-                                    <span className="sr-only">YouTube</span>
-                                    📺
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-8 border-t border-slate-800 pt-8 text-center text-slate-400">
-                        <p>&copy; 2024 {NAMA_LEMBAGA}. Semua hak dilindungi.</p>
-                    </div>
-                </div>
-            </footer>
-        </div>
+        </GuestLayout>
     );
 };
 
-export default Welcome;
+export default WelcomeWithLayout;
