@@ -5,3 +5,8 @@ export { default as ServerError } from './500';
 export { default as PageExpired } from './419';
 export { default as TooManyRequests } from './429';
 export { default as ServiceUnavailable } from './503';
+export { default as ValidationError } from './422';
+export { default as BadRequest } from './400';
+export { default as RequestTimeout } from './408';
+export { default as BadGateway } from './502';
+export { default as GatewayTimeout } from './504';
