@@ -7,38 +7,79 @@ import FreeCourses from '@/pages/free-courses';
 import CatalogWA from '@/pages/catalog-wa';
 import InstitutionDetail from '@/pages/institution-detail';
 import HotelBooking from '@/pages/hotel-booking';
+import LMSNavigation from '@/components/lms-navigation';
 
 export default createBrowserRouter([
-    {
-        path: '/',
-        element: <Welcome />,
-    },
-    {
-        path: '/about',
-        element: <About />,
-    },
-    {
-        path: '/institutions',
-        element: <Institutions />,
-    },
-    {
-        path: '/pro-courses',
-        element: <ProCourses />,
-    },
-    {
-        path: '/free-courses',
-        element: <FreeCourses />,
-    },
-    {
-        path: '/catalog-wa',
-        element: <CatalogWA />,
-    },
-    {
-        path: '/institution/:id',
-        element: <InstitutionDetail />,
-    },
-    {
-        path: '/hotel-booking',
-        element: <HotelBooking />,
-    },
+  {
+    path: '/',
+    element: (
+      <>
+        <LMSNavigation />
+        <Welcome />
+      </>
+    ),
+  },
+  {
+    path: '/about',
+    element: (
+      <>
+        <LMSNavigation />
+        <About />
+      </>
+    ),
+  },
+  {
+    path: '/institutions',
+    element: (
+      <>
+        <LMSNavigation />
+        <Institutions />
+      </>
+    ),
+  },
+  {
+    path: '/pro-courses',
+    element: (
+      <>
+        <LMSNavigation />
+        <ProCourses />
+      </>
+    ),
+  },
+  {
+    path: '/free-courses',
+    element: (
+      <>
+        <LMSNavigation />
+        <FreeCourses />
+      </>
+    ),
+  },
+  {
+    path: '/catalog-wa',
+    element: (
+      <>
+        <LMSNavigation />
+        <CatalogWA />
+      </>
+    ),
+  },
+  {
+    path: '/institution/:id',
+    element: (
+      <>
+        <LMSNavigation />
+        <InstitutionDetail />
+      </>
+    ),
+  },
+  {
+    path: '/hotel-booking',
+    element: (
+      <>
+        <LMSNavigation />
+        <HotelBooking />
+      </>
+    ),
+  },
 ]);
