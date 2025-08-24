@@ -3,9 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import UserLayout from '@/layouts/user-layout'; // Asumsikan Anda memiliki layout ini
+import UserLayout from '@/layouts/user-layout';
 import { ArrowRight, Award, BookOpen, CloudSun, LifeBuoy, MessageSquare, PlayCircle, ShoppingCart, Star, Users, Zap } from 'lucide-react';
 import React from 'react';
+import { HeroSection, Section, SectionHeader, heroStyles, sectionStyles, cardStyles, featureStyles, testimonialStyles } from '@/components/ui/style-guide';
 
 // --- Tipe Data (sesuai migrasi) ---
 interface Course {
@@ -185,8 +186,8 @@ const Home: React.FC = () => {
     return (
         <UserLayout>
             {/* Hero Section */}
-            <section className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4 text-center">
+            <Section className="bg-slate-50 dark:bg-slate-900/50">
+                <div className="text-center">
                     <Badge variant="outline" className="mb-4 px-3 py-1">
                         <Award className="mr-2 h-4 w-4 text-yellow-500" />
                         Platform Kursus Online Eksklusif dari {NAMA_LEMBAGA}
@@ -204,7 +205,7 @@ const Home: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-            </section>
+            </Section>
 
             <section className="container mx-auto -mt-8 px-4">
                 <Card className="border-2 border-primary/10 bg-card/80 shadow-lg backdrop-blur">
@@ -235,109 +236,105 @@ const Home: React.FC = () => {
             </section>
 
             {/* Kelas Pro */}
-            <section id="kelas-pro" className="py-20">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Kelas Profesional Unggulan</h2>
-                    <p className="mx-auto mb-8 max-w-xl text-center text-muted-foreground">
-                        Investasi terbaik untuk karir Anda. Dapatkan akses ke semua kelas Pro dengan sekali bayar.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {proCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
+            <Section id="kelas-pro">
+                <SectionHeader 
+                    title="Kelas Profesional Unggulan"
+                    subtitle="Investasi terbaik untuk karir Anda. Dapatkan akses ke semua kelas Pro dengan sekali bayar."
+                />
+                <div className={sectionStyles.grid}>
+                    {proCourses.map((course) => (
+                        <CourseCard key={course.id} course={course} />
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* Mengapa Memilih Kami */}
-            <section id="why-us" className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-12 text-center text-3xl font-bold">Mengapa Belajar di {NAMA_LEMBAGA}?</h2>
-                    <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <BookOpen className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Kurikulum Standar Industri</h3>
-                            <p className="text-muted-foreground">
-                                Materi disusun oleh para ahli dan selalu diperbarui sesuai kebutuhan industri terkini.
-                            </p>
+            <Section id="why-us" className="bg-slate-50 dark:bg-slate-900/50">
+                <SectionHeader 
+                    title={`Mengapa Belajar di ${NAMA_LEMBAGA}?`}
+                />
+                <div className={sectionStyles.grid4}>
+                    <div className={featureStyles.container}>
+                        <div className={featureStyles.icon}>
+                            <BookOpen className="h-8 w-8" />
                         </div>
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <Users className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Mentor Berpengalaman</h3>
-                            <p className="text-muted-foreground">
-                                Dapatkan bimbingan langsung dari praktisi yang telah bertahun-tahun berkarir di bidangnya.
-                            </p>
+                        <h3 className={featureStyles.title}>Kurikulum Standar Industri</h3>
+                        <p className={featureStyles.description}>
+                            Materi disusun oleh para ahli dan selalu diperbarui sesuai kebutuhan industri terkini.
+                        </p>
+                    </div>
+                    <div className={featureStyles.container}>
+                        <div className={featureStyles.icon}>
+                            <Users className="h-8 w-8" />
                         </div>
-                        <div className="flex flex-col items-center">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                                <Zap className="h-8 w-8 text-primary" />
-                            </div>
-                            <h3 className="mb-2 text-xl font-bold">Akses Seumur Hidup</h3>
-                            <p className="text-muted-foreground">
-                                Cukup bayar sekali untuk menikmati semua kelas Pro, termasuk update dan kelas baru di masa depan.
-                            </p>
+                        <h3 className={featureStyles.title}>Mentor Berpengalaman</h3>
+                        <p className={featureStyles.description}>
+                            Dapatkan bimbingan langsung dari praktisi yang telah bertahun-tahun berkarir di bidangnya.
+                        </p>
+                    </div>
+                    <div className={featureStyles.container}>
+                        <div className={featureStyles.icon}>
+                            <Zap className="h-8 w-8" />
                         </div>
+                        <h3 className={featureStyles.title}>Akses Seumur Hidup</h3>
+                        <p className={featureStyles.description}>
+                            Cukup bayar sekali untuk menikmati semua kelas Pro, termasuk update dan kelas baru di masa depan.
+                        </p>
                     </div>
                 </div>
-            </section>
+            </Section>
 
             {/* Kelas Gratis */}
-            <section id="kelas-gratis" className="py-20">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Mulai Belajar dengan Kelas Gratis</h2>
-                    <p className="mx-auto mb-8 max-w-xl text-center text-muted-foreground">
-                        Cicipi materi dasar dari berbagai bidang tanpa biaya. Cukup daftar dan langsung bisa akses.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {freeCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
+            <Section id="kelas-gratis">
+                <SectionHeader 
+                    title="Mulai Belajar dengan Kelas Gratis"
+                    subtitle="Cicipi materi dasar dari berbagai bidang tanpa biaya. Cukup daftar dan langsung bisa akses."
+                />
+                <div className={sectionStyles.grid}>
+                    {freeCourses.map((course) => (
+                        <CourseCard key={course.id} course={course} />
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* Testimoni */}
-            <section id="testimonials" className="bg-slate-50 py-20 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    <h2 className="mb-2 text-center text-3xl font-bold">Apa Kata Alumni Kami?</h2>
-                    <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-                        Kami bangga telah membantu ribuan siswa mencapai tujuan karir mereka.
-                    </p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {testimonials.map((item) => (
-                            <Card key={item.id} className="flex flex-col p-6">
-                                <div className="flex-grow">
-                                    <div className="mb-4 flex items-center">
-                                        {[...Array(item.rating)].map((_, i) => (
-                                            <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                                        ))}
-                                    </div>
-                                    <p className="text-muted-foreground">"{item.comment}"</p>
+            <Section id="testimonials" className="bg-slate-50 dark:bg-slate-900/50">
+                <SectionHeader 
+                    title="Apa Kata Alumni Kami?"
+                    subtitle="Kami bangga telah membantu ribuan siswa mencapai tujuan karir mereka."
+                />
+                <div className={sectionStyles.grid}>
+                    {testimonials.map((item) => (
+                        <Card key={item.id} className={testimonialStyles.container}>
+                            <div className="flex-grow">
+                                <div className={testimonialStyles.rating}>
+                                    {[...Array(item.rating)].map((_, i) => (
+                                        <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                                    ))}
                                 </div>
-                                <div className="mt-6 flex items-center">
-                                    <Avatar>
-                                        <AvatarImage src={item.avatar} alt={item.name} />
-                                        <AvatarFallback>{item.name.substring(0, 2)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="ml-4">
-                                        <p className="font-bold">{item.name}</p>
-                                        <p className="text-sm text-muted-foreground">{item.role}</p>
-                                    </div>
+                                <p className={testimonialStyles.comment}>"{item.comment}"</p>
+                            </div>
+                            <div className={testimonialStyles.header}>
+                                <Avatar className={testimonialStyles.avatar}>
+                                    <AvatarImage src={item.avatar} alt={item.name} />
+                                    <AvatarFallback>{item.name.substring(0, 2)}</AvatarFallback>
+                                </Avatar>
+                                <div className={testimonialStyles.info}>
+                                    <p className={testimonialStyles.name}>{item.name}</p>
+                                    <p className={testimonialStyles.role}>{item.role}</p>
                                 </div>
-                            </Card>
-                        ))}
-                    </div>
+                            </div>
+                        </Card>
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* FAQ */}
-            <section id="faq" className="py-20">
-                <div className="container mx-auto max-w-3xl px-4">
-                    <h2 className="mb-8 text-center text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
+            <Section id="faq">
+                <div className="mx-auto max-w-3xl">
+                    <SectionHeader 
+                        title="Pertanyaan yang Sering Diajukan"
+                    />
                     <Accordion type="single" collapsible className="w-full">
                         {faqs.map((faq, index) => (
                             <AccordionItem value={`item-${index + 1}`} key={index}>
@@ -347,7 +344,7 @@ const Home: React.FC = () => {
                         ))}
                     </Accordion>
                 </div>
-            </section>
+            </Section>
         </UserLayout>
     );
 };

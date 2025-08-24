@@ -6,6 +6,7 @@ import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import GuestLayout from '@/layouts/guest-layout';
 import { ArrowRight, Award, BookOpen, MessageSquare, PlayCircle, Star, Users, Zap } from 'lucide-react';
 import React from 'react';
+import { HeroSection, Section, SectionHeader, heroStyles, sectionStyles, cardStyles, featureStyles, testimonialStyles } from '@/components/ui/style-guide';
 
 // --- Tipe Data (sesuai migrasi) ---
 interface Course {
@@ -181,214 +182,199 @@ const Welcome: React.FC = () => {
             keywords="coding, programming, web development, design, online course, tutorial, laravel, react, javascript, php"
         >
             {/* Hero Section */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-4xl text-center">
-                        {/* Logo */}
-                        <div className="mb-8 flex justify-center">
-                            <img src="/logo.png" alt={`${NAMA_LEMBAGA} Logo`} className="h-16 w-auto" />
-                        </div>
-                        <h1 className="mb-6 text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
-                            Belajar Skill Digital
-                            <span className="block text-primary-foreground">Untuk Masa Depan</span>
-                        </h1>
-                        <p className="mb-8 text-xl text-primary-foreground/90 sm:text-2xl">
-                            Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
-                        </p>
-                        <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-                                Mulai Belajar Gratis
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Button>
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-                            >
-                                <PlayCircle className="mr-2 h-5 w-5" /> Lihat Demo
-                            </Button>
-                        </div>
-                    </div>
+            <HeroSection>
+                {/* Logo */}
+                <div className={heroStyles.logo}>
+                    <img src="/logo.png" alt={`${NAMA_LEMBAGA} Logo`} className={heroStyles.logoImage} />
                 </div>
-            </section>
+                <h1 className={heroStyles.title}>
+                    Belajar Skill Digital
+                    <span className={heroStyles.subtitle}>Untuk Masa Depan</span>
+                </h1>
+                <p className={heroStyles.description}>
+                    Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
+                </p>
+                <div className={heroStyles.actions}>
+                    <Button size="lg" className={heroStyles.primaryButton}>
+                        Mulai Belajar Gratis
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                    <Button
+                        size="lg"
+                        variant="outline"
+                        className={heroStyles.secondaryButton}
+                    >
+                        <PlayCircle className="mr-2 h-5 w-5" /> Lihat Demo
+                    </Button>
+                </div>
+            </HeroSection>
 
             {/* Features Section */}
-            <section className="py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Mengapa Memilih {NAMA_LEMBAGA}?</h2>
-                        <p className="text-lg text-muted-foreground">
-                            Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan.
-                        </p>
-                    </div>
-                    <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                        {features.map((feature, index) => (
-                            <div key={index} className="text-center">
-                                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                    {feature.icon}
-                                </div>
-                                <h3 className="mb-2 text-lg font-semibold text-foreground">{feature.title}</h3>
-                                <p className="text-muted-foreground">{feature.description}</p>
+            <Section>
+                <SectionHeader 
+                    title={`Mengapa Memilih ${NAMA_LEMBAGA}?`}
+                    subtitle="Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan."
+                />
+                <div className={sectionStyles.grid4}>
+                    {features.map((feature, index) => (
+                        <div key={index} className={featureStyles.container}>
+                            <div className={featureStyles.icon}>
+                                {feature.icon}
                             </div>
-                        ))}
-                    </div>
+                            <h3 className={featureStyles.title}>{feature.title}</h3>
+                            <p className={featureStyles.description}>{feature.description}</p>
+                        </div>
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* Pro Courses Section */}
-            <section className="bg-muted/50 py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Kursus Pro Terpopuler</h2>
-                        <p className="text-lg text-muted-foreground">Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.</p>
-                    </div>
-                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {proCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
-                                <div className="relative">
-                                    <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
-                                    <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">PRO</Badge>
-                                </div>
-                                <CardHeader>
+            <Section className="bg-muted/50">
+                <SectionHeader 
+                    title="Kursus Pro Terpopuler"
+                    subtitle="Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli."
+                />
+                <div className={sectionStyles.grid}>
+                    {proCourses.map((course) => (
+                        <Card key={course.id} className={cardStyles.container}>
+                            <div className="relative">
+                                <img src={course.thumbnail} alt={course.title} className={cardStyles.image} />
+                                <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">PRO</Badge>
+                            </div>
+                            <CardHeader className={cardStyles.content}>
+                                <div className={cardStyles.header}>
                                     <div className="flex items-center justify-between">
                                         <Badge variant="secondary">{course.category}</Badge>
-                                        <div className="flex items-center text-sm text-muted-foreground">
+                                        <div className={cardStyles.rating}>
                                             <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
                                             {course.rating}
                                         </div>
                                     </div>
-                                    <h3 className="text-lg font-semibold text-foreground">{course.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{course.description}</p>
-                                </CardHeader>
-                                <CardFooter className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-muted-foreground">
-                                        <Users className="mr-1 h-4 w-4" />
-                                        {course.students.toLocaleString()} siswa
-                                    </div>
-                                    <div className="text-lg font-bold text-primary">Rp {course.price.toLocaleString()}</div>
-                                </CardFooter>
-                            </Card>
-                        ))}
-                    </div>
+                                    <h3 className={cardStyles.title}>{course.title}</h3>
+                                    <p className={cardStyles.description}>{course.description}</p>
+                                </div>
+                            </CardHeader>
+                            <CardFooter className={cardStyles.footer}>
+                                <div className={cardStyles.rating}>
+                                    <Users className="mr-1 h-4 w-4" />
+                                    {course.students.toLocaleString()} siswa
+                                </div>
+                                <div className={cardStyles.price}>Rp {course.price.toLocaleString()}</div>
+                            </CardFooter>
+                        </Card>
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* Free Courses Section */}
-            <section className="py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Mulai Gratis</h2>
-                        <p className="text-lg text-muted-foreground">Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.</p>
-                    </div>
-                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {freeCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
-                                <div className="relative">
-                                    <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
-                                    <Badge className="absolute top-2 right-2 bg-green-500 text-white">GRATIS</Badge>
-                                </div>
-                                <CardHeader>
+            <Section>
+                <SectionHeader 
+                    title="Mulai Gratis"
+                    subtitle="Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami."
+                />
+                <div className={sectionStyles.grid}>
+                    {freeCourses.map((course) => (
+                        <Card key={course.id} className={cardStyles.container}>
+                            <div className="relative">
+                                <img src={course.thumbnail} alt={course.title} className={cardStyles.image} />
+                                <Badge className="absolute top-2 right-2 bg-green-500 text-white">GRATIS</Badge>
+                            </div>
+                            <CardHeader className={cardStyles.content}>
+                                <div className={cardStyles.header}>
                                     <div className="flex items-center justify-between">
                                         <Badge variant="secondary">{course.category}</Badge>
-                                        <div className="flex items-center text-sm text-muted-foreground">
+                                        <div className={cardStyles.rating}>
                                             <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
                                             {course.rating}
                                         </div>
                                     </div>
-                                    <h3 className="text-lg font-semibold text-foreground">{course.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{course.description}</p>
-                                </CardHeader>
-                                <CardFooter className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-muted-foreground">
-                                        <Users className="mr-1 h-4 w-4" />
-                                        {course.students.toLocaleString()} siswa
-                                    </div>
-                                    <div className="text-lg font-bold text-green-600">Gratis</div>
-                                </CardFooter>
-                            </Card>
-                        ))}
-                    </div>
+                                    <h3 className={cardStyles.title}>{course.title}</h3>
+                                    <p className={cardStyles.description}>{course.description}</p>
+                                </div>
+                            </CardHeader>
+                            <CardFooter className={cardStyles.footer}>
+                                <div className={cardStyles.rating}>
+                                    <Users className="mr-1 h-4 w-4" />
+                                    {course.students.toLocaleString()} siswa
+                                </div>
+                                <div className="text-lg font-bold text-green-600">Gratis</div>
+                            </CardFooter>
+                        </Card>
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* Testimonials Section */}
-            <section className="bg-muted/50 py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Apa Kata Mereka?</h2>
-                        <p className="text-lg text-muted-foreground">Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.</p>
-                    </div>
-                    <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-                        {reviews.map((review) => (
-                            <Card key={review.id} className="p-6">
-                                <div className="mb-4 flex items-center">
-                                    <Avatar className="mr-3">
-                                        <AvatarImage src={review.avatar} alt={review.name} />
-                                        <AvatarFallback>{review.name.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div>
-                                        <h4 className="font-semibold text-foreground">{review.name}</h4>
-                                        <p className="text-sm text-muted-foreground">{review.role}</p>
-                                    </div>
+            <Section className="bg-muted/50">
+                <SectionHeader 
+                    title="Apa Kata Mereka?"
+                    subtitle={`Ribuan siswa telah merasakan manfaat belajar di ${NAMA_LEMBAGA}.`}
+                />
+                <div className={sectionStyles.grid}>
+                    {reviews.map((review) => (
+                        <Card key={review.id} className={testimonialStyles.container}>
+                            <div className={testimonialStyles.header}>
+                                <Avatar className={testimonialStyles.avatar}>
+                                    <AvatarImage src={review.avatar} alt={review.name} />
+                                    <AvatarFallback>{review.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div className={testimonialStyles.info}>
+                                    <h4 className={testimonialStyles.name}>{review.name}</h4>
+                                    <p className={testimonialStyles.role}>{review.role}</p>
                                 </div>
-                                <div className="mb-3 flex">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`}
-                                        />
-                                    ))}
-                                </div>
-                                <p className="text-muted-foreground">{review.comment}</p>
-                            </Card>
-                        ))}
-                    </div>
+                            </div>
+                            <div className={testimonialStyles.rating}>
+                                {[...Array(5)].map((_, i) => (
+                                    <Star
+                                        key={i}
+                                        className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`}
+                                    />
+                                ))}
+                            </div>
+                            <p className={testimonialStyles.comment}>{review.comment}</p>
+                        </Card>
+                    ))}
                 </div>
-            </section>
+            </Section>
 
             {/* FAQ Section */}
-            <section className="py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Pertanyaan yang Sering Diajukan</h2>
-                        <p className="text-lg text-muted-foreground">Temukan jawaban untuk pertanyaan umum seputar platform kami.</p>
-                    </div>
-                    <div className="mx-auto mt-12 max-w-4xl">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqs.map((faq, index) => (
-                                <AccordionItem key={index} value={`item-${index}`} className="border-border">
-                                    <AccordionTrigger className="text-left text-foreground hover:no-underline">{faq.question}</AccordionTrigger>
-                                    <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
+            <Section>
+                <SectionHeader 
+                    title="Pertanyaan yang Sering Diajukan"
+                    subtitle="Temukan jawaban untuk pertanyaan umum seputar platform kami."
+                />
+                <div className="mx-auto max-w-4xl">
+                    <Accordion type="single" collapsible className="w-full">
+                        {faqs.map((faq, index) => (
+                            <AccordionItem key={index} value={`item-${index}`} className="border-border">
+                                <AccordionTrigger className="text-left text-foreground hover:no-underline">{faq.question}</AccordionTrigger>
+                                <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
                 </div>
-            </section>
+            </Section>
 
             {/* CTA Section */}
-            <section className="bg-primary py-16 text-white">
-                <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-                    <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Siap Memulai Perjalanan Belajar Anda?</h2>
-                    <p className="mb-8 text-xl text-primary-foreground/90">
-                        Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
-                    </p>
-                    <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-                            Daftar Sekarang
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-                        >
-                            <MessageSquare className="mr-2 h-5 w-5" /> Hubungi Kami
-                        </Button>
-                    </div>
+            <HeroSection className="bg-primary text-white">
+                <h2 className={heroStyles.title}>Siap Memulai Perjalanan Belajar Anda?</h2>
+                <p className={heroStyles.description}>
+                    Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
+                </p>
+                <div className={heroStyles.actions}>
+                    <Button size="lg" className={heroStyles.primaryButton}>
+                        Daftar Sekarang
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                    <Button
+                        size="lg"
+                        variant="outline"
+                        className={heroStyles.secondaryButton}
+                    >
+                        <MessageSquare className="mr-2 h-5 w-5" /> Hubungi Kami
+                    </Button>
                 </div>
-            </section>
+            </HeroSection>
         </GuestLayout>
     );
 };

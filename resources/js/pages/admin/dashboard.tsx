@@ -15,6 +15,7 @@ import { Head, Link } from '@inertiajs/react';
 import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX, Building2, RefreshCw, Bell } from 'lucide-react';
 import { useState } from 'react';
 import { useFormToast } from '@/hooks/use-form-toast';
+import { dashboardStyles } from '@/components/ui/style-guide';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
