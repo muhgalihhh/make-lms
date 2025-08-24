@@ -94,6 +94,34 @@ class Handler extends ExceptionHandler
                 ])->toResponse($request)->setStatusCode(503);
             }
 
+            // Handle ValidationException (422 errors)
+            if ($e instanceof ValidationException) {
+                return Inertia::render('errors/422', [
+                    'code' => '422',
+                    'title' => 'Data Tidak Valid',
+                    'description' => 'Data yang Anda masukkan tidak valid. Silakan periksa kembali.',
+                    'errors' => $e->errors(),
+                ])->toResponse($request)->setStatusCode(422);
+            }
+
+            // Handle InvalidSignatureException (401 errors)
+            if ($e instanceof InvalidSignatureException) {
+                return Inertia::render('errors/401', [
+                    'code' => '401',
+                    'title' => 'Tanda Tangan Tidak Valid',
+                    'description' => 'Link yang Anda akses tidak valid atau telah kadaluarsa.',
+                ])->toResponse($request)->setStatusCode(401);
+            }
+
+            // Handle AccessDeniedHttpException (403 errors)
+            if ($e instanceof AccessDeniedHttpException) {
+                return Inertia::render('errors/403', [
+                    'code' => '403',
+                    'title' => 'Akses Dilarang',
+                    'description' => 'Anda tidak memiliki izin untuk mengakses resource ini.',
+                ])->toResponse($request)->setStatusCode(403);
+            }
+
             // Handle 500 errors
             if ($e instanceof HttpException && $e->getStatusCode() >= 500) {
                 return Inertia::render('errors/500', [
@@ -103,9 +131,31 @@ class Handler extends ExceptionHandler
                 ])->toResponse($request)->setStatusCode(500);
             }
 
-            // Handle other HTTP exceptions
+            // Handle specific HTTP exceptions with dedicated pages
             if ($e instanceof HttpException) {
                 $statusCode = $e->getStatusCode();
+                
+                // Handle specific error codes with dedicated pages
+                if (in_array($statusCode, [400, 408, 502, 504])) {
+                    $errorPage = match ($statusCode) {
+                        400 => 'errors/400',
+                        408 => 'errors/408',
+                        502 => 'errors/502',
+                        504 => 'errors/504',
+                        default => 'errors/GenericError'
+                    };
+                    
+                    $title = $this->getErrorTitle($statusCode);
+                    $description = $this->getErrorDescription($statusCode);
+
+                    return Inertia::render($errorPage, [
+                        'code' => (string) $statusCode,
+                        'title' => $title,
+                        'description' => $description,
+                    ])->toResponse($request)->setStatusCode($statusCode);
+                }
+                
+                // Handle other HTTP exceptions with generic page
                 $title = $this->getErrorTitle($statusCode);
                 $description = $this->getErrorDescription($statusCode);
 
@@ -116,7 +166,12 @@ class Handler extends ExceptionHandler
                 ])->toResponse($request)->setStatusCode($statusCode);
             }
 
-            return null;
+            // Handle any other unhandled exceptions (fallback to 500)
+            return Inertia::render('errors/500', [
+                'code' => '500',
+                'title' => 'Kesalahan Tidak Terduga',
+                'description' => 'Terjadi kesalahan yang tidak terduga. Tim kami sedang bekerja untuk memperbaiki masalah ini.',
+            ])->toResponse($request)->setStatusCode(500);
         });
     }
 

@@ -1,7 +1,7 @@
 # 📋 Ringkasan Halaman Error yang Telah Dibuat
 
 ## 🎯 Tujuan
-Membuat halaman error yang profesional dan modern untuk website Laravel + Inertia.js dengan desain yang konsisten dan user-friendly.
+Membuat halaman error yang profesional dan modern untuk website Laravel + Inertia.js dengan desain yang konsisten dan user-friendly. **Sistem error handling sekarang menangani berbagai jenis error, tidak hanya 404 saja.**
 
 ## 📁 File yang Telah Dibuat
 
@@ -9,13 +9,18 @@ Membuat halaman error yang profesional dan modern untuk website Laravel + Inerti
 - **`resources/js/components/ErrorPage.tsx`** - Komponen utama yang dapat digunakan kembali untuk semua halaman error
 
 ### 2. Halaman Error Spesifik
-- **`resources/js/pages/errors/404.tsx`** - Halaman tidak ditemukan
-- **`resources/js/pages/errors/403.tsx`** - Akses dilarang
-- **`resources/js/pages/errors/401.tsx`** - Akses tidak sah (dengan tombol login)
-- **`resources/js/pages/errors/500.tsx`** - Kesalahan server internal
+- **`resources/js/pages/errors/400.tsx`** - Permintaan buruk (Bad Request)
+- **`resources/js/pages/errors/401.tsx`** - Akses tidak sah (Unauthorized)
+- **`resources/js/pages/errors/403.tsx`** - Akses dilarang (Forbidden)
+- **`resources/js/pages/errors/404.tsx`** - Halaman tidak ditemukan (Not Found)
+- **`resources/js/pages/errors/408.tsx`** - Permintaan timeout (Request Timeout)
 - **`resources/js/pages/errors/419.tsx`** - Halaman kadaluarsa (CSRF token)
-- **`resources/js/pages/errors/429.tsx`** - Terlalu banyak request (dengan countdown)
+- **`resources/js/pages/errors/422.tsx`** - Data tidak valid (Validation Error)
+- **`resources/js/pages/errors/429.tsx`** - Terlalu banyak request (Rate Limiting)
+- **`resources/js/pages/errors/500.tsx`** - Kesalahan server internal
+- **`resources/js/pages/errors/502.tsx`** - Gateway buruk (Bad Gateway)
 - **`resources/js/pages/errors/503.tsx`** - Layanan tidak tersedia
+- **`resources/js/pages/errors/504.tsx`** - Gateway timeout
 - **`resources/js/pages/errors/GenericError.tsx`** - Error generik yang dapat dikustomisasi
 - **`resources/js/pages/errors/index.ts`** - File index untuk ekspor
 
@@ -23,7 +28,7 @@ Membuat halaman error yang profesional dan modern untuk website Laravel + Inerti
 - **`app/Exceptions/Handler.php`** - Exception Handler untuk menangani error secara otomatis
 
 ### 4. Routes
-- **`routes/web.php`** - Route testing untuk halaman error (baris 72-95)
+- **`routes/web.php`** - Route testing untuk halaman error dan fallback route yang cerdas
 
 ### 5. Dokumentasi
 - **`ERROR_PAGES_USAGE.md`** - Dokumentasi lengkap
@@ -48,6 +53,7 @@ Membuat halaman error yang profesional dan modern untuk website Laravel + Inerti
 - Tombol aksi yang relevan (Kembali, Beranda, Muat Ulang, Masuk)
 - Countdown timer untuk rate limiting
 - Integrasi otomatis dengan Laravel Exception Handler
+- **Fallback route yang cerdas** - menangani berbagai jenis error berdasarkan konteks
 
 ### 🌐 Lokalisasi
 - Pesan error dalam bahasa Indonesia
@@ -70,7 +76,13 @@ return Inertia::render('errors/404');
 throw new NotFoundHttpException('Halaman tidak ditemukan');
 ```
 
-### 3. Kustomisasi
+### 3. Fallback Route yang Cerdas
+Route fallback sekarang menangani berbagai skenario:
+- **User tidak login** → Error 401
+- **User tidak punya akses admin** → Error 403
+- **Halaman tidak ditemukan** → Error 404
+
+### 4. Kustomisasi
 Setiap halaman error dapat dikustomisasi dengan props:
 ```tsx
 <ErrorPage
@@ -85,27 +97,37 @@ Setiap halaman error dapat dikustomisasi dengan props:
 
 ## 📊 Jenis Error yang Didukung
 
-| Kode | Jenis Error | Handler | Halaman |
-|------|-------------|---------|---------|
-| 404 | Not Found | ✅ | ✅ |
-| 403 | Forbidden | ✅ | ✅ |
-| 401 | Unauthorized | ✅ | ✅ |
-| 500 | Server Error | ✅ | ✅ |
-| 419 | Page Expired | ✅ | ✅ |
-| 429 | Too Many Requests | ✅ | ✅ |
-| 503 | Service Unavailable | ✅ | ✅ |
-| 400-599 | Generic HTTP Errors | ✅ | ✅ |
+| Kode | Jenis Error | Handler | Halaman | Deskripsi |
+|------|-------------|---------|---------|-----------|
+| 400 | Bad Request | ✅ | ✅ | Permintaan tidak valid |
+| 401 | Unauthorized | ✅ | ✅ | Belum login atau token invalid |
+| 403 | Forbidden | ✅ | ✅ | Tidak punya izin |
+| 404 | Not Found | ✅ | ✅ | Halaman tidak ditemukan |
+| 408 | Request Timeout | ✅ | ✅ | Permintaan timeout |
+| 419 | Page Expired | ✅ | ✅ | CSRF token kadaluarsa |
+| 422 | Validation Error | ✅ | ✅ | Data tidak valid |
+| 429 | Too Many Requests | ✅ | ✅ | Rate limiting |
+| 500 | Server Error | ✅ | ✅ | Kesalahan server internal |
+| 502 | Bad Gateway | ✅ | ✅ | Gateway buruk |
+| 503 | Service Unavailable | ✅ | ✅ | Layanan tidak tersedia |
+| 504 | Gateway Timeout | ✅ | ✅ | Gateway timeout |
+| 400-599 | Generic HTTP Errors | ✅ | ✅ | Semua error HTTP lainnya |
 
 ## 🧪 Testing
 
 Untuk testing halaman error, gunakan URL berikut:
-- `http://localhost:8000/errors/404`
-- `http://localhost:8000/errors/403`
+- `http://localhost:8000/errors/400`
 - `http://localhost:8000/errors/401`
-- `http://localhost:8000/errors/500`
+- `http://localhost:8000/errors/403`
+- `http://localhost:8000/errors/404`
+- `http://localhost:8000/errors/408`
 - `http://localhost:8000/errors/419`
+- `http://localhost:8000/errors/422`
 - `http://localhost:8000/errors/429`
+- `http://localhost:8000/errors/500`
+- `http://localhost:8000/errors/502`
 - `http://localhost:8000/errors/503`
+- `http://localhost:8000/errors/504`
 
 ## 🔧 Konfigurasi
 
@@ -129,6 +151,7 @@ Untuk testing halaman error, gunakan URL berikut:
 4. **Consistency**: Desain yang konsisten di semua halaman error
 5. **Accessibility**: Tombol aksi yang jelas dan mudah dipahami
 6. **SEO**: Meta title yang sesuai untuk setiap jenis error
+7. **Comprehensive Coverage**: Menangani berbagai jenis error, tidak hanya 404
 
 ## 🎯 Next Steps
 
@@ -151,3 +174,4 @@ Jika ada pertanyaan atau masalah, lihat:
 **Status**: ✅ Selesai dan siap digunakan
 **Build**: ✅ Berhasil
 **Testing**: 🧪 Siap untuk testing
+**Coverage**: ✅ Menangani berbagai jenis error, tidak hanya 404
