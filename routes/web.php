@@ -7,18 +7,21 @@ use App\Http\Controllers\Admin\TransactionController as AdminTransactionControll
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+// API routes untuk welcome page
+Route::prefix('api/welcome')->name('api.welcome.')->group(function () {
+    Route::get('/institutions', [WelcomeController::class, 'getInstitutions'])->name('institutions');
+    Route::get('/pro-courses', [WelcomeController::class, 'getProCourses'])->name('pro-courses');
+    Route::get('/free-courses', [WelcomeController::class, 'getFreeCourses'])->name('free-courses');
+    Route::get('/weather', [WelcomeController::class, 'getWeather'])->name('weather');
+    Route::get('/institutions-by-rating', [WelcomeController::class, 'getInstitutionsByRating'])->name('institutions-by-rating');
+});
 
 // Dashboard untuk semua user yang login
 Route::get('/dashboard', function () {
