@@ -181,15 +181,9 @@ const Welcome: React.FC = () => {
             keywords="coding, programming, web development, design, online course, tutorial, laravel, react, javascript, php"
         >
             {/* Hero Section */}
-<<<<<<< HEAD
-            <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-=======
             <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white dark:from-primary/90 dark:via-primary/80 dark:to-primary/70">
                 <div className="absolute inset-0 bg-black/20 dark:bg-black/30" />
-                <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
+                <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl text-center">
                         <h1 className="mb-6 text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
                             Belajar Skill Digital
@@ -198,13 +192,11 @@ const Welcome: React.FC = () => {
                         <p className="mb-8 text-xl text-primary-foreground/90 sm:text-2xl">
                             Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
                         </p>
-<<<<<<< HEAD
                         <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-=======
-                        <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 dark:bg-white dark:text-primary dark:hover:bg-gray-100">
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
+                            <Button
+                                size="lg"
+                                className="bg-white text-primary hover:bg-gray-100 dark:bg-white dark:text-primary dark:hover:bg-gray-100"
+                            >
                                 Mulai Belajar Gratis
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
@@ -224,15 +216,8 @@ const Welcome: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-<<<<<<< HEAD
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Mengapa Memilih {NAMA_LEMBAGA}?</h2>
-                        <p className="text-lg text-gray-600">
-=======
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                            Mengapa Memilih {NAMA_LEMBAGA}?
-                        </h2>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">Mengapa Memilih {NAMA_LEMBAGA}?</h2>
                         <p className="text-lg text-gray-600 dark:text-gray-300">
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
                             Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan.
                         </p>
                     </div>
@@ -251,24 +236,20 @@ const Welcome: React.FC = () => {
             </section>
 
             {/* Pro Courses Section */}
-            <section className="bg-gray-50 dark:bg-gray-800 py-16">
+            <section className="bg-gray-50 py-16 dark:bg-gray-800">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-<<<<<<< HEAD
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Kursus Pro Terpopuler</h2>
-                        <p className="text-lg text-gray-600">Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.</p>
-=======
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                            Kursus Pro Terpopuler
-                        </h2>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">Kursus Pro Terpopuler</h2>
                         <p className="text-lg text-gray-600 dark:text-gray-300">
                             Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.
                         </p>
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {proCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105 dark:bg-gray-700 dark:border-gray-600">
+                            <Card
+                                key={course.id}
+                                className="overflow-hidden transition-transform hover:scale-105 dark:border-gray-600 dark:bg-gray-700"
+                            >
                                 <div className="relative">
                                     <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
                                     <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">PRO</Badge>
@@ -301,21 +282,17 @@ const Welcome: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-<<<<<<< HEAD
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Mulai Gratis</h2>
-                        <p className="text-lg text-gray-600">Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.</p>
-=======
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                            Mulai Gratis
-                        </h2>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">Mulai Gratis</h2>
                         <p className="text-lg text-gray-600 dark:text-gray-300">
                             Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.
                         </p>
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {freeCourses.map((course) => (
-                            <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105 dark:bg-gray-700 dark:border-gray-600">
+                            <Card
+                                key={course.id}
+                                className="overflow-hidden transition-transform hover:scale-105 dark:border-gray-600 dark:bg-gray-700"
+                            >
                                 <div className="relative">
                                     <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
                                     <Badge className="absolute top-2 right-2 bg-green-500 text-white">GRATIS</Badge>
@@ -345,24 +322,15 @@ const Welcome: React.FC = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="bg-gray-50 dark:bg-gray-800 py-16">
+            <section className="bg-gray-50 py-16 dark:bg-gray-800">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-<<<<<<< HEAD
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Apa Kata Mereka?</h2>
-                        <p className="text-lg text-gray-600">Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.</p>
-=======
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                            Apa Kata Mereka?
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-300">
-                            Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.
-                        </p>
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">Apa Kata Mereka?</h2>
+                        <p className="text-lg text-gray-600 dark:text-gray-300">Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.</p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
                         {reviews.map((review) => (
-                            <Card key={review.id} className="p-6 dark:bg-gray-700 dark:border-gray-600">
+                            <Card key={review.id} className="p-6 dark:border-gray-600 dark:bg-gray-700">
                                 <div className="mb-4 flex items-center">
                                     <Avatar className="mr-3">
                                         <AvatarImage src={review.avatar} alt={review.name} />
@@ -377,15 +345,9 @@ const Welcome: React.FC = () => {
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-<<<<<<< HEAD
-                                            className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
-=======
                                             className={`h-4 w-4 ${
-                                                i < review.rating
-                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'text-gray-300 dark:text-gray-600'
+                                                i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300 dark:text-gray-600'
                                             }`}
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
                                         />
                                     ))}
                                 </div>
@@ -400,34 +362,15 @@ const Welcome: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-<<<<<<< HEAD
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Pertanyaan yang Sering Diajukan</h2>
-                        <p className="text-lg text-gray-600">Temukan jawaban untuk pertanyaan umum seputar platform kami.</p>
-=======
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                            Pertanyaan yang Sering Diajukan
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-300">
-                            Temukan jawaban untuk pertanyaan umum seputar platform kami.
-                        </p>
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">Pertanyaan yang Sering Diajukan</h2>
+                        <p className="text-lg text-gray-600 dark:text-gray-300">Temukan jawaban untuk pertanyaan umum seputar platform kami.</p>
                     </div>
                     <div className="mx-auto mt-12 max-w-4xl">
                         <Accordion type="single" collapsible className="w-full">
                             {faqs.map((faq, index) => (
-<<<<<<< HEAD
-                                <AccordionItem key={index} value={`item-${index}`}>
-                                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                                    <AccordionContent>{faq.answer}</AccordionContent>
-=======
                                 <AccordionItem key={index} value={`item-${index}`} className="border-gray-200 dark:border-gray-700">
-                                    <AccordionTrigger className="text-left dark:text-white hover:no-underline">
-                                        {faq.question}
-                                    </AccordionTrigger>
-                                    <AccordionContent className="text-gray-600 dark:text-gray-300">
-                                        {faq.answer}
-                                    </AccordionContent>
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
+                                    <AccordionTrigger className="text-left hover:no-underline dark:text-white">{faq.question}</AccordionTrigger>
+                                    <AccordionContent className="text-gray-600 dark:text-gray-300">{faq.answer}</AccordionContent>
                                 </AccordionItem>
                             ))}
                         </Accordion>
@@ -442,13 +385,8 @@ const Welcome: React.FC = () => {
                     <p className="mb-8 text-xl text-primary-foreground/90">
                         Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
                     </p>
-<<<<<<< HEAD
                     <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-=======
-                    <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                         <Button size="lg" className="bg-white text-primary hover:bg-gray-100 dark:bg-white dark:text-primary dark:hover:bg-gray-100">
->>>>>>> a9baa05ac3708fe292e157b800315283ce0c2096
                             Daftar Sekarang
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
