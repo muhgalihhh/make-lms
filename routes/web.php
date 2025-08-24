@@ -35,19 +35,19 @@ Route::get('/dashboard', function () {
 // Routes untuk Admin
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    
+
     // User Management
     Route::resource('users', AdminUserController::class);
-    
+
     // Course Management
     Route::resource('courses', AdminCourseController::class);
-    
+
     // Category Management
     Route::resource('categories', AdminCategoryController::class);
-    
+
     // Institution Management
     Route::resource('institutions', AdminInstitutionController::class);
-    
+
     // Transaction Management
     Route::resource('transactions', AdminTransactionController::class)->except(['create', 'store', 'edit', 'update']);
     Route::patch('/transactions/{transaction}/status', [AdminTransactionController::class, 'updateStatus'])->name('transactions.update-status');
@@ -74,27 +74,27 @@ Route::prefix('errors')->name('errors.')->group(function () {
     Route::get('/404', function () {
         return Inertia::render('errors/404');
     })->name('404');
-    
+
     Route::get('/403', function () {
         return Inertia::render('errors/403');
     })->name('403');
-    
+
     Route::get('/401', function () {
         return Inertia::render('errors/401');
     })->name('401');
-    
+
     Route::get('/500', function () {
         return Inertia::render('errors/500');
     })->name('500');
-    
+
     Route::get('/419', function () {
         return Inertia::render('errors/419');
     })->name('419');
-    
+
     Route::get('/429', function () {
         return Inertia::render('errors/429');
     })->name('429');
-    
+
     Route::get('/503', function () {
         return Inertia::render('errors/503');
     })->name('503');
