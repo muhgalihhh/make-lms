@@ -1,3 +1,4 @@
+import ThemeToggle from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { BookOpen, ChevronDown, Facebook, Instagram, Linkedin, Menu, Search, Twitter, X, Youtube } from 'lucide-react';
@@ -121,7 +122,7 @@ const NavigationDropdown = ({ item }: { item: NavigationItem }) => {
         return (
             <a
                 href={item.href}
-                className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
             >
@@ -133,7 +134,7 @@ const NavigationDropdown = ({ item }: { item: NavigationItem }) => {
     return (
         <div className="relative" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
             <button
-                className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
                 aria-expanded={isOpen}
                 aria-haspopup="true"
             >
@@ -141,12 +142,12 @@ const NavigationDropdown = ({ item }: { item: NavigationItem }) => {
                 <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             {isOpen && (
-                <div className="ring-opacity-5 absolute left-0 z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black">
+                <div className="ring-opacity-5 absolute left-0 z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black dark:bg-gray-800 dark:ring-gray-700">
                     {item.children.map((child, index) => (
                         <a
                             key={index}
                             href={child.href}
-                            className="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                            className="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
                             target={child.external ? '_blank' : undefined}
                             rel={child.external ? 'noopener noreferrer' : undefined}
                         >
@@ -164,14 +165,19 @@ const Header = ({ className }: { className?: string }) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     return (
-        <header className={cn('sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60', className)}>
+        <header
+            className={cn(
+                'sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-800 dark:bg-gray-900/95',
+                className,
+            )}
+        >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <div className="flex items-center">
                         <a href="/" className="flex items-center space-x-2">
                             <BookOpen className="h-8 w-8 text-primary" />
-                            <span className="text-xl font-bold text-gray-900">Pare : Edu Hub</span>
+                            <span className="text-xl font-bold text-gray-900 dark:text-white">AkademiKoding</span>
                         </a>
                     </div>
 
@@ -187,11 +193,14 @@ const Header = ({ className }: { className?: string }) => {
                         {/* Search */}
                         <button
                             onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500"
+                            className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                             aria-label="Search"
                         >
                             <Search className="h-5 w-5" />
                         </button>
+
+                        {/* Theme Toggle */}
+                        <ThemeToggle />
 
                         {/* Auth Buttons */}
                         <Button variant="ghost" size="sm">
@@ -204,7 +213,7 @@ const Header = ({ className }: { className?: string }) => {
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500"
+                            className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                             aria-label="Toggle menu"
                         >
                             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -220,7 +229,7 @@ const Header = ({ className }: { className?: string }) => {
                                 <div key={index}>
                                     <a
                                         href={item.href}
-                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
                                     >
                                         {item.label}
                                     </a>
@@ -230,7 +239,7 @@ const Header = ({ className }: { className?: string }) => {
                                                 <a
                                                     key={childIndex}
                                                     href={child.href}
-                                                    className="block rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                                                    className="block rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
                                                 >
                                                     {child.label}
                                                 </a>
@@ -240,7 +249,11 @@ const Header = ({ className }: { className?: string }) => {
                                 </div>
                             ))}
                         </div>
-                        <div className="border-t border-gray-200 px-2 py-3">
+                        <div className="border-t border-gray-200 px-2 py-3 dark:border-gray-700">
+                            <div className="mb-3 flex items-center justify-between">
+                                <span className="text-sm text-gray-600 dark:text-gray-400">Tema</span>
+                                <ThemeToggle />
+                            </div>
                             <Button variant="ghost" className="w-full justify-start">
                                 Masuk
                             </Button>
@@ -251,13 +264,13 @@ const Header = ({ className }: { className?: string }) => {
 
                 {/* Search Bar */}
                 {isSearchOpen && (
-                    <div className="border-t border-gray-200 px-2 py-3">
+                    <div className="border-t border-gray-200 px-2 py-3 dark:border-gray-700">
                         <div className="relative">
                             <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="text"
                                 placeholder="Cari kursus, tutorial, atau topik..."
-                                className="w-full rounded-md border border-gray-300 bg-white py-2 pr-4 pl-10 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
+                                className="w-full rounded-md border border-gray-300 bg-white py-2 pr-4 pl-10 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
                             />
                         </div>
                     </div>
@@ -269,7 +282,7 @@ const Header = ({ className }: { className?: string }) => {
 
 const Footer = ({ className }: { className?: string }) => {
     return (
-        <footer className={cn('bg-gray-900 text-gray-300', className)}>
+        <footer className={cn('bg-gray-900 text-gray-300 dark:bg-gray-950', className)}>
             <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
                     {/* Brand */}
@@ -372,7 +385,7 @@ export default function GuestLayout({
     mainClassName,
 }: GuestLayoutProps) {
     return (
-        <div className={cn('min-h-screen bg-gray-50', className)}>
+        <div className={cn('min-h-screen bg-gray-50 dark:bg-gray-900', className)}>
             {/* SEO Meta Tags */}
             <head>
                 <title>{title}</title>
