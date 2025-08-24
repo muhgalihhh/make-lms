@@ -98,11 +98,59 @@ Route::prefix('errors')->name('errors.')->group(function () {
     Route::get('/503', function () {
         return Inertia::render('errors/503');
     })->name('503');
+    
+    Route::get('/422', function () {
+        return Inertia::render('errors/422', [
+            'errors' => [
+                'email' => ['Email harus valid'],
+                'password' => ['Password minimal 8 karakter'],
+            ]
+        ]);
+    })->name('422');
+    
+    Route::get('/400', function () {
+        return Inertia::render('errors/400');
+    })->name('400');
+    
+    Route::get('/408', function () {
+        return Inertia::render('errors/408');
+    })->name('408');
+    
+    Route::get('/502', function () {
+        return Inertia::render('errors/502');
+    })->name('502');
+    
+    Route::get('/504', function () {
+        return Inertia::render('errors/504');
+    })->name('504');
 });
 
 // Fallback route untuk menangani semua URL yang tidak terdaftar
 // Route ini harus ditempatkan di akhir file routes
 Route::fallback(function () {
+    // Cek apakah user sudah login
+    if (!auth()->check()) {
+        return Inertia::render('errors/401', [
+            'code' => '401',
+            'title' => 'Akses Tidak Sah',
+            'description' => 'Anda harus masuk terlebih dahulu untuk mengakses halaman ini.',
+        ])->toResponse(request())->setStatusCode(401);
+    }
+    
+    // Cek apakah user memiliki akses ke halaman yang diminta
+    $user = auth()->user();
+    $path = request()->path();
+    
+    // Jika mencoba mengakses area admin tanpa permission
+    if (str_starts_with($path, 'admin') && !$user->isAdmin()) {
+        return Inertia::render('errors/403', [
+            'code' => '403',
+            'title' => 'Akses Dilarang',
+            'description' => 'Anda tidak memiliki izin untuk mengakses halaman ini.',
+        ])->toResponse(request())->setStatusCode(403);
+    }
+    
+    // Default: halaman tidak ditemukan
     return Inertia::render('errors/404', [
         'code' => '404',
         'title' => 'Halaman Tidak Ditemukan',
