@@ -1,3 +1,4 @@
+import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,19 +6,21 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import GuestLayout from '@/layouts/guest-layout';
-import { 
-    Building2, 
-    Star, 
-    Phone, 
-    Mail, 
-    Globe, 
-    MapPin, 
-    Search, 
+import {
+    Building2,
+    Star,
+    Phone,
+    Mail,
+    Globe,
+    MapPin,
+    Search,
     Filter,
     Lock,
     Crown,
     Users,
-    Award
+    Award,
+    ArrowRight,
+    ExternalLink
 } from 'lucide-react';
 
 interface Institution {
@@ -35,207 +38,170 @@ interface Institution {
     isPremium: boolean;
 }
 
-const Institutions: React.FC = () => {
+const institutions: Institution[] = [
+    {
+        id: 1,
+        name: "Pare English Course",
+        phone: "+62 812-3456-7890",
+        email: "info@pareenglish.com",
+        address: "Jl. Brawijaya No. 123, Pare, Kediri",
+        website: "https://pareenglish.com",
+        rating: 4.8,
+        reviews: 1250,
+        category: 'premium',
+        description: "Lembaga kursus bahasa Inggris terbaik di Pare dengan metode kampung Inggris yang terkenal.",
+        logo: "/images/pare-english-logo.png",
+        isPremium: true
+    },
+    {
+        id: 2,
+        name: "Kampung Inggris Global",
+        phone: "+62 812-3456-7891",
+        email: "contact@kampunginggrisglobal.com",
+        address: "Jl. Ahmad Yani No. 45, Pare, Kediri",
+        website: "https://kampunginggrisglobal.com",
+        rating: 4.6,
+        reviews: 890,
+        category: 'premium',
+        description: "Program intensif bahasa Inggris dengan lingkungan yang mendukung pembelajaran.",
+        logo: "/images/global-logo.png",
+        isPremium: true
+    },
+    {
+        id: 3,
+        name: "English Village Pare",
+        phone: "+62 812-3456-7892",
+        email: "hello@englishvillagepare.com",
+        address: "Jl. Soekarno-Hatta No. 67, Pare, Kediri",
+        website: "https://englishvillagepare.com",
+        rating: 4.4,
+        reviews: 650,
+        category: 'standard',
+        description: "Belajar bahasa Inggris dengan suasana kampung yang nyaman dan menyenangkan.",
+        logo: "/images/village-logo.png",
+        isPremium: false
+    },
+    {
+        id: 4,
+        name: "Pare Language Center",
+        phone: "+62 812-3456-7893",
+        email: "info@parelanguage.com",
+        address: "Jl. Diponegoro No. 89, Pare, Kediri",
+        website: "https://parelanguage.com",
+        rating: 4.2,
+        reviews: 450,
+        category: 'standard',
+        description: "Pusat pembelajaran bahasa dengan metode modern dan teknologi terkini.",
+        logo: "/images/language-center-logo.png",
+        isPremium: false
+    },
+    {
+        id: 5,
+        name: "Basic English Pare",
+        phone: "+62 812-3456-7894",
+        email: "contact@basicenglishpare.com",
+        address: "Jl. Sudirman No. 12, Pare, Kediri",
+        website: "https://basicenglishpare.com",
+        rating: 4.0,
+        reviews: 320,
+        category: 'basic',
+        description: "Kursus bahasa Inggris dasar untuk pemula dengan harga terjangkau.",
+        logo: "/images/basic-english-logo.png",
+        isPremium: false
+    },
+    {
+        id: 6,
+        name: "Pare Learning Hub",
+        phone: "+62 812-3456-7895",
+        email: "hello@parelearninghub.com",
+        address: "Jl. Gatot Subroto No. 34, Pare, Kediri",
+        website: "https://parelearninghub.com",
+        rating: 3.8,
+        reviews: 280,
+        category: 'basic',
+        description: "Tempat belajar yang nyaman dengan suasana yang mendukung.",
+        logo: "/images/learning-hub-logo.png",
+        isPremium: false
+    }
+];
+
+const getCategoryColor = (category: string) => {
+    switch (category) {
+        case 'premium':
+            return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
+        case 'standard':
+            return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white';
+        case 'basic':
+            return 'bg-gradient-to-r from-green-500 to-teal-600 text-white';
+        default:
+            return 'bg-gray-500 text-white';
+    }
+};
+
+const getCategoryName = (category: string) => {
+    switch (category) {
+        case 'premium':
+            return 'Premium';
+        case 'standard':
+            return 'Standard';
+        case 'basic':
+            return 'Basic';
+        default:
+            return category;
+    }
+};
+
+export default function Institutions() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [isPremiumUser, setIsPremiumUser] = useState(false); // Simulasi user premium
 
-    const institutions: Institution[] = [
-        {
-            id: 1,
-            name: 'Tech Academy Indonesia',
-            phone: '+62 21 1234 5678',
-            email: 'info@techacademy.id',
-            address: 'Jl. Sudirman No. 123, Jakarta Pusat',
-            website: 'https://techacademy.id',
-            rating: 4.9,
-            reviews: 1250,
-            category: 'premium',
-            description: 'Lembaga pelatihan teknologi terkemuka dengan fokus pada web development dan mobile apps.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: true
-        },
-        {
-            id: 2,
-            name: 'Digital Skills Center',
-            phone: '+62 21 2345 6789',
-            email: 'hello@digitalskills.id',
-            address: 'Jl. Thamrin No. 45, Jakarta Pusat',
-            website: 'https://digitalskills.id',
-            rating: 4.7,
-            reviews: 890,
-            category: 'premium',
-            description: 'Pusat pengembangan skill digital dengan kurikulum yang disesuaikan kebutuhan industri.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: true
-        },
-        {
-            id: 3,
-            name: 'Creative Learning Hub',
-            phone: '+62 21 3456 7890',
-            email: 'contact@creativehub.id',
-            address: 'Jl. Gatot Subroto No. 67, Jakarta Selatan',
-            website: 'https://creativehub.id',
-            rating: 4.5,
-            reviews: 650,
-            category: 'standard',
-            description: 'Lembaga pelatihan kreatif untuk design, marketing, dan content creation.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: false
-        },
-        {
-            id: 4,
-            name: 'Business School Indonesia',
-            phone: '+62 21 4567 8901',
-            email: 'info@businessschool.id',
-            address: 'Jl. Kuningan No. 89, Jakarta Selatan',
-            website: 'https://businessschool.id',
-            rating: 4.3,
-            reviews: 450,
-            category: 'standard',
-            description: 'Lembaga pelatihan bisnis dan manajemen untuk profesional.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: false
-        },
-        {
-            id: 5,
-            name: 'Language Center Pro',
-            phone: '+62 21 5678 9012',
-            email: 'hello@languagecenter.id',
-            address: 'Jl. Menteng No. 12, Jakarta Pusat',
-            website: 'https://languagecenter.id',
-            rating: 4.1,
-            reviews: 320,
-            category: 'basic',
-            description: 'Pusat pembelajaran bahasa asing dengan metode modern.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: false
-        },
-        {
-            id: 6,
-            name: 'Coding Bootcamp Indonesia',
-            phone: '+62 21 6789 0123',
-            email: 'info@codingbootcamp.id',
-            address: 'Jl. Senayan No. 34, Jakarta Pusat',
-            website: 'https://codingbootcamp.id',
-            rating: 4.8,
-            reviews: 780,
-            category: 'premium',
-            description: 'Bootcamp coding intensif untuk karir di bidang teknologi.',
-            logo: 'https://via.placeholder.com/80x80',
-            isPremium: true
-        }
-    ];
-
-    const getCategoryColor = (category: string) => {
-        switch (category) {
-            case 'premium':
-                return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
-            case 'standard':
-                return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white';
-            case 'basic':
-                return 'bg-gradient-to-r from-green-500 to-teal-600 text-white';
-            default:
-                return 'bg-gray-500 text-white';
-        }
-    };
-
-    const getRatingCategory = (rating: number) => {
-        if (rating >= 4.5) return 'excellent';
-        if (rating >= 4.0) return 'good';
-        if (rating >= 3.5) return 'average';
-        return 'basic';
-    };
-
-    const getRatingCategoryColor = (category: string) => {
-        switch (category) {
-            case 'excellent':
-                return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
-            case 'good':
-                return 'bg-gradient-to-r from-blue-500 to-purple-600 text-white';
-            case 'average':
-                return 'bg-gradient-to-r from-green-500 to-teal-600 text-white';
-            case 'basic':
-                return 'bg-gradient-to-r from-gray-500 to-gray-600 text-white';
-            default:
-                return 'bg-gray-500 text-white';
-        }
-    };
-
-    const getRatingCategoryLabel = (category: string) => {
-        switch (category) {
-            case 'excellent':
-                return 'Excellent (4.5+)';
-            case 'good':
-                return 'Good (4.0-4.4)';
-            case 'average':
-                return 'Average (3.5-3.9)';
-            case 'basic':
-                return 'Basic (<3.5)';
-            default:
-                return 'Unknown';
-        }
-    };
-
+    // Filter institutions based on search and category
     const filteredInstitutions = institutions.filter(institution => {
         const matchesSearch = institution.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                             institution.description.toLowerCase().includes(searchTerm.toLowerCase());
+                            institution.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === 'all' || institution.category === selectedCategory;
+        
+        // If user is not premium, only show first 3 institutions
+        if (!isPremiumUser && !institution.isPremium) {
+            return false;
+        }
+        
         return matchesSearch && matchesCategory;
     });
 
-    const groupedInstitutions = filteredInstitutions.reduce((acc, institution) => {
-        const category = getRatingCategory(institution.rating);
-        if (!acc[category]) {
-            acc[category] = [];
+    // Group institutions by category
+    const groupedInstitutions = filteredInstitutions.reduce((groups, institution) => {
+        const category = institution.category;
+        if (!groups[category]) {
+            groups[category] = [];
         }
-        acc[category].push(institution);
-        return acc;
+        groups[category].push(institution);
+        return groups;
     }, {} as Record<string, Institution[]>);
 
-    const canAccessInstitution = (institution: Institution) => {
-        if (isPremiumUser) return true;
-        return !institution.isPremium;
-    };
-
-    const handleWhatsApp = (institution: Institution) => {
-        const message = encodeURIComponent(`Halo, saya tertarik dengan lembaga ${institution.name}. Bisa info lebih lanjut?`);
-        const whatsappUrl = `https://wa.me/${institution.phone.replace(/\D/g, '')}?text=${message}`;
-        window.open(whatsappUrl, '_blank');
-    };
-
     return (
-        <GuestLayout
-            title="Katalog Lembaga - Pare EDUHUB"
-            description="Temukan lembaga pelatihan terbaik yang dikelompokkan berdasarkan rating dan kualitas."
-            keywords="lembaga pelatihan, katalog lembaga, rating lembaga, premium lembaga"
-        >
+        <GuestLayout>
+            <Head title="Katalog Lembaga - Pare EDUHUB LMS" />
+            
             {/* Header Section */}
-            <section className="bg-gradient-to-r from-primary to-primary/80 py-16 text-white">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-4xl text-center">
-                        <h1 className="mb-4 text-4xl font-bold sm:text-5xl">Katalog Lembaga</h1>
-                        <p className="text-xl text-primary-foreground/90">
-                            Temukan lembaga pelatihan terbaik yang dikelompokkan berdasarkan rating dan kualitas
-                        </p>
-                        {!isPremiumUser && (
-                            <div className="mt-6 p-4 bg-white/10 rounded-lg">
-                                <div className="flex items-center justify-center gap-2">
-                                    <Lock className="w-5 h-5" />
-                                    <span>Akses terbatas untuk user gratis. Upgrade ke Premium untuk akses penuh!</span>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+            <section className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        Katalog Lembaga
+                    </h1>
+                    <p className="text-xl max-w-3xl mx-auto">
+                        Temukan lembaga pendidikan berkualitas di Pare dengan rating dan ulasan terbaik
+                    </p>
                 </div>
             </section>
 
             {/* Search and Filter Section */}
             <section className="py-8 bg-gray-50">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="flex-1 relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-3 gap-4">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                             <Input
                                 placeholder="Cari lembaga..."
                                 value={searchTerm}
@@ -244,7 +210,7 @@ const Institutions: React.FC = () => {
                             />
                         </div>
                         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                            <SelectTrigger className="w-full md:w-48">
+                            <SelectTrigger>
                                 <SelectValue placeholder="Pilih kategori" />
                             </SelectTrigger>
                             <SelectContent>
@@ -256,138 +222,143 @@ const Institutions: React.FC = () => {
                         </Select>
                         <Button 
                             variant="outline" 
-                            onClick={() => setIsPremiumUser(!isPremiumUser)}
                             className="flex items-center gap-2"
+                            onClick={() => setIsPremiumUser(!isPremiumUser)}
                         >
-                            {isPremiumUser ? <Crown className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                            {isPremiumUser ? 'Premium User' : 'Free User'}
+                            {isPremiumUser ? (
+                                <>
+                                    <Crown className="w-4 h-4 text-yellow-500" />
+                                    Premium User
+                                </>
+                            ) : (
+                                <>
+                                    <Lock className="w-4 h-4" />
+                                    Free User
+                                </>
+                            )}
                         </Button>
                     </div>
                 </div>
             </section>
 
-            {/* Institutions by Rating Category */}
-            <section className="py-16">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    {Object.entries(groupedInstitutions).map(([category, institutionsList]) => (
-                        <div key={category} className="mb-16">
-                            <div className="flex items-center gap-4 mb-8">
-                                <Badge className={getRatingCategoryColor(category)}>
-                                    {getRatingCategoryLabel(category)}
-                                </Badge>
-                                <h2 className="text-2xl font-bold text-foreground">
-                                    {institutionsList.length} Lembaga
-                                </h2>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {institutionsList.map((institution) => (
-                                    <Card key={institution.id} className="overflow-hidden transition-transform hover:scale-105">
-                                        <div className="relative p-6">
-                                            {!canAccessInstitution(institution) && (
-                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 rounded-lg">
-                                                    <div className="text-center text-white">
-                                                        <Lock className="w-8 h-8 mx-auto mb-2" />
-                                                        <p className="text-sm">Akses Premium</p>
+            {/* Institutions List */}
+            <section className="py-12">
+                <div className="container mx-auto px-4">
+                    {Object.keys(groupedInstitutions).length === 0 ? (
+                        <div className="text-center py-12">
+                            <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                                Tidak ada lembaga ditemukan
+                            </h3>
+                            <p className="text-gray-500">
+                                Coba ubah filter pencarian Anda
+                            </p>
+                        </div>
+                    ) : (
+                        Object.entries(groupedInstitutions).map(([category, categoryInstitutions]) => (
+                            <div key={category} className="mb-12">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${getCategoryColor(category)}`}>
+                                        <Award className="w-4 h-4" />
+                                    </div>
+                                    <h2 className="text-2xl font-bold">
+                                        Kategori {getCategoryName(category)}
+                                    </h2>
+                                    <Badge variant="secondary">
+                                        {categoryInstitutions.length} lembaga
+                                    </Badge>
+                                </div>
+                                
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {categoryInstitutions.map((institution) => (
+                                        <Card key={institution.id} className="card-hover">
+                                            <CardHeader>
+                                                <div className="flex items-start justify-between">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                                            <Building2 className="w-6 h-6 text-white" />
+                                                        </div>
+                                                        <div>
+                                                            <CardTitle className="text-lg">{institution.name}</CardTitle>
+                                                            <Badge className={getCategoryColor(institution.category)}>
+                                                                {getCategoryName(institution.category)}
+                                                            </Badge>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                                                        <span className="text-sm font-medium">{institution.rating}</span>
                                                     </div>
                                                 </div>
-                                            )}
-                                            
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <img src={institution.logo} alt={institution.name} className="w-16 h-16 rounded-lg object-cover" />
-                                                <div className="flex-1">
-                                                    <h3 className="text-lg font-semibold text-foreground">{institution.name}</h3>
-                                                    <Badge className={getCategoryColor(institution.category)}>
-                                                        {institution.category === 'premium' ? 'Premium' : 
-                                                         institution.category === 'standard' ? 'Standard' : 'Basic'}
-                                                    </Badge>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <p className="text-gray-600 mb-4">{institution.description}</p>
+                                                
+                                                <div className="space-y-2 mb-4">
+                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                        <Phone className="w-4 h-4" />
+                                                        <span>{institution.phone}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                        <Mail className="w-4 h-4" />
+                                                        <span>{institution.email}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                        <MapPin className="w-4 h-4" />
+                                                        <span className="truncate">{institution.address}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                                                        <Globe className="w-4 h-4" />
+                                                        <a 
+                                                            href={institution.website} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer"
+                                                            className="text-blue-600 hover:underline flex items-center gap-1"
+                                                        >
+                                                            {institution.website}
+                                                            <ExternalLink className="w-3 h-3" />
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <p className="text-sm text-muted-foreground mb-4">{institution.description}</p>
-                                            
-                                            <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-1">
-                                                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                                    <span className="text-sm font-medium">{institution.rating}</span>
-                                                    <span className="text-sm text-muted-foreground">({institution.reviews} ulasan)</span>
+                                                
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                                                        <span>{institution.reviews} ulasan</span>
+                                                        <div className="flex items-center gap-1">
+                                                            <Users className="w-4 h-4" />
+                                                            <span>1.2k siswa</span>
+                                                        </div>
+                                                    </div>
+                                                    <Button size="sm">
+                                                        Lihat Detail
+                                                        <ArrowRight className="ml-1 h-4 w-4" />
+                                                    </Button>
                                                 </div>
-                                                {institution.isPremium && (
-                                                    <Crown className="w-4 h-4 text-yellow-500" />
-                                                )}
-                                            </div>
-                                            
-                                            <div className="space-y-2 text-sm text-muted-foreground">
-                                                <div className="flex items-center gap-2">
-                                                    <Phone className="w-4 h-4" />
-                                                    <span>{institution.phone}</span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <Mail className="w-4 h-4" />
-                                                    <span>{institution.email}</span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <MapPin className="w-4 h-4" />
-                                                    <span className="truncate">{institution.address}</span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <Globe className="w-4 h-4" />
-                                                    <a href={institution.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                                                        {institution.website}
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="p-4 border-t">
-                                            <div className="flex gap-2">
-                                                <Button 
-                                                    className="flex-1" 
-                                                    disabled={!canAccessInstitution(institution)}
-                                                >
-                                                    Lihat Detail
-                                                </Button>
-                                                <Button 
-                                                    variant="outline" 
-                                                    size="sm"
-                                                    onClick={() => handleWhatsApp(institution)}
-                                                    disabled={!canAccessInstitution(institution)}
-                                                >
-                                                    💬 WA
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                ))}
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                    
-                    {Object.keys(groupedInstitutions).length === 0 && (
-                        <div className="text-center py-16">
-                            <Building2 className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                            <h3 className="text-lg font-semibold text-gray-600 mb-2">Tidak ada lembaga ditemukan</h3>
-                            <p className="text-gray-500">Coba ubah filter pencarian Anda</p>
-                        </div>
+                        ))
                     )}
                 </div>
             </section>
 
-            {/* Upgrade CTA Section */}
+            {/* Premium Upgrade CTA */}
             {!isPremiumUser && (
-                <section className="bg-gradient-to-r from-yellow-400 to-orange-500 py-16 text-white">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                        <h2 className="mb-4 text-3xl font-bold">Upgrade ke Premium</h2>
-                        <p className="mb-8 text-xl">
-                            Dapatkan akses penuh ke semua lembaga premium dan fitur eksklusif lainnya
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <section className="py-12 bg-gradient-to-r from-yellow-400 to-orange-500">
+                    <div className="container mx-auto px-4 text-center">
+                        <div className="max-w-2xl mx-auto">
+                            <Crown className="w-16 h-16 text-white mx-auto mb-4" />
+                            <h2 className="text-3xl font-bold text-white mb-4">
+                                Upgrade ke Premium
+                            </h2>
+                            <p className="text-white/90 mb-6">
+                                Dapatkan akses ke semua lembaga dan fitur premium lainnya
+                            </p>
                             <Button size="lg" className="bg-white text-orange-500 hover:bg-gray-100">
-                                <Crown className="mr-2 w-5 h-5" />
                                 Upgrade Sekarang
-                            </Button>
-                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-500">
-                                Pelajari Lebih Lanjut
+                                <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </div>
                     </div>
@@ -395,6 +366,4 @@ const Institutions: React.FC = () => {
             )}
         </GuestLayout>
     );
-};
-
-export default Institutions;
+}
