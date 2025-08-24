@@ -1,0 +1,2 @@
+import{j as e}from"./ui-BwMZXhck.js";import{A as r}from"./app-logo-icon-BSCX9sr6.js";function i(){return e.jsx(e.Fragment,{children:e.jsx("div",{className:"flex aspect-square size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground",children:e.jsx(r,{className:"size-5 fill-current text-white dark:text-black"})})})}export{i as A};
+//# sourceMappingURL=app-logo-DyOhsscK.js.map

@@ -1,0 +1,2 @@
+import{j as t}from"./ui-BwMZXhck.js";import{c as n}from"./button-BvJlm8Xz.js";import{x as a}from"./inertia-C2PwhFgr.js";function c({className:r="",children:o,...e}){return t.jsx(a,{className:n("text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500",r),...e,children:o})}export{c as T};
+//# sourceMappingURL=text-link-DWD4o-TH.js.map
