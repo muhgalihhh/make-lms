@@ -177,7 +177,7 @@ const Header = ({ className }: { className?: string }) => {
                     <div className="flex items-center">
                         <a href="/" className="flex items-center space-x-2">
                             <BookOpen className="h-8 w-8 text-primary" />
-                            <span className="text-xl font-bold text-gray-900 dark:text-white">AkademiKoding</span>
+                            <span className="text-xl font-bold text-gray-900 dark:text-white">Pare EDUHUB</span>
                         </a>
                     </div>
 
@@ -203,7 +203,7 @@ const Header = ({ className }: { className?: string }) => {
                         <ThemeToggle />
 
                         {/* Auth Buttons */}
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" onClick={() => alert('Masuk clicked')}>
                             Masuk
                         </Button>
                         <Button size="sm">Daftar</Button>
@@ -289,7 +289,7 @@ const Footer = ({ className }: { className?: string }) => {
                     <div className="lg:col-span-2">
                         <div className="flex items-center space-x-2">
                             <BookOpen className="h-8 w-8 text-primary" />
-                            <span className="text-xl font-bold text-white">AkademiKoding</span>
+                            <span className="text-xl font-bold text-white">Pare EDUHUB</span>
                         </div>
                         <p className="mt-4 max-w-md text-sm text-gray-400">
                             Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas untuk mengembangkan skill digital Anda.
