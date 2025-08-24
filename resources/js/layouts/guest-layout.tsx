@@ -1,20 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { 
-    BookOpen, 
-    ChevronDown, 
-    Facebook, 
-    Instagram, 
-    Linkedin, 
-    Mail, 
-    Menu, 
-    MessageSquare, 
-    Phone, 
-    Search, 
-    Twitter, 
-    X, 
-    Youtube 
-} from 'lucide-react';
+import { BookOpen, ChevronDown, Facebook, Instagram, Linkedin, Menu, Search, Twitter, X, Youtube } from 'lucide-react';
 import { useState, type PropsWithChildren, type ReactNode } from 'react';
 
 // --- Types ---
@@ -155,7 +141,7 @@ const NavigationDropdown = ({ item }: { item: NavigationItem }) => {
                 <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             {isOpen && (
-                <div className="absolute left-0 z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="ring-opacity-5 absolute left-0 z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black">
                     {item.children.map((child, index) => (
                         <a
                             key={index}
@@ -185,7 +171,7 @@ const Header = ({ className }: { className?: string }) => {
                     <div className="flex items-center">
                         <a href="/" className="flex items-center space-x-2">
                             <BookOpen className="h-8 w-8 text-primary" />
-                            <span className="text-xl font-bold text-gray-900">AkademiKoding</span>
+                            <span className="text-xl font-bold text-gray-900">Pare : Edu Hub</span>
                         </a>
                     </div>
 
@@ -211,9 +197,7 @@ const Header = ({ className }: { className?: string }) => {
                         <Button variant="ghost" size="sm">
                             Masuk
                         </Button>
-                        <Button size="sm">
-                            Daftar
-                        </Button>
+                        <Button size="sm">Daftar</Button>
                     </div>
 
                     {/* Mobile menu button */}
@@ -231,7 +215,7 @@ const Header = ({ className }: { className?: string }) => {
                 {/* Mobile Navigation */}
                 {isMobileMenuOpen && (
                     <div className="md:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2">
+                        <div className="space-y-1 px-2 pt-2 pb-3">
                             {NAVIGATION_ITEMS.map((item, index) => (
                                 <div key={index}>
                                     <a
@@ -241,7 +225,7 @@ const Header = ({ className }: { className?: string }) => {
                                         {item.label}
                                     </a>
                                     {item.children && (
-                                        <div className="ml-4 mt-1 space-y-1">
+                                        <div className="mt-1 ml-4 space-y-1">
                                             {item.children.map((child, childIndex) => (
                                                 <a
                                                     key={childIndex}
@@ -260,9 +244,7 @@ const Header = ({ className }: { className?: string }) => {
                             <Button variant="ghost" className="w-full justify-start">
                                 Masuk
                             </Button>
-                            <Button className="mt-2 w-full">
-                                Daftar
-                            </Button>
+                            <Button className="mt-2 w-full">Daftar</Button>
                         </div>
                     </div>
                 )}
@@ -271,11 +253,11 @@ const Header = ({ className }: { className?: string }) => {
                 {isSearchOpen && (
                     <div className="border-t border-gray-200 px-2 py-3">
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="text"
                                 placeholder="Cari kursus, tutorial, atau topik..."
-                                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                className="w-full rounded-md border border-gray-300 bg-white py-2 pr-4 pl-10 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                             />
                         </div>
                     </div>
@@ -317,14 +299,11 @@ const Footer = ({ className }: { className?: string }) => {
 
                     {/* Company */}
                     <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Perusahaan</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-white uppercase">Perusahaan</h3>
                         <ul className="mt-4 space-y-2">
                             {FOOTER_LINKS.company.map((link) => (
                                 <li key={link.label}>
-                                    <a
-                                        href={link.href}
-                                        className="text-sm text-gray-400 transition-colors hover:text-white"
-                                    >
+                                    <a href={link.href} className="text-sm text-gray-400 transition-colors hover:text-white">
                                         {link.label}
                                     </a>
                                 </li>
@@ -334,14 +313,11 @@ const Footer = ({ className }: { className?: string }) => {
 
                     {/* Resources */}
                     <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Sumber Daya</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-white uppercase">Sumber Daya</h3>
                         <ul className="mt-4 space-y-2">
                             {FOOTER_LINKS.resources.map((link) => (
                                 <li key={link.label}>
-                                    <a
-                                        href={link.href}
-                                        className="text-sm text-gray-400 transition-colors hover:text-white"
-                                    >
+                                    <a href={link.href} className="text-sm text-gray-400 transition-colors hover:text-white">
                                         {link.label}
                                     </a>
                                 </li>
@@ -351,14 +327,11 @@ const Footer = ({ className }: { className?: string }) => {
 
                     {/* Support */}
                     <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Dukungan</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-white uppercase">Dukungan</h3>
                         <ul className="mt-4 space-y-2">
                             {FOOTER_LINKS.support.map((link) => (
                                 <li key={link.label}>
-                                    <a
-                                        href={link.href}
-                                        className="text-sm text-gray-400 transition-colors hover:text-white"
-                                    >
+                                    <a href={link.href} className="text-sm text-gray-400 transition-colors hover:text-white">
                                         {link.label}
                                     </a>
                                 </li>
@@ -372,18 +345,12 @@ const Footer = ({ className }: { className?: string }) => {
                     <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                         <div className="flex flex-wrap justify-center space-x-6 text-sm text-gray-400">
                             {FOOTER_LINKS.legal.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    className="transition-colors hover:text-white"
-                                >
+                                <a key={link.label} href={link.href} className="transition-colors hover:text-white">
                                     {link.label}
                                 </a>
                             ))}
                         </div>
-                        <p className="text-sm text-gray-400">
-                            &copy; {new Date().getFullYear()} AkademiKoding. Semua hak dilindungi.
-                        </p>
+                        <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} AkademiKoding. Semua hak dilindungi.</p>
                     </div>
                 </div>
             </div>
@@ -424,9 +391,7 @@ export default function GuestLayout({
             {showHeader && <Header className={headerClassName} />}
 
             {/* Main Content */}
-            <main className={cn('flex-1', mainClassName)}>
-                {children}
-            </main>
+            <main className={cn('flex-1', mainClassName)}>{children}</main>
 
             {/* Footer */}
             {showFooter && <Footer className={footerClassName} />}

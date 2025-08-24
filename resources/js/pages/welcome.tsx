@@ -1,10 +1,10 @@
-import GuestLayout from '@/layouts/guest-layout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { ArrowRight, Award, BookOpen, CloudSun, Eye, LifeBuoy, Lock, MessageSquare, PlayCircle, Star, Users, Zap } from 'lucide-react';
+import { Card, CardFooter, CardHeader } from '@/components/ui/card';
+import GuestLayout from '@/layouts/guest-layout';
+import { ArrowRight, Award, BookOpen, MessageSquare, PlayCircle, Star, Users, Zap } from 'lucide-react';
 import React from 'react';
 
 // --- Tipe Data (sesuai migrasi) ---
@@ -29,7 +29,7 @@ interface Review {
     rating: number;
 }
 
-const WelcomeWithLayout: React.FC = () => {
+const Welcome: React.FC = () => {
     // --- Data Statis (Contoh) ---
     const NAMA_LEMBAGA = 'Akademi Koding Pro'; // Ganti dengan nama lembaga Anda
 
@@ -183,16 +183,16 @@ const WelcomeWithLayout: React.FC = () => {
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/80 py-20 text-white">
                 <div className="absolute inset-0 bg-black/20" />
-                <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl text-center">
-                        <h1 className="mb-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                        <h1 className="mb-6 text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
                             Belajar Skill Digital
                             <span className="block text-primary-foreground">Untuk Masa Depan</span>
                         </h1>
                         <p className="mb-8 text-xl text-primary-foreground/90 sm:text-2xl">
                             Platform pembelajaran online terpercaya dengan ribuan kursus berkualitas dari para ahli di bidangnya.
                         </p>
-                        <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                        <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                             <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                                 Mulai Belajar Gratis
                                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -213,9 +213,7 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                            Mengapa Memilih {NAMA_LEMBAGA}?
-                        </h2>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Mengapa Memilih {NAMA_LEMBAGA}?</h2>
                         <p className="text-lg text-gray-600">
                             Kami berkomitmen memberikan pengalaman belajar terbaik dengan berbagai fitur unggulan.
                         </p>
@@ -238,25 +236,15 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="bg-gray-50 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                            Kursus Pro Terpopuler
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.
-                        </p>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Kursus Pro Terpopuler</h2>
+                        <p className="text-lg text-gray-600">Tingkatkan skill Anda dengan kursus premium yang dirancang oleh para ahli.</p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {proCourses.map((course) => (
                             <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
                                 <div className="relative">
-                                    <img
-                                        src={course.thumbnail}
-                                        alt={course.title}
-                                        className="h-48 w-full object-cover"
-                                    />
-                                    <Badge className="absolute right-2 top-2 bg-primary text-primary-foreground">
-                                        PRO
-                                    </Badge>
+                                    <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
+                                    <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">PRO</Badge>
                                 </div>
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
@@ -274,9 +262,7 @@ const WelcomeWithLayout: React.FC = () => {
                                         <Users className="mr-1 h-4 w-4" />
                                         {course.students.toLocaleString()} siswa
                                     </div>
-                                    <div className="text-lg font-bold text-primary">
-                                        Rp {course.price.toLocaleString()}
-                                    </div>
+                                    <div className="text-lg font-bold text-primary">Rp {course.price.toLocaleString()}</div>
                                 </CardFooter>
                             </Card>
                         ))}
@@ -288,25 +274,15 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                            Mulai Gratis
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.
-                        </p>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Mulai Gratis</h2>
+                        <p className="text-lg text-gray-600">Tidak perlu khawatir tentang biaya. Mulai belajar dengan kursus gratis kami.</p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {freeCourses.map((course) => (
                             <Card key={course.id} className="overflow-hidden transition-transform hover:scale-105">
                                 <div className="relative">
-                                    <img
-                                        src={course.thumbnail}
-                                        alt={course.title}
-                                        className="h-48 w-full object-cover"
-                                    />
-                                    <Badge className="absolute right-2 top-2 bg-green-500 text-white">
-                                        GRATIS
-                                    </Badge>
+                                    <img src={course.thumbnail} alt={course.title} className="h-48 w-full object-cover" />
+                                    <Badge className="absolute top-2 right-2 bg-green-500 text-white">GRATIS</Badge>
                                 </div>
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
@@ -336,12 +312,8 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="bg-gray-50 py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                            Apa Kata Mereka?
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.
-                        </p>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Apa Kata Mereka?</h2>
+                        <p className="text-lg text-gray-600">Ribuan siswa telah merasakan manfaat belajar di {NAMA_LEMBAGA}.</p>
                     </div>
                     <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
                         {reviews.map((review) => (
@@ -360,11 +332,7 @@ const WelcomeWithLayout: React.FC = () => {
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-                                            className={`h-4 w-4 ${
-                                                i < review.rating
-                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'text-gray-300'
-                                            }`}
+                                            className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
                                         />
                                     ))}
                                 </div>
@@ -379,20 +347,14 @@ const WelcomeWithLayout: React.FC = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-                            Pertanyaan yang Sering Diajukan
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            Temukan jawaban untuk pertanyaan umum seputar platform kami.
-                        </p>
+                        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">Pertanyaan yang Sering Diajukan</h2>
+                        <p className="text-lg text-gray-600">Temukan jawaban untuk pertanyaan umum seputar platform kami.</p>
                     </div>
                     <div className="mx-auto mt-12 max-w-4xl">
                         <Accordion type="single" collapsible className="w-full">
                             {faqs.map((faq, index) => (
                                 <AccordionItem key={index} value={`item-${index}`}>
-                                    <AccordionTrigger className="text-left">
-                                        {faq.question}
-                                    </AccordionTrigger>
+                                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                                     <AccordionContent>{faq.answer}</AccordionContent>
                                 </AccordionItem>
                             ))}
@@ -404,13 +366,11 @@ const WelcomeWithLayout: React.FC = () => {
             {/* CTA Section */}
             <section className="bg-primary py-16 text-white">
                 <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-                    <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-                        Siap Memulai Perjalanan Belajar Anda?
-                    </h2>
+                    <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Siap Memulai Perjalanan Belajar Anda?</h2>
                     <p className="mb-8 text-xl text-primary-foreground/90">
                         Bergabunglah dengan ribuan pelajar lainnya dan mulai bangun masa depan tech Anda hari ini.
                     </p>
-                    <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                    <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                         <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                             Daftar Sekarang
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -429,4 +389,4 @@ const WelcomeWithLayout: React.FC = () => {
     );
 };
 
-export default WelcomeWithLayout;
+export default Welcome;
