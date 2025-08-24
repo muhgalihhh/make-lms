@@ -24,7 +24,10 @@ import {
     CheckCircle,
     Heart,
     Shield,
-    Clock
+    Clock,
+    GraduationCap,
+    Zap,
+    Target
 } from 'lucide-react';
 
 interface Institution {
@@ -99,7 +102,7 @@ const getCategoryColor = (category: string) => {
 export default function Welcome() {
     return (
         <GuestLayout>
-            <Head title="Beranda - Pare EDUHUB LMS" />
+            <Head title="Beranda - Pare EDU HUB" />
             
             {/* Tawk.to Chat Integration */}
             <TawkToChat propertyId="your-property-id" widgetId="your-widget-id" />
@@ -107,13 +110,16 @@ export default function Welcome() {
             {/* Hero Section */}
             <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white py-20">
                 <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                        Selamat Datang di{' '}
-                        <span className="text-yellow-300">Pare EDUHUB</span>
-                    </h1>
+                    <div className="mb-6">
+                        <GraduationCap className="w-16 h-16 mx-auto text-yellow-300 mb-4" />
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                            Selamat Datang di{' '}
+                            <span className="text-yellow-300">Pare EDU HUB</span>
+                        </h1>
+                    </div>
                     <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                        Platform pembelajaran online terdepan untuk lembaga pendidikan di Pare, 
-                        menghubungkan siswa dengan lembaga berkualitas.
+                        Platform pembelajaran online eksklusif untuk lembaga pendidikan di Pare. 
+                        Temukan kursus berkualitas dari lembaga terpercaya.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" className="bg-yellow-400 text-gray-900 hover:bg-yellow-300">
@@ -138,25 +144,25 @@ export default function Welcome() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
-                                        <Award className="h-5 w-5 text-blue-600" />
+                                        <Zap className="h-5 w-5 text-blue-600" />
                                         Akses Cepat
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2">
+                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2 hover:bg-blue-50">
                                             <Building2 className="h-6 w-6 text-blue-600" />
                                             <span className="text-sm">Lembaga</span>
                                         </Button>
-                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2">
+                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2 hover:bg-purple-50">
                                             <Award className="h-6 w-6 text-purple-600" />
                                             <span className="text-sm">Kelas Pro</span>
                                         </Button>
-                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2">
+                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2 hover:bg-green-50">
                                             <BookOpen className="h-6 w-6 text-green-600" />
                                             <span className="text-sm">Kelas Gratis</span>
                                         </Button>
-                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2">
+                                        <Button variant="outline" className="h-20 flex flex-col items-center justify-center gap-2 hover:bg-orange-50">
                                             <MessageSquare className="h-6 w-6 text-orange-600" />
                                             <span className="text-sm">Katalog WA</span>
                                         </Button>
@@ -182,7 +188,7 @@ export default function Welcome() {
                     
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {institutions.map((institution) => (
-                            <Card key={institution.id} className="card-hover">
+                            <Card key={institution.id} className="hover:shadow-lg transition-shadow duration-300">
                                 <CardHeader>
                                     <div className="flex items-start justify-between">
                                         <div className="flex items-center gap-3">
@@ -204,7 +210,6 @@ export default function Welcome() {
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-gray-600 mb-4">{institution.description}</p>
-                                    
                                     <div className="space-y-2 mb-4">
                                         <div className="flex items-center gap-2 text-sm text-gray-500">
                                             <Phone className="w-4 h-4" />
@@ -218,17 +223,13 @@ export default function Welcome() {
                                             <MapPin className="w-4 h-4" />
                                             <span>{institution.address}</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                                            <Globe className="w-4 h-4" />
-                                            <span>{institution.website}</span>
-                                        </div>
                                     </div>
-                                    
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm text-gray-500">
-                                            {institution.reviews} ulasan
-                                        </span>
-                                        <Button size="sm">
+                                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                                            <Users className="w-4 h-4" />
+                                            <span>{institution.reviews} ulasan</span>
+                                        </div>
+                                        <Button size="sm" variant="outline">
                                             Lihat Detail
                                             <ArrowRight className="ml-1 h-4 w-4" />
                                         </Button>
@@ -253,340 +254,76 @@ export default function Welcome() {
                     </div>
                     
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <Card className="text-center p-6">
-                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Award className="w-8 h-8 text-blue-600" />
+                        <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <Award className="w-6 h-6 text-blue-600" />
                             </div>
-                            <h3 className="text-xl font-semibold mb-2">Kelas Premium</h3>
-                            <p className="text-gray-600">Akses ke kelas berkualitas tinggi dengan instruktur profesional</p>
-                        </Card>
-                        
-                        <Card className="text-center p-6">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <BookOpen className="w-8 h-8 text-green-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Kelas Gratis</h3>
-                            <p className="text-gray-600">Materi pembelajaran dasar yang dapat diakses tanpa biaya</p>
-                        </Card>
-                        
-                        <Card className="text-center p-6">
-                            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <MessageSquare className="w-8 h-8 text-purple-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Konsultasi WA</h3>
-                            <p className="text-gray-600">Hubungi langsung lembaga melalui WhatsApp untuk informasi lebih lanjut</p>
-                        </Card>
-                        
-                        <Card className="text-center p-6">
-                            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Bed className="w-8 h-8 text-orange-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Booking Hotel</h3>
-                            <p className="text-gray-600">Temukan dan pesan akomodasi terdekat dengan lembaga pendidikan</p>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Pro Courses Preview */}
-            <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                            Kelas Premium
-                        </h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">
-                            Tingkatkan kemampuan Anda dengan kelas premium yang dirancang khusus
-                        </p>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <Badge className="bg-yellow-500 text-white">Terpopuler</Badge>
-                                    <span className="text-2xl font-bold text-blue-600">Rp 2.500.000</span>
-                                </div>
-                                <CardTitle>Kelas Bahasa Inggris Intensif</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <span className="text-sm">4.9 (150 ulasan)</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1.2k siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Program intensif 3 bulan dengan metode kampung Inggris yang terbukti efektif.
-                                </p>
-                                <Button className="w-full">
-                                    Daftar Sekarang
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Button>
-                            </CardContent>
-                        </Card>
-                        
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <Badge className="bg-green-500 text-white">Baru</Badge>
-                                    <span className="text-2xl font-bold text-blue-600">Rp 1.800.000</span>
-                                </div>
-                                <CardTitle>Kelas TOEFL Preparation</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <span className="text-sm">4.8 (89 ulasan)</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">856 siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Persiapan lengkap untuk tes TOEFL dengan strategi dan latihan intensif.
-                                </p>
-                                <Button className="w-full">
-                                    Daftar Sekarang
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Button>
-                            </CardContent>
-                        </Card>
-                        
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <Badge className="bg-purple-500 text-white">Premium</Badge>
-                                    <span className="text-2xl font-bold text-blue-600">Rp 3.200.000</span>
-                                </div>
-                                <CardTitle>Kelas IELTS Master</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <span className="text-sm">4.9 (203 ulasan)</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1.5k siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Program master untuk mencapai skor IELTS tinggi dengan bimbingan expert.
-                                </p>
-                                <Button className="w-full">
-                                    Daftar Sekarang
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Free Courses Preview */}
-            <section className="py-16 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                            Kelas Gratis
-                        </h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">
-                            Mulai perjalanan belajar Anda dengan kelas gratis yang berkualitas
-                        </p>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <BookOpen className="w-5 h-5 text-green-600" />
-                                    Dasar Bahasa Inggris
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">2 jam</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">2.5k siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Pelajari dasar-dasar bahasa Inggris dengan metode yang mudah dipahami.
-                                </p>
-                                <div className="flex gap-2">
-                                    <Button variant="outline" size="sm" className="flex-1">
-                                        <PlayCircle className="w-4 h-4 mr-1" />
-                                        Mulai
-                                    </Button>
-                                    <Button variant="outline" size="sm">
-                                        <Download className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                        
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <BookOpen className="w-5 h-5 text-green-600" />
-                                    Grammar Dasar
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1.5 jam</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1.8k siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Kuasai tata bahasa Inggris dasar dengan penjelasan yang jelas dan contoh.
-                                </p>
-                                <div className="flex gap-2">
-                                    <Button variant="outline" size="sm" className="flex-1">
-                                        <PlayCircle className="w-4 h-4 mr-1" />
-                                        Mulai
-                                    </Button>
-                                    <Button variant="outline" size="sm">
-                                        <Download className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                        
-                        <Card className="card-hover">
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <BookOpen className="w-5 h-5 text-green-600" />
-                                    Pronunciation
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1 jam</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Users className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm">1.2k siswa</span>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    Pelajari cara pengucapan yang benar dalam bahasa Inggris.
-                                </p>
-                                <div className="flex gap-2">
-                                    <Button variant="outline" size="sm" className="flex-1">
-                                        <PlayCircle className="w-4 h-4 mr-1" />
-                                        Mulai
-                                    </Button>
-                                    <Button variant="outline" size="sm">
-                                        <Download className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Testimonials */}
-            <section className="py-16 bg-gray-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                            Apa Kata Mereka
-                        </h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">
-                            Testimoni dari siswa yang telah merasakan manfaat platform kami
-                        </p>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <Card className="p-6">
-                            <div className="flex items-center gap-1 mb-4">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                                ))}
-                            </div>
-                            <p className="text-gray-600 mb-4">
-                                "Platform yang sangat membantu untuk menemukan lembaga berkualitas. 
-                                Saya berhasil meningkatkan kemampuan bahasa Inggris dengan signifikan."
+                            <h3 className="text-lg font-semibold mb-2">Kelas Pro</h3>
+                            <p className="text-gray-600 text-sm">
+                                Akses materi lengkap dengan pembayaran melalui QRIS
                             </p>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white font-semibold">A</span>
-                                </div>
-                                <div>
-                                    <p className="font-semibold">Ahmad Rizki</p>
-                                    <p className="text-sm text-gray-500">Mahasiswa</p>
-                                </div>
-                            </div>
                         </Card>
                         
-                        <Card className="p-6">
-                            <div className="flex items-center gap-1 mb-4">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                                ))}
+                        <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+                            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <BookOpen className="w-6 h-6 text-green-600" />
                             </div>
-                            <p className="text-gray-600 mb-4">
-                                "Kelas gratis sangat bermanfaat untuk memulai belajar. 
-                                Materinya berkualitas dan mudah dipahami."
+                            <h3 className="text-lg font-semibold mb-2">Kelas Gratis</h3>
+                            <p className="text-gray-600 text-sm">
+                                Materi dasar gratis, upgrade ke pro untuk konten lengkap
                             </p>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white font-semibold">S</span>
-                                </div>
-                                <div>
-                                    <p className="font-semibold">Sarah Putri</p>
-                                    <p className="text-sm text-gray-500">Karyawan</p>
-                                </div>
-                            </div>
                         </Card>
                         
-                        <Card className="p-6">
-                            <div className="flex items-center gap-1 mb-4">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                                ))}
+                        <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+                            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <Download className="w-6 h-6 text-purple-600" />
                             </div>
-                            <p className="text-gray-600 mb-4">
-                                "Fitur booking hotel sangat praktis. 
-                                Tidak perlu repot mencari akomodasi saat mengikuti kursus."
+                            <h3 className="text-lg font-semibold mb-2">Download PDF</h3>
+                            <p className="text-gray-600 text-sm">
+                                Download materi dalam format PDF untuk belajar offline
                             </p>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white font-semibold">M</span>
-                                </div>
-                                <div>
-                                    <p className="font-semibold">Maya Sari</p>
-                                    <p className="text-sm text-gray-500">Pelajar</p>
-                                </div>
+                        </Card>
+                        
+                        <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+                            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <MessageSquare className="w-6 h-6 text-orange-600" />
                             </div>
+                            <h3 className="text-lg font-semibold mb-2">Live Chat</h3>
+                            <p className="text-gray-600 text-sm">
+                                Konsultasi langsung dengan tim support kami
+                            </p>
                         </Card>
                     </div>
                 </div>
             </section>
 
             {/* Emergency Help Section */}
-            <EmergencyHelp />
+            <section className="py-16 bg-gray-50">
+                <div className="container mx-auto px-4">
+                    <EmergencyHelp />
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                        Siap Memulai Perjalanan Belajar?
+                    </h2>
+                    <p className="text-xl mb-8 max-w-2xl mx-auto">
+                        Bergabunglah dengan ribuan siswa yang telah merasakan manfaat pembelajaran di Pare EDU HUB
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button size="lg" className="bg-yellow-400 text-gray-900 hover:bg-yellow-300">
+                            Daftar Sekarang
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-900">
+                            Pelajari Lebih Lanjut
+                        </Button>
+                    </div>
+                </div>
+            </section>
         </GuestLayout>
     );
 }

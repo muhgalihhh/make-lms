@@ -23,26 +23,48 @@ export default function TawkToChat({ propertyId, widgetId }: TawkToChatProps) {
         
         document.head.appendChild(script);
 
-        // Initialize Tawk.to
-        window.Tawk_LoadStart = new Date();
-        
-        window.Tawk_API = window.Tawk_API || {};
-        window.Tawk_API.onLoad = function() {
-            console.log('Tawk.to loaded successfully');
-        };
-        
-        window.Tawk_API.onStatusChange = function(status: string) {
-            console.log('Tawk.to status changed:', status);
+        // Initialize Tawk.to when script loads
+        script.onload = () => {
+            if (window.Tawk_API) {
+                // Set visitor information
+                window.Tawk_API.onLoad = function() {
+                    window.Tawk_API.setAttributes({
+                        'name': 'Pare EDU HUB Visitor',
+                        'email': 'visitor@pareeduhub.com',
+                        'role': 'visitor'
+                    }, function(error: any) {
+                        if (error) {
+                            console.error('Error setting Tawk.to attributes:', error);
+                        }
+                    });
+                };
+
+                // Handle chat events
+                window.Tawk_API.onStatusChange = function(status: string) {
+                    console.log('Tawk.to status changed:', status);
+                };
+
+                // Handle chat messages
+                window.Tawk_API.onBeforeLoad = function() {
+                    console.log('Tawk.to chat is loading...');
+                };
+
+                // Handle chat loaded
+                window.Tawk_API.onLoad = function() {
+                    console.log('Tawk.to chat loaded successfully');
+                };
+            }
         };
 
+        // Cleanup function
         return () => {
-            // Cleanup script when component unmounts
-            const existingScript = document.querySelector(`script[src*="${propertyId}"]`);
-            if (existingScript) {
-                document.head.removeChild(existingScript);
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
             }
         };
     }, [propertyId, widgetId]);
 
-    return null; // This component doesn't render anything visible
+    // This component doesn't render anything visible
+    // It only loads the Tawk.to script and initializes the chat widget
+    return null;
 }
