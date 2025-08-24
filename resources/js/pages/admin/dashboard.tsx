@@ -1,493 +1,342 @@
 // resources/js/pages/admin/dashboard.tsx
 
+import { Head } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { StatCard } from '@/components/stat-card';
-import { ActivityItem } from '@/components/activity-item';
-import { ChartCard, LineChartComponent, BarChartComponent, PieChartComponent } from '@/components/ui/charts';
-import { DashboardFilters } from '@/components/dashboard-filters';
-import { StatsSummary } from '@/components/stats-summary';
-import { OverviewChart } from '@/components/overview-chart';
-import AdminLayout from '@/layouts/admin-layout';
-import { type BreadcrumbItem, type PageProps, type User } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { BookOpen, Users, TrendingUp, DollarSign, ArrowRight, Calendar, Mail, BarChart3, Crown, Download, UserCheck, UserX, Building2, RefreshCw, Bell } from 'lucide-react';
-import { useState } from 'react';
-import { useFormToast } from '@/hooks/use-form-toast';
+import { Badge } from '@/components/ui/badge';
+import AuthenticatedLayout from '@/layouts/authenticated-layout';
+import {
+    Users,
+    Building2,
+    BookOpen,
+    CreditCard,
+    TrendingUp,
+    TrendingDown,
+    DollarSign,
+    Award,
+    ArrowRight,
+    Calendar,
+    Target,
+    Settings
+} from 'lucide-react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: route('admin.dashboard'),
-    },
-];
-
-interface Stats {
-    totalUsers: number;
-    totalCourses: number;
+interface AdminDashboardProps {
+    auth: {
+        user: {
+            id: number;
+            name: string;
+            email: string;
+            role: string;
+        };
+    };
 }
 
-interface DashboardProps extends PageProps {
-    stats: Stats;
-    recentUsers: User[];
-}
-
-export default function Dashboard({ stats, recentUsers }: DashboardProps) {
-    const [chartPeriod, setChartPeriod] = useState('30d');
-    const { showSuccess, showError, showWarning, showInfo } = useFormToast();
-
-    const handleRefreshData = () => {
-        showInfo('Memperbarui data dashboard...');
-        // Simulasi refresh data
-        setTimeout(() => {
-            showSuccess('Data dashboard berhasil diperbarui!');
-        }, 1000);
+export default function AdminDashboard({ auth }: AdminDashboardProps) {
+    // Mock data untuk admin dashboard
+    const adminStats = {
+        totalUsers: 1250,
+        totalInstitutions: 15,
+        totalCourses: 50,
+        totalRevenue: 25000000,
+        newUsersThisMonth: 45,
+        activeCourses: 35,
+        pendingTransactions: 8,
+        averageRating: 4.7
     };
 
-    const handleSendNotification = () => {
-        showWarning('Mengirim notifikasi ke semua pengguna...');
-        // Simulasi kirim notifikasi
-        setTimeout(() => {
-            showSuccess('Notifikasi berhasil dikirim ke 1,247 pengguna!');
-        }, 1500);
-    };
-
-    // Data untuk chart pendaftaran
-    const registrationData = [
-        { month: 'Jan', regular: 45, premium: 12 },
-        { month: 'Feb', regular: 52, premium: 18 },
-        { month: 'Mar', regular: 38, premium: 15 },
-        { month: 'Apr', regular: 67, premium: 25 },
-        { month: 'May', regular: 73, premium: 32 },
-        { month: 'Jun', regular: 89, premium: 41 },
-    ];
-
-    // Data untuk chart bulanan
-    const monthlyData = [
-        { month: 'Jan', pendaftar: 57 },
-        { month: 'Feb', pendaftar: 70 },
-        { month: 'Mar', pendaftar: 53 },
-        { month: 'Apr', pendaftar: 92 },
-        { month: 'May', pendaftar: 105 },
-        { month: 'Jun', pendaftar: 130 },
-    ];
-
-    // Data untuk pie chart tipe user
-    const userTypeData = [
-        { name: 'Regular', value: 1250 },
-        { name: 'Premium', value: 320 },
-        { name: 'Enterprise', value: 85 },
-    ];
-
-    // Data untuk overview chart
-    const overviewData = [
-        { name: 'Jan', users: 1200, courses: 45, revenue: 1800000 },
-        { name: 'Feb', users: 1250, courses: 48, revenue: 1900000 },
-        { name: 'Mar', users: 1300, courses: 52, revenue: 2100000 },
-        { name: 'Apr', users: 1280, courses: 50, revenue: 2000000 },
-        { name: 'May', users: 1350, courses: 55, revenue: 2200000 },
-        { name: 'Jun', users: 1400, courses: 58, revenue: 2300000 },
-        { name: 'Jul', users: 1450, courses: 62, revenue: 2400000 },
-        { name: 'Aug', users: 1500, courses: 65, revenue: 2500000 },
-    ];
-
-    // Data untuk statistik detail
-    const detailedStats = [
+    const recentUsers = [
         {
-            label: 'Pendaftar Baru',
-            value: 89,
-            change: '+12%',
-            isPositive: true,
-            icon: UserCheck,
-            color: '#10b981'
+            id: 1,
+            name: "Ahmad Rizki",
+            email: "ahmad@example.com",
+            joinedAt: "2 jam yang lalu",
+            status: "active"
         },
         {
-            label: 'User Aktif',
-            value: 1247,
-            change: '+8%',
-            isPositive: true,
-            icon: Users,
-            color: '#3b82f6'
+            id: 2,
+            name: "Sarah Putri",
+            email: "sarah@example.com",
+            joinedAt: "4 jam yang lalu",
+            status: "active"
         },
         {
-            label: 'User Non-Aktif',
-            value: 23,
-            change: '-3%',
-            isPositive: false,
-            icon: UserX,
-            color: '#ef4444'
-        },
-        {
-            label: 'Conversion Rate',
-            value: '15.2%',
-            change: '+2.1%',
-            isPositive: true,
-            icon: TrendingUp,
-            color: '#f59e0b'
+            id: 3,
+            name: "Michael Chen",
+            email: "michael@example.com",
+            joinedAt: "1 hari yang lalu",
+            status: "pending"
         }
     ];
 
-    // Data untuk mini charts
-    const userTrendData = [
-        { value: 1200 }, { value: 1250 }, { value: 1300 }, { value: 1280 }, 
-        { value: 1350 }, { value: 1400 }, { value: 1450 }, { value: 1500 }
-    ];
-    
-    const courseTrendData = [
-        { value: 45 }, { value: 48 }, { value: 52 }, { value: 50 }, 
-        { value: 55 }, { value: 58 }, { value: 62 }, { value: 65 }
-    ];
-    
-    const revenueTrendData = [
-        { value: 1800000 }, { value: 1900000 }, { value: 2100000 }, { value: 2000000 }, 
-        { value: 2200000 }, { value: 2300000 }, { value: 2400000 }, { value: 2500000 }
-    ];
-    
-    const growthTrendData = [
-        { value: 12 }, { value: 13 }, { value: 14 }, { value: 13.5 }, 
-        { value: 15 }, { value: 15.5 }, { value: 16 }, { value: 15.2 }
+    const recentTransactions = [
+        {
+            id: 1,
+            user: "Ahmad Rizki",
+            course: "Kelas Bahasa Inggris Intensif",
+            amount: 2500000,
+            status: "completed",
+            date: "2 jam yang lalu"
+        },
+        {
+            id: 2,
+            user: "Sarah Putri",
+            course: "TOEFL Preparation",
+            amount: 1800000,
+            status: "pending",
+            date: "4 jam yang lalu"
+        },
+        {
+            id: 3,
+            user: "Michael Chen",
+            course: "IELTS Master Class",
+            amount: 3200000,
+            status: "completed",
+            date: "1 hari yang lalu"
+        }
     ];
 
-    const handleExportData = () => {
-        // Implement export functionality
-        console.log('Exporting dashboard data...');
-    };
+    const topInstitutions = [
+        {
+            id: 1,
+            name: "Pare English Course",
+            rating: 4.8,
+            students: 500,
+            revenue: 12500000
+        },
+        {
+            id: 2,
+            name: "Kampung Inggris Global",
+            rating: 4.6,
+            students: 350,
+            revenue: 8750000
+        },
+        {
+            id: 3,
+            name: "English Village Pare",
+            rating: 4.4,
+            students: 280,
+            revenue: 7000000
+        }
+    ];
 
     return (
-        <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Dashboard</h1>
-                        <p className="text-sm text-muted-foreground sm:text-base">
-                            Selamat datang! Kelola profil institusi dan pantau perkembangan platform kursus online Anda.
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm">
-                            <Calendar className="mr-2 h-4 w-4" />
-                            Today
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={handleExportData}>
-                            <Download className="mr-2 h-4 w-4" />
-                            Export
-                        </Button>
-                    </div>
-                </div>
+        <AuthenticatedLayout user={auth.user}>
+            <Head title="Admin Dashboard - Pare EDU HUB" />
+            
+            {/* Welcome Section */}
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    Admin Dashboard 👨‍💼
+                </h1>
+                <p className="text-gray-600">
+                    Kelola platform Pare EDU HUB dan pantau performa sistem
+                </p>
+            </div>
 
-                {/* Dashboard Filters */}
-                <DashboardFilters
-                    period={chartPeriod}
-                    onPeriodChange={setChartPeriod}
-                    onExport={handleExportData}
-                    showExport={true}
-                />
-
-                {/* Stats Cards */}
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <StatCard
-                        title="Total Pengguna"
-                        value={stats.totalUsers}
-                        description="dari bulan lalu"
-                        icon={Users}
-                        trend={{ value: "+12%", isPositive: true }}
-                        chartData={userTrendData}
-                    />
-                    
-                    <StatCard
-                        title="Total Kursus"
-                        value={stats.totalCourses}
-                        description="dari bulan lalu"
-                        icon={BookOpen}
-                        trend={{ value: "+8%", isPositive: true }}
-                        chartData={courseTrendData}
-                    />
-
-                    <StatCard
-                        title="Pendapatan"
-                        value="Rp 2.4M"
-                        description="dari bulan lalu"
-                        icon={DollarSign}
-                        trend={{ value: "+23%", isPositive: true }}
-                        chartData={revenueTrendData}
-                    />
-
-                    <StatCard
-                        title="Pertumbuhan"
-                        value="+15.2%"
-                        description="dari bulan lalu"
-                        icon={TrendingUp}
-                        trend={{ value: "+2.1%", isPositive: true }}
-                        chartData={growthTrendData}
-                    />
-                </div>
-
-                {/* Overview Chart */}
-                <OverviewChart
-                    title="Overview Platform"
-                    description="Perkembangan users, courses, dan revenue dalam 8 bulan terakhir"
-                    data={overviewData}
-                    categories={["users", "courses", "revenue"]}
-                    colors={["#3b82f6", "#10b981", "#f59e0b"]}
-                    valueFormatter={(value) => {
-                        if (value >= 1000000) {
-                            return `Rp ${(value / 1000000).toFixed(1)}M`
-                        }
-                        return value.toString()
-                    }}
-                />
-
-                {/* Charts Section */}
-                <div className="grid gap-6 lg:grid-cols-2">
-                    {/* User Registration Trend */}
-                    <ChartCard
-                        title="Trend Pendaftaran"
-                        description="Perbandingan pendaftar regular vs premium"
-                        trend={{
-                            value: "+18%",
-                            isPositive: true,
-                            label: "vs bulan lalu"
-                        }}
-                    >
-                        <LineChartComponent
-                            data={registrationData}
-                            index="month"
-                            categories={["regular", "premium"]}
-                            colors={["#3b82f6", "#10b981"]}
-                        />
-                    </ChartCard>
-
-                    {/* User Types Distribution */}
-                    <ChartCard
-                        title="Distribusi Tipe User"
-                        description="Persentase berdasarkan tipe user"
-                        trend={{
-                            value: "+5%",
-                            isPositive: true,
-                            label: "Premium growth"
-                        }}
-                    >
-                        <PieChartComponent data={userTypeData} />
-                    </ChartCard>
-                </div>
-
-                {/* Monthly Registration Stats */}
-                <ChartCard
-                    title="Pendaftaran Bulanan"
-                    description="Total pendaftar per bulan"
-                >
-                    <BarChartComponent
-                        data={monthlyData}
-                        index="month"
-                        categories={["pendaftar"]}
-                        colors={["#3b82f6"]}
-                    />
-                </ChartCard>
-
-                {/* Detailed Statistics and Recent Activity */}
-                <div className="grid gap-6 lg:grid-cols-2">
-                    <StatsSummary
-                        title="Statistik Detail User"
-                        stats={detailedStats}
-                    />
-                    
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-lg">Aktivitas Terbaru</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <ActivityItem
-                                title="User baru mendaftar"
-                                time="2 menit yang lalu"
-                                icon={Users}
-                                iconBgColor="bg-green-100"
-                                iconColor="text-green-600"
-                            />
-                            
-                            <ActivityItem
-                                title="Kursus baru ditambahkan"
-                                time="1 jam yang lalu"
-                                icon={BookOpen}
-                                iconBgColor="bg-blue-100"
-                                iconColor="text-blue-600"
-                            />
-                            
-                            <ActivityItem
-                                title="Transaksi berhasil"
-                                time="3 jam yang lalu"
-                                icon={DollarSign}
-                                iconBgColor="bg-yellow-100"
-                                iconColor="text-yellow-600"
-                            />
-                            
-                            <ActivityItem
-                                title="Laporan bulanan selesai"
-                                time="1 hari yang lalu"
-                                icon={TrendingUp}
-                                iconBgColor="bg-purple-100"
-                                iconColor="text-purple-600"
-                            />
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* Institution Profile Management */}
+            {/* Stats Cards */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <Card>
-                    <CardHeader className="pb-3">
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <CardTitle className="text-lg">Profil Institusi</CardTitle>
-                            <Button variant="ghost" size="sm" asChild>
-                                <Link href={route('admin.institutions.index')}>
-                                    Kelola Profil
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+                        <Users className="h-4 w-4 text-blue-600" />
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center p-4 border rounded-lg bg-blue-50">
-                            <Building2 className="h-8 w-8 text-blue-600 shrink-0" />
-                            <div className="flex-1 min-w-0">
-                                <h4 className="font-medium text-blue-900">Profil Institusi</h4>
-                                <p className="text-sm text-blue-700">
-                                    Kelola informasi profil institusi untuk platform kursus online Anda
-                                </p>
-                            </div>
-                            <Button variant="outline" size="sm" asChild className="shrink-0">
-                                <Link href={route('admin.institutions.index')}>
-                                    Lihat Profil
-                                </Link>
-                            </Button>
-                        </div>
-                        
-                        <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="p-4 border rounded-lg">
-                                <div className="flex items-center justify-between mb-2">
-                                    <h4 className="font-medium text-sm">Status Profil</h4>
-                                    <Badge variant="default" className="text-xs">Aktif</Badge>
-                                </div>
-                                <p className="text-xs text-muted-foreground">
-                                    Profil institusi sudah terdaftar dan aktif
-                                </p>
-                            </div>
-                            
-                            <div className="p-4 border rounded-lg">
-                                <div className="flex items-center justify-between mb-2">
-                                    <h4 className="font-medium text-sm">Kelengkapan Data</h4>
-                                    <Badge variant="secondary" className="text-xs">Lengkap</Badge>
-                                </div>
-                                <p className="text-xs text-muted-foreground">
-                                    Semua informasi profil sudah diisi
-                                </p>
-                            </div>
+                    <CardContent>
+                        <div className="text-2xl font-bold">{adminStats.totalUsers.toLocaleString()}</div>
+                        <div className="flex items-center gap-1 text-xs text-green-600">
+                            <TrendingUp className="w-3 h-3" />
+                            +{adminStats.newUsersThisMonth} bulan ini
                         </div>
                     </CardContent>
                 </Card>
 
-                {/* Recent Users */}
                 <Card>
-                    <CardHeader className="pb-3">
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <CardTitle className="text-lg">Pengguna Terbaru</CardTitle>
-                            <Button variant="ghost" size="sm" asChild>
-                                <Link href={route('admin.users.index')}>
-                                    Lihat Semua
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Lembaga</CardTitle>
+                        <Building2 className="h-4 w-4 text-green-600" />
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-4">
-                            {recentUsers.map((user) => (
-                                <div className="flex items-center gap-4" key={user.id}>
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted shrink-0">
-                                        <Users className="h-5 w-5 text-muted-foreground" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium leading-none truncate">{user.name}</p>
-                                        <div className="flex items-center gap-2 mt-1">
-                                            <Mail className="h-3 w-3 text-muted-foreground shrink-0" />
-                                            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 shrink-0">
-                                        <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
-                                            {user.role}
-                                        </Badge>
-                                        <p className="text-xs text-muted-foreground whitespace-nowrap">
-                                            {new Date(user.created_at).toLocaleDateString('id-ID', {
-                                                day: 'numeric',
-                                                month: 'short',
-                                                year: 'numeric'
-                                            })}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <div className="text-2xl font-bold">{adminStats.totalInstitutions}</div>
+                        <p className="text-xs text-gray-600">Lembaga terdaftar</p>
                     </CardContent>
                 </Card>
 
-                {/* Demo Toast Notifications */}
                 <Card>
-                    <CardHeader className="pb-3">
-                        <CardTitle className="text-lg">Demo Toast Notifications</CardTitle>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Kelas Aktif</CardTitle>
+                        <BookOpen className="h-4 w-4 text-purple-600" />
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-muted-foreground mb-4">
-                            Klik tombol di bawah untuk melihat berbagai jenis toast notifications
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={handleRefreshData}
-                                className="flex items-center gap-2"
-                            >
-                                <RefreshCw className="h-4 w-4" />
-                                Refresh Data
-                            </Button>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={handleSendNotification}
-                                className="flex items-center gap-2"
-                            >
-                                <Bell className="h-4 w-4" />
-                                Kirim Notifikasi
-                            </Button>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={() => showError('Terjadi kesalahan pada sistem!')}
-                                className="flex items-center gap-2"
-                            >
-                                Demo Error
-                            </Button>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={() => showWarning('Perhatian: Sistem akan maintenance dalam 1 jam!')}
-                                className="flex items-center gap-2"
-                            >
-                                Demo Warning
-                            </Button>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={() => showSuccess('Data berhasil disimpan!')}
-                                className="flex items-center gap-2"
-                            >
-                                Demo Success
-                            </Button>
+                        <div className="text-2xl font-bold">{adminStats.activeCourses}</div>
+                        <p className="text-xs text-gray-600">Dari {adminStats.totalCourses} total</p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                        <DollarSign className="h-4 w-4 text-yellow-600" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            Rp {(adminStats.totalRevenue / 1000000).toFixed(1)}M
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-green-600">
+                            <TrendingUp className="w-3 h-3" />
+                            +12% bulan ini
                         </div>
                     </CardContent>
                 </Card>
             </div>
-        </AdminLayout>
+
+            <div className="grid lg:grid-cols-2 gap-8 mb-8">
+                {/* Recent Users */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Users className="w-5 h-5" />
+                            User Terbaru
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {recentUsers.map((user) => (
+                                <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
+                                    <div>
+                                        <h3 className="font-medium text-sm">{user.name}</h3>
+                                        <p className="text-xs text-gray-500">{user.email}</p>
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            Bergabung: {user.joinedAt}
+                                        </p>
+                                    </div>
+                                    <Badge 
+                                        variant={user.status === 'active' ? 'default' : 'secondary'}
+                                        className={user.status === 'active' ? 'bg-green-600' : 'bg-yellow-600'}
+                                    >
+                                        {user.status === 'active' ? 'Aktif' : 'Pending'}
+                                    </Badge>
+                                </div>
+                            ))}
+                        </div>
+                        <Button className="w-full mt-4" variant="outline">
+                            Lihat Semua Users
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                {/* Recent Transactions */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <CreditCard className="w-5 h-5" />
+                            Transaksi Terbaru
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {recentTransactions.map((transaction) => (
+                                <div key={transaction.id} className="p-3 border rounded-lg">
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex-1">
+                                            <h3 className="font-medium text-sm">{transaction.user}</h3>
+                                            <p className="text-xs text-gray-500">{transaction.course}</p>
+                                            <div className="flex items-center gap-2 mt-2">
+                                                <DollarSign className="w-3 h-3 text-gray-400" />
+                                                <span className="text-xs text-gray-600">
+                                                    Rp {transaction.amount.toLocaleString()}
+                                                </span>
+                                                <span className="text-xs text-gray-400">•</span>
+                                                <span className="text-xs text-gray-400">{transaction.date}</span>
+                                            </div>
+                                        </div>
+                                        <Badge 
+                                            variant={transaction.status === 'completed' ? 'default' : 'secondary'}
+                                            className={transaction.status === 'completed' ? 'bg-green-600' : 'bg-yellow-600'}
+                                        >
+                                            {transaction.status === 'completed' ? 'Selesai' : 'Pending'}
+                                        </Badge>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <Button className="w-full mt-4" variant="outline">
+                            Lihat Semua Transaksi
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Top Institutions */}
+            <Card className="mb-8">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <Award className="w-5 h-5" />
+                        Lembaga Terbaik
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {topInstitutions.map((institution, index) => (
+                            <div key={institution.id} className="flex items-center justify-between p-4 border rounded-lg">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <span className="text-sm font-bold text-blue-600">#{index + 1}</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-medium">{institution.name}</h3>
+                                        <div className="flex items-center gap-4 mt-1">
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-sm text-yellow-600">★</span>
+                                                <span className="text-xs text-gray-600">{institution.rating}</span>
+                                            </div>
+                                            <span className="text-xs text-gray-500">
+                                                {institution.students} siswa
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="font-semibold text-sm">
+                                        Rp {(institution.revenue / 1000000).toFixed(1)}M
+                                    </div>
+                                    <div className="text-xs text-gray-500">Revenue</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <Target className="w-5 h-5" />
+                        Aksi Cepat
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid md:grid-cols-4 gap-4">
+                        <Button className="h-16 flex flex-col items-center justify-center gap-2">
+                            <Users className="w-6 h-6" />
+                            <span className="text-sm">Kelola Users</span>
+                        </Button>
+                        <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-2">
+                            <Building2 className="w-6 h-6" />
+                            <span className="text-sm">Kelola Lembaga</span>
+                        </Button>
+                        <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-2">
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-sm">Kelola Kelas</span>
+                        </Button>
+                        <Button variant="outline" className="h-16 flex flex-col items-center justify-center gap-2">
+                            <Settings className="w-6 h-6" />
+                            <span className="text-sm">Pengaturan</span>
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
+        </AuthenticatedLayout>
     );
 }
