@@ -26,39 +26,41 @@ export default function ErrorPage({
   customActions,
 }: ErrorPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-6">
-            <div className="flex justify-center mb-4">
-              {icon}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-lg">
+        <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-md rounded-2xl overflow-hidden">
+          <CardHeader className="text-center pb-6 bg-gradient-to-r from-slate-50 to-blue-50">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 rounded-full bg-gradient-to-br from-red-50 to-orange-50 border-2 border-orange-200">
+                {icon}
+              </div>
             </div>
-            <div className="space-y-2">
-              <CardTitle className="text-6xl font-bold text-slate-800">
+            <div className="space-y-3">
+              <CardTitle className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-600">
                 {code}
               </CardTitle>
-              <h2 className="text-xl font-semibold text-slate-700">{title}</h2>
+              <h2 className="text-2xl font-bold text-slate-700">{title}</h2>
             </div>
           </CardHeader>
-          <CardContent className="text-center space-y-6">
-            <p className="text-slate-600 leading-relaxed">{description}</p>
+          <CardContent className="text-center space-y-8 p-8">
+            <p className="text-slate-600 leading-relaxed text-lg">{description}</p>
             
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {showBackButton && (
                 <Button
                   variant="outline"
                   onClick={() => window.history.back()}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 px-6 py-3 text-base font-medium"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-5 w-5" />
                   Kembali
                 </Button>
               )}
               
               {showHomeButton && (
-                <Button asChild className="flex items-center gap-2">
+                <Button asChild className="flex items-center gap-2 px-6 py-3 text-base font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
                   <Link href="/">
-                    <Home className="h-4 w-4" />
+                    <Home className="h-5 w-5" />
                     Beranda
                   </Link>
                 </Button>
@@ -68,9 +70,9 @@ export default function ErrorPage({
                 <Button
                   variant="outline"
                   onClick={() => window.location.reload()}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 px-6 py-3 text-base font-medium"
                 >
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw className="h-5 w-5" />
                   Muat Ulang
                 </Button>
               )}
