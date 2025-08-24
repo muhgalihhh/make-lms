@@ -99,3 +99,13 @@ Route::prefix('errors')->name('errors.')->group(function () {
         return Inertia::render('errors/503');
     })->name('503');
 });
+
+// Fallback route untuk menangani semua URL yang tidak terdaftar
+// Route ini harus ditempatkan di akhir file routes
+Route::fallback(function () {
+    return Inertia::render('errors/404', [
+        'code' => '404',
+        'title' => 'Halaman Tidak Ditemukan',
+        'description' => 'Halaman yang Anda cari tidak dapat ditemukan.',
+    ])->toResponse(request())->setStatusCode(404);
+});
