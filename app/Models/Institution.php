@@ -17,6 +17,13 @@ class Institution extends Model
         'email',
         'address',
         'website',
+        'rating',
+        'review_count',
+    ];
+
+    protected $casts = [
+        'rating' => 'float',
+        'review_count' => 'integer',
     ];
 
     /**
